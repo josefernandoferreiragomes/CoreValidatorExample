@@ -1,0 +1,26 @@
+﻿@model CoreValidatorExample.WebSite.Models.HomeModel
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to detail your site's privacy policy.</p>
+<div>Data from service:</div>
+<div>@Model.DataFromModel</div>
+@using (Html.BeginForm(actionName:"Save",controllerName:"Home",method:FormMethod.Post)){
+    <div>
+        @Html.LabelFor(m=>m.Designation)    
+        <p>
+            @Html.TextBoxFor(m=>m.Designation)
+        </p>
+        
+        <input type="submit" value="Submit form"/>        
+    </div>
+}
+@using (Html.BeginForm(actionName: "ProposalChangeState", controllerName: "Home", method: FormMethod.Post))
+{
+    @Html.HiddenFor(m=>m.Designation)
+    <div>       
+        <input type="submit" value="ChangeState" />
+    </div>
+}
