@@ -9,3 +9,4 @@
 
 ## Sources
 	https://dotnetchris.wordpress.com/2009/02/11/creating-a-generic-validation-framework/
+	(has some bugs, corrected with check in number 2)
