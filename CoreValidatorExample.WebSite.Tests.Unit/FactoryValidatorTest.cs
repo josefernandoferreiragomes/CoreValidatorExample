@@ -20,5 +20,17 @@ namespace CoreValidatorExample.WebSite.Tests.Unit
             Assert.IsFalse(results.Valid);
             Assert.IsTrue(results.Messages.Count > 0);
         }
+
+        [Test]
+        public void InvalidPersonTest()
+        {
+            var employee = new Person { FirstName = string.Empty, LastName = string.Empty };
+
+            var results = ValidationFactory.Validate(employee);
+
+            Assert.IsNotNull(results);
+            Assert.IsFalse(results.Valid);
+            Assert.IsTrue(results.Messages.Count > 0);
+        }
     }
 }

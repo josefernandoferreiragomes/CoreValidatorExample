@@ -68,6 +68,49 @@ namespace CoreValidatorExample.WebSite.ValidationHelper
         }
     }
 
+    public class PersonValidator : IValidator<Person>
+    {
+        #region Implementation of IValidation<Person>
+
+        public ValidationResult Validate(Person person)
+        {
+            return Validate(person, false);
+        }
+
+        public ValidationResult Validate(Person person, bool suppressWarnings)
+        {
+            var result = new ValidationResult();
+
+            //This code here would be replaced with a validation rules engine later
+
+            if (person != null)
+            {
+               
+
+                if (person != null)
+                {
+                    if (string.IsNullOrEmpty(person.FirstName))
+                        result.Messages.Add(new ValidationMessage { Message = "Person FirstName is required." });
+                    if (string.IsNullOrEmpty(person.LastName))
+                        result.Messages.Add(new ValidationMessage { Message = "Person LastName is required." });
+                }
+                else
+                    result.Messages.Add(new ValidationMessage { Message = "Person data is missing." });
+            }
+            else
+                result.Messages.Add(new ValidationMessage { Message = "Person data is missing." });
+
+            return result;
+        }
+
+        //public ValidationResult Validate<T>(T? obj)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        #endregion
+    }
+
     public class EmployeeValidator : IValidator<Employee>
     {
         #region Implementation of IValidation<Employee>
@@ -175,7 +218,17 @@ namespace CoreValidatorExample.WebSite.ValidationHelper
 
         public static IValidator<T> GetObjectInstance<T>()
         {
-            return (IValidator<T>)Activator.CreateInstance(typeof(EmployeeValidator));
+            IValidator<T>? objInstance = Activator.CreateInstance(typeof(EmployeeValidator)) as IValidator<T>;
+            switch (typeof(T).Name)
+            {
+                case "Employee":
+                    objInstance = (IValidator<T>)Activator.CreateInstance(typeof(EmployeeValidator));
+                    break;
+                case "Person":
+                    objInstance = (IValidator<T>)Activator.CreateInstance(typeof(PersonValidator));
+                    break;
+            }
+            return objInstance;
         }
     }
 
@@ -186,9 +239,9 @@ namespace CoreValidatorExample.WebSite.ValidationHelper
 
     //public void InvalidEmployeeTest()
     //{
-    //    var employee = new Employee { Person = new Person { FirstName = string.Empty, LastName = string.Empty } };
+    //    var person = new Employee { Person = new Person { FirstName = string.Empty, LastName = string.Empty } };
 
-    //    var results = ValidationFactory.Validate(employee);
+    //    var results = ValidationFactory.Validate(person);
 
     //    Assert.IsNotNull(results);
     //    Assert.IsFalse(results.Valid);
@@ -197,12 +250,12 @@ namespace CoreValidatorExample.WebSite.ValidationHelper
 
     //public bool SaveEmployee()
     //{
-    //    var employee = View.Employee;
+    //    var person = View.Employee;
 
-    //    var results = ValidationFactory.Validate(employee);
+    //    var results = ValidationFactory.Validate(person);
 
     //    if (results.Valid)
-    //        _controller.SaveEmployee(employee);
+    //        _controller.SaveEmployee(person);
     //    else
     //        View.Errors = results.Messages;
     //}
