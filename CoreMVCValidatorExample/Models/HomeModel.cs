@@ -25,9 +25,13 @@ namespace CoreValidatorExample.WebSite.Models
         public ProposalSvcResponse ProposalChangeState(ProposalSvcRequest request)
         {
             ProposalSvcResponse result = new ProposalSvcResponse();
+
             ProposalStateValidatorHelper helper = new ProposalStateValidatorHelper(request);
-            
+            if (helper.ValidateSimple(request).IsSuccess)
+            {
                 result = SvcRepository.ProposalChangeState(request);
+            }
+            
            
             return result;
         }

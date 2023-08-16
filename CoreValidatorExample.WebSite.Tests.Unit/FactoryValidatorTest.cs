@@ -12,7 +12,7 @@ namespace CoreValidatorExample.WebSite.Tests.Unit
         [Test]
         public void InvalidEmployeeTest()
         {
-            var employee = new Employee { Person = new Person { FirstName = string.Empty, LastName = string.Empty } };
+            var employee = new EmployeeWithFactory { Person = new PersonWithFactory { FirstName = string.Empty, LastName = string.Empty } };
 
             var results = ValidationFactory.Validate(employee);
 
@@ -24,7 +24,7 @@ namespace CoreValidatorExample.WebSite.Tests.Unit
         [Test]
         public void InvalidPersonTest()
         {
-            var employee = new Person { FirstName = string.Empty, LastName = string.Empty };
+            var employee = new PersonWithFactory { FirstName = string.Empty, LastName = string.Empty };
 
             var results = ValidationFactory.Validate(employee);
 

@@ -2,24 +2,24 @@
 
 namespace CoreValidatorExample.WebSite.ValidationHelper
 {
-    public interface IValidator<T>
+    public interface IValidatorWithFactory<T>
     {
-        ValidationResult Validate(T obj);
-        ValidationResult Validate(T obj, bool suppressWarnings);
+        ValidationResultWithFactory Validate(T obj);
+        ValidationResultWithFactory Validate(T obj, bool suppressWarnings);
     }
 
-    public sealed class ValidationMessage
+    public sealed class ValidationMessageWithFactory
     {
         public string Message { get; internal set; }
         public bool Warning { get; internal set; }
 
-        //Only allow creation internally or by ValidationResult class.
-        internal ValidationMessage()
+        //Only allow creation internally or by ValidationResultWithFactory class.
+        internal ValidationMessageWithFactory()
         {
         }
     }
 
-    public sealed class ValidationResult
+    public sealed class ValidationResultWithFactory
     {
         private bool _dirty = true;
         private bool _valid;
@@ -40,12 +40,12 @@ namespace CoreValidatorExample.WebSite.ValidationHelper
             }
         }
 
-        public ValidationResult()
+        public ValidationResultWithFactory()
         {
-            Messages = new List<ValidationMessage>();
+            Messages = new List<ValidationMessageWithFactory>();
         }
 
-        public IList<ValidationMessage> Messages { get; internal set; }
+        public IList<ValidationMessageWithFactory> Messages { get; internal set; }
 
         /// <summary>
         /// Adds the error. 
@@ -54,7 +54,7 @@ namespace CoreValidatorExample.WebSite.ValidationHelper
         public void AddError(string errorMessage)
         {
             _dirty = true;
-            Messages.Add(new ValidationMessage { Message = errorMessage });
+            Messages.Add(new ValidationMessageWithFactory { Message = errorMessage });
         }
 
         /// <summary>
@@ -64,22 +64,22 @@ namespace CoreValidatorExample.WebSite.ValidationHelper
         public void AddWarning(string warningMessage)
         {
             //No need to mark collection dirty since warnings never generate validation changes
-            Messages.Add(new ValidationMessage { Message = warningMessage, Warning = true });
+            Messages.Add(new ValidationMessageWithFactory { Message = warningMessage, Warning = true });
         }
     }
 
-    public class PersonValidator : IValidator<Person>
+    public class PersonValidatorWithFactory : IValidatorWithFactory<PersonWithFactory>
     {
         #region Implementation of IValidation<Person>
 
-        public ValidationResult Validate(Person person)
+        public ValidationResultWithFactory Validate(PersonWithFactory person)
         {
             return Validate(person, false);
         }
 
-        public ValidationResult Validate(Person person, bool suppressWarnings)
+        public ValidationResultWithFactory Validate(PersonWithFactory person, bool suppressWarnings)
         {
-            var result = new ValidationResult();
+            var result = new ValidationResultWithFactory();
 
             //This code here would be replaced with a validation rules engine later
 
@@ -90,20 +90,20 @@ namespace CoreValidatorExample.WebSite.ValidationHelper
                 if (person != null)
                 {
                     if (string.IsNullOrEmpty(person.FirstName))
-                        result.Messages.Add(new ValidationMessage { Message = "Person FirstName is required." });
+                        result.Messages.Add(new ValidationMessageWithFactory { Message = "PersonWithFactory FirstName is required." });
                     if (string.IsNullOrEmpty(person.LastName))
-                        result.Messages.Add(new ValidationMessage { Message = "Person LastName is required." });
+                        result.Messages.Add(new ValidationMessageWithFactory { Message = "PersonWithFactory LastName is required." });
                 }
                 else
-                    result.Messages.Add(new ValidationMessage { Message = "Person data is missing." });
+                    result.Messages.Add(new ValidationMessageWithFactory { Message = "PersonWithFactory data is missing." });
             }
             else
-                result.Messages.Add(new ValidationMessage { Message = "Person data is missing." });
+                result.Messages.Add(new ValidationMessageWithFactory { Message = "PersonWithFactory data is missing." });
 
             return result;
         }
 
-        //public ValidationResult Validate<T>(T? obj)
+        //public ValidationResultWithFactory Validate<T>(T? obj)
         //{
         //    throw new NotImplementedException();
         //}
@@ -111,47 +111,47 @@ namespace CoreValidatorExample.WebSite.ValidationHelper
         #endregion
     }
 
-    public class EmployeeValidator : IValidator<Employee>
+    public class EmployeeValidatorWithFactory : IValidatorWithFactory<EmployeeWithFactory>
     {
         #region Implementation of IValidation<Employee>
 
-        public ValidationResult Validate(Employee employee)
+        public ValidationResultWithFactory Validate(EmployeeWithFactory employee)
         {
             return Validate(employee, false);
         }
 
-        public ValidationResult Validate(Employee employee, bool suppressWarnings)
+        public ValidationResultWithFactory Validate(EmployeeWithFactory employee, bool suppressWarnings)
         {
-            var result = new ValidationResult();
+            var result = new ValidationResultWithFactory();
 
             //This code here would be replaced with a validation rules engine later
 
             if (employee != null)
             {
                 if (!suppressWarnings && employee.HireDate > DateTime.Now)
-                    result.Messages.Add(new ValidationMessage
+                    result.Messages.Add(new ValidationMessageWithFactory
                     {
-                        Message = string.Format("Employee hire date: {0} is set in the future.", employee.HireDate),
+                        Message = string.Format("EmployeeWithFactory hire date: {0} is set in the future.", employee.HireDate),
                         Warning = true
                     });
 
                 if (employee.Person != null)
                 {
                     if (string.IsNullOrEmpty(employee.Person.FirstName))
-                        result.Messages.Add(new ValidationMessage { Message = "Employee FirstName is required." });
+                        result.Messages.Add(new ValidationMessageWithFactory { Message = "EmployeeWithFactory FirstName is required." });
                     if (string.IsNullOrEmpty(employee.Person.LastName))
-                        result.Messages.Add(new ValidationMessage { Message = "Employee LastName is required." });
+                        result.Messages.Add(new ValidationMessageWithFactory { Message = "EmployeeWithFactory LastName is required." });
                 }
                 else
-                    result.Messages.Add(new ValidationMessage { Message = "Employee person data is missing." });
+                    result.Messages.Add(new ValidationMessageWithFactory { Message = "EmployeeWithFactory person data is missing." });
             }
             else
-                result.Messages.Add(new ValidationMessage { Message = "Employee data is missing." });
+                result.Messages.Add(new ValidationMessageWithFactory { Message = "EmployeeWithFactory data is missing." });
 
             return result;
         }
 
-        //public ValidationResult Validate<T>(T? obj)
+        //public ValidationResultWithFactory Validate<T>(T? obj)
         //{
         //    throw new NotImplementedException();
         //}
@@ -159,13 +159,13 @@ namespace CoreValidatorExample.WebSite.ValidationHelper
         #endregion
     }
 
-    public class Employee
+    public class EmployeeWithFactory
     {
-        public Person Person { get; set; }
+        public PersonWithFactory Person { get; set; }
         public DateTime HireDate { get; set; }
     }
 
-    public class Person
+    public class PersonWithFactory
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -174,34 +174,34 @@ namespace CoreValidatorExample.WebSite.ValidationHelper
     public static class ValidationFactory
     {
         
-        public static ValidationResult Validate<T>(T obj)
+        public static ValidationResultWithFactory Validate<T>(T obj)
         {
             try
             {
-                //var validator = ObjectFactory.GetInstance<IValidator<T>>();
-                IValidator<T> validator = CustomObjectFactory.GetObjectInstance<T>();
+                //var validator = ObjectFactory.GetInstance<IValidatorWithFactory<T>>();
+                IValidatorWithFactory<T> validator = CustomObjectFactory.GetObjectInstance<T>();
                 return validator.Validate(obj);
             }
             catch (Exception ex)
             {
-                var messages = new List<ValidationMessage> {new ValidationMessage {
+                var messages = new List<ValidationMessageWithFactory> {new ValidationMessageWithFactory {
                 Message = string.Format("Error validating {0}", obj)}};
 
                 messages.AddRange(FlattenError(ex));
 
-                var result = new ValidationResult { Messages = messages };
+                var result = new ValidationResultWithFactory { Messages = messages };
                 return result;
             }
         }
 
-        private static IEnumerable<ValidationMessage> FlattenError(Exception exception)
+        private static IEnumerable<ValidationMessageWithFactory> FlattenError(Exception exception)
         {
-            var messages = new List<ValidationMessage>();
+            var messages = new List<ValidationMessageWithFactory>();
             var currentException = exception;
 
             do
             {
-                messages.Add(new ValidationMessage { Message = exception.Message });
+                messages.Add(new ValidationMessageWithFactory { Message = exception.Message });
                 currentException = currentException.InnerException;
             } while (currentException != null);
 
@@ -211,21 +211,21 @@ namespace CoreValidatorExample.WebSite.ValidationHelper
 
     public static class CustomObjectFactory
     {
-        //internal static IValidator<T> GetObjectInstance(T obj)
+        //internal static IValidatorWithFactory<T> GetObjectInstance(T obj)
         //{
-        //    return (IValidator<T>)Activator.CreateInstance(typeof(EmployeeValidator));//<T>(typeof(ProposalStateValidatorHelper));
+        //    return (IValidatorWithFactory<T>)Activator.CreateInstance(typeof(EmployeeValidatorWithFactory));//<T>(typeof(ProposalStateValidatorHelper));
         //}
 
-        public static IValidator<T> GetObjectInstance<T>()
+        public static IValidatorWithFactory<T> GetObjectInstance<T>()
         {
-            IValidator<T>? objInstance = Activator.CreateInstance(typeof(EmployeeValidator)) as IValidator<T>;
+            IValidatorWithFactory<T>? objInstance = Activator.CreateInstance(typeof(EmployeeValidatorWithFactory)) as IValidatorWithFactory<T>;
             switch (typeof(T).Name)
             {
-                case "Employee":
-                    objInstance = (IValidator<T>)Activator.CreateInstance(typeof(EmployeeValidator));
+                case "EmployeeWithFactory":
+                    objInstance = (IValidatorWithFactory<T>)Activator.CreateInstance(typeof(EmployeeValidatorWithFactory));
                     break;
-                case "Person":
-                    objInstance = (IValidator<T>)Activator.CreateInstance(typeof(PersonValidator));
+                case "PersonWithFactory":
+                    objInstance = (IValidatorWithFactory<T>)Activator.CreateInstance(typeof(PersonValidatorWithFactory));
                     break;
             }
             return objInstance;
@@ -234,12 +234,12 @@ namespace CoreValidatorExample.WebSite.ValidationHelper
 
     //snippets
 
-    //ForRequestedType<IValidator<Employee>>().TheDefaultIsConcreteType<EmployeeValidator>();
+    //ForRequestedType<IValidatorWithFactory<EmployeeWithFactory>>().TheDefaultIsConcreteType<EmployeeValidatorWithFactory>();
 
 
     //public void InvalidEmployeeTest()
     //{
-    //    var person = new Employee { Person = new Person { FirstName = string.Empty, LastName = string.Empty } };
+    //    var person = new EmployeeWithFactory { PersonWithFactory = new PersonWithFactory { FirstName = string.Empty, LastName = string.Empty } };
 
     //    var results = ValidationFactory.Validate(person);
 
@@ -250,7 +250,7 @@ namespace CoreValidatorExample.WebSite.ValidationHelper
 
     //public bool SaveEmployee()
     //{
-    //    var person = View.Employee;
+    //    var person = View.EmployeeWithFactory;
 
     //    var results = ValidationFactory.Validate(person);
 
@@ -263,9 +263,9 @@ namespace CoreValidatorExample.WebSite.ValidationHelper
 
     //internal class CustomObjectFactory
     //{
-    //    internal static IValidator<T> GetObjectInstance<T>(T obj)
+    //    internal static IValidatorWithFactory<T> GetObjectInstance<T>(T obj)
     //    {
-    //        return (IValidator<T>)Activator.CreateInstance(typeof(ProposalStateValidatorHelper), true, obj);//<T>(typeof(ProposalStateValidatorHelper));
+    //        return (IValidatorWithFactory<T>)Activator.CreateInstance(typeof(ProposalStateValidatorHelper), true, obj);//<T>(typeof(ProposalStateValidatorHelper));
     //    }
     //}
 
@@ -277,7 +277,7 @@ namespace CoreValidatorExample.WebSite.ValidationHelper
     //}
     //public static T Validate<T>(T obj) where T : class
     //{
-    //    //ValidationResult validationResult = new ValidationResult();
+    //    //ValidationResultWithFactory validationResult = new ValidationResultWithFactory();
 
     //    switch ((typeof(T)).Name )
     //    {

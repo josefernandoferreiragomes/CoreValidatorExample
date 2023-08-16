@@ -2,6 +2,6 @@
 {
     public interface IStateValidator<T>
     {
-        WFValidationResult Validate();
+        WFValidationResult<T> ValidateSimple(T obj);
     }
 }
