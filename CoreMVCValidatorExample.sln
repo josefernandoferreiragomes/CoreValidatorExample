@@ -12,9 +12,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		ReadMe.md = ReadMe.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreValidatorExample.WebSite.Tests.Unit", "CoreValidatorExample.WebSite.Tests.Unit\CoreValidatorExample.WebSite.Tests.Unit.csproj", "{96D28FF5-4721-40BD-B92C-F861A720E8CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreValidatorExample.ApiLibrary.Tests.Unit", "CoreValidatorExample.WebSite.Tests.Unit\CoreValidatorExample.ApiLibrary.Tests.Unit.csproj", "{96D28FF5-4721-40BD-B92C-F861A720E8CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreMVCValidatorExample.APILibrary", "CoreMVCValidatorExample.APILibrary\CoreMVCValidatorExample.APILibrary.csproj", "{CF6F1270-B7FD-4643-89D9-7DAA43BC6BAA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreValidatorExample.APILibrary", "CoreMVCValidatorExample.APILibrary\CoreValidatorExample.APILibrary.csproj", "{CF6F1270-B7FD-4643-89D9-7DAA43BC6BAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CoreMVCValidatorExample.APILibrary\CoreMVCValidatorExample.APILibrary.csproj" />
+    <ProjectReference Include="..\CoreMVCValidatorExample.APILibrary\CoreValidatorExample.APILibrary.csproj" />
   </ItemGroup>
 
 </Project>
