@@ -1,17 +1,19 @@
-﻿namespace CoreMVCValidatorExample.APILibrary.ValidationFactoryConcept
+﻿using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Data;
+
+namespace CoreValidatorExample.APILibrary.ValidationFactoryConcept.Validators
 {
-    public class PersonValidatorWithFactory : IValidatorWithFactory<PersonWithFactory>
+    public class PersonValidatorWithFactory : Interfaces.IValidatorFacConcept<PersonExample>
     {
         #region Implementation of IValidation<Person>
 
-        public ValidationResultWithFactory Validate(PersonWithFactory person)
+        public ValidationResultFacConcept Validate(PersonExample person)
         {
             return Validate(person, false);
         }
 
-        public ValidationResultWithFactory Validate(PersonWithFactory person, bool suppressWarnings)
+        public ValidationResultFacConcept Validate(PersonExample person, bool suppressWarnings)
         {
-            var result = new ValidationResultWithFactory();
+            var result = new ValidationResultFacConcept();
 
             //This code here would be replaced with a validation rules engine later
 
@@ -22,20 +24,20 @@
                 if (person != null)
                 {
                     if (string.IsNullOrEmpty(person.FirstName))
-                        result.Messages.Add(new ValidationMessageWithFactory { Message = "PersonWithFactory FirstName is required." });
+                        result.Messages.Add(new ValidationMessageFacConcept { Message = "PersonExample FirstName is required." });
                     if (string.IsNullOrEmpty(person.LastName))
-                        result.Messages.Add(new ValidationMessageWithFactory { Message = "PersonWithFactory LastName is required." });
+                        result.Messages.Add(new ValidationMessageFacConcept { Message = "PersonExample LastName is required." });
                 }
                 else
-                    result.Messages.Add(new ValidationMessageWithFactory { Message = "PersonWithFactory data is missing." });
+                    result.Messages.Add(new ValidationMessageFacConcept { Message = "PersonExample data is missing." });
             }
             else
-                result.Messages.Add(new ValidationMessageWithFactory { Message = "PersonWithFactory data is missing." });
+                result.Messages.Add(new ValidationMessageFacConcept { Message = "PersonExample data is missing." });
 
             return result;
         }
 
-        //public ValidationResultWithFactory Validate<T>(T? obj)
+        //public ValidationResultFacConcept Validate<T>(T? obj)
         //{
         //    throw new NotImplementedException();
         //}
@@ -45,14 +47,14 @@
 
     //snippets
 
-    //ForRequestedType<IValidatorWithFactory<EmployeeWithFactory>>().TheDefaultIsConcreteType<EmployeeValidatorWithFactory>();
+    //ForRequestedType<IValidatorFacConcept<EmployeeExample>>().TheDefaultIsConcreteType<EmployeeValidatorWithFactory>();
 
 
     //public void InvalidEmployeeTest()
     //{
-    //    var person = new EmployeeWithFactory { PersonWithFactory = new PersonWithFactory { FirstName = string.Empty, LastName = string.Empty } };
+    //    var person = new EmployeeExample { PersonExample = new PersonExample { FirstName = string.Empty, LastName = string.Empty } };
 
-    //    var results = ValidationFactory.Validate(person);
+    //    var results = ValidationFactoryFacConcept.Validate(person);
 
     //    Assert.IsNotNull(results);
     //    Assert.IsFalse(results.Valid);
@@ -61,9 +63,9 @@
 
     //public bool SaveEmployee()
     //{
-    //    var person = View.EmployeeWithFactory;
+    //    var person = View.EmployeeExample;
 
-    //    var results = ValidationFactory.Validate(person);
+    //    var results = ValidationFactoryFacConcept.Validate(person);
 
     //    if (results.Valid)
     //        _controller.SaveEmployee(person);
@@ -72,11 +74,11 @@
     //}
 
 
-    //internal class CustomObjectFactory
+    //internal class CustomObjectFactoryFacConcept
     //{
-    //    internal static IValidatorWithFactory<T> GetObjectInstance<T>(T obj)
+    //    internal static IValidatorFacConcept<T> GetObjectInstance<T>(T obj)
     //    {
-    //        return (IValidatorWithFactory<T>)Activator.CreateInstance(typeof(ProposalStateValidatorHelper), true, obj);//<T>(typeof(ProposalStateValidatorHelper));
+    //        return (IValidatorFacConcept<T>)Activator.CreateInstance(typeof(ProposalStateValidatorHelper), true, obj);//<T>(typeof(ProposalStateValidatorHelper));
     //    }
     //}
 
@@ -88,7 +90,7 @@
     //}
     //public static T Validate<T>(T obj) where T : class
     //{
-    //    //ValidationResultWithFactory validationResult = new ValidationResultWithFactory();
+    //    //ValidationResultFacConcept validationResult = new ValidationResultFacConcept();
 
     //    switch ((typeof(T)).Name )
     //    {

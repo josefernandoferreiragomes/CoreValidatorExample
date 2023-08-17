@@ -1,6 +1,6 @@
-﻿namespace CoreMVCValidatorExample.APILibrary.ValidationFactoryConcept
+﻿namespace CoreValidatorExample.APILibrary.ValidationFactoryConcept.Data
 {
-    public sealed class ValidationResultWithFactory
+    public sealed class ValidationResultFacConcept
     {
         private bool _dirty = true;
         private bool _valid;
@@ -21,12 +21,12 @@
             }
         }
 
-        public ValidationResultWithFactory()
+        public ValidationResultFacConcept()
         {
-            Messages = new List<ValidationMessageWithFactory>();
+            Messages = new List<ValidationMessageFacConcept>();
         }
 
-        public IList<ValidationMessageWithFactory> Messages { get; internal set; }
+        public IList<ValidationMessageFacConcept> Messages { get; internal set; }
 
         /// <summary>
         /// Adds the error. 
@@ -35,7 +35,7 @@
         public void AddError(string errorMessage)
         {
             _dirty = true;
-            Messages.Add(new ValidationMessageWithFactory { Message = errorMessage });
+            Messages.Add(new ValidationMessageFacConcept { Message = errorMessage });
         }
 
         /// <summary>
@@ -45,20 +45,20 @@
         public void AddWarning(string warningMessage)
         {
             //No need to mark collection dirty since warnings never generate validation changes
-            Messages.Add(new ValidationMessageWithFactory { Message = warningMessage, Warning = true });
+            Messages.Add(new ValidationMessageFacConcept { Message = warningMessage, Warning = true });
         }
     }
 
     //snippets
 
-    //ForRequestedType<IValidatorWithFactory<EmployeeWithFactory>>().TheDefaultIsConcreteType<EmployeeValidatorWithFactory>();
+    //ForRequestedType<IValidatorFacConcept<EmployeeExample>>().TheDefaultIsConcreteType<EmployeeValidatorWithFactory>();
 
 
     //public void InvalidEmployeeTest()
     //{
-    //    var person = new EmployeeWithFactory { PersonWithFactory = new PersonWithFactory { FirstName = string.Empty, LastName = string.Empty } };
+    //    var person = new EmployeeExample { PersonExample = new PersonExample { FirstName = string.Empty, LastName = string.Empty } };
 
-    //    var results = ValidationFactory.Validate(person);
+    //    var results = ValidationFactoryFacConcept.Validate(person);
 
     //    Assert.IsNotNull(results);
     //    Assert.IsFalse(results.Valid);
@@ -67,9 +67,9 @@
 
     //public bool SaveEmployee()
     //{
-    //    var person = View.EmployeeWithFactory;
+    //    var person = View.EmployeeExample;
 
-    //    var results = ValidationFactory.Validate(person);
+    //    var results = ValidationFactoryFacConcept.Validate(person);
 
     //    if (results.Valid)
     //        _controller.SaveEmployee(person);
@@ -78,11 +78,11 @@
     //}
 
 
-    //internal class CustomObjectFactory
+    //internal class CustomObjectFactoryFacConcept
     //{
-    //    internal static IValidatorWithFactory<T> GetObjectInstance<T>(T obj)
+    //    internal static IValidatorFacConcept<T> GetObjectInstance<T>(T obj)
     //    {
-    //        return (IValidatorWithFactory<T>)Activator.CreateInstance(typeof(ProposalStateValidatorHelper), true, obj);//<T>(typeof(ProposalStateValidatorHelper));
+    //        return (IValidatorFacConcept<T>)Activator.CreateInstance(typeof(ProposalStateValidatorHelper), true, obj);//<T>(typeof(ProposalStateValidatorHelper));
     //    }
     //}
 
@@ -94,7 +94,7 @@
     //}
     //public static T Validate<T>(T obj) where T : class
     //{
-    //    //ValidationResultWithFactory validationResult = new ValidationResultWithFactory();
+    //    //ValidationResultFacConcept validationResult = new ValidationResultFacConcept();
 
     //    switch ((typeof(T)).Name )
     //    {

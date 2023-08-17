@@ -1,4 +1,5 @@
-using CoreMVCValidatorExample.APILibrary.ValidationFactoryConcept;
+using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Data;
+using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Interfaces;
 
 namespace CoreValidatorExample.WebSite.Tests.Unit
 {
@@ -12,9 +13,9 @@ namespace CoreValidatorExample.WebSite.Tests.Unit
         [Test]
         public void InvalidEmployeeTest()
         {
-            var employee = new EmployeeWithFactory { Person = new PersonWithFactory { FirstName = string.Empty, LastName = string.Empty } };
+            var employee = new EmployeeExample { Person = new PersonExample { FirstName = string.Empty, LastName = string.Empty } };
 
-            var results = ValidationFactory.Validate(employee);
+            var results = ValidationFactoryFacConcept.Validate(employee);
 
             Assert.IsNotNull(results);
             Assert.IsFalse(results.Valid);
@@ -24,9 +25,9 @@ namespace CoreValidatorExample.WebSite.Tests.Unit
         [Test]
         public void InvalidPersonTest()
         {
-            var employee = new PersonWithFactory { FirstName = string.Empty, LastName = string.Empty };
+            var person = new PersonExample { FirstName = string.Empty, LastName = string.Empty };
 
-            var results = ValidationFactory.Validate(employee);
+            var results = ValidationFactoryFacConcept.Validate(person);
 
             Assert.IsNotNull(results);
             Assert.IsFalse(results.Valid);

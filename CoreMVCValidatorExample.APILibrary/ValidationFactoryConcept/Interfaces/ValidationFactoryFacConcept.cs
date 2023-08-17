@@ -1,39 +1,41 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Data;
+using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Factory;
 
-namespace CoreMVCValidatorExample.APILibrary.ValidationFactoryConcept
+namespace CoreValidatorExample.APILibrary.ValidationFactoryConcept.Interfaces
 {
 
-    public static class ValidationFactory
+    public static class ValidationFactoryFacConcept
     {
 
-        public static ValidationResultWithFactory Validate<T>(T obj)
+        public static ValidationResultFacConcept Validate<T>(T obj)
         {
             try
             {
-                //var validator = ObjectFactory.GetInstance<IValidatorWithFactory<T>>();
-                IValidatorWithFactory<T> validator = CustomObjectFactory.GetObjectInstance<T>();
+                //var validator = ObjectFactory.GetInstance<IValidatorFacConcept<T>>();
+                IValidatorFacConcept<T> validator = CustomObjectFactoryFacConcept.GetObjectInstance<T>();
                 return validator.Validate(obj);
             }
             catch (Exception ex)
             {
-                var messages = new List<ValidationMessageWithFactory> {new ValidationMessageWithFactory {
+                var messages = new List<ValidationMessageFacConcept> {new ValidationMessageFacConcept {
                 Message = string.Format("Error validating {0}", obj)}};
 
                 messages.AddRange(FlattenError(ex));
 
-                var result = new ValidationResultWithFactory { Messages = messages };
+                var result = new ValidationResultFacConcept { Messages = messages };
                 return result;
             }
         }
 
-        private static IEnumerable<ValidationMessageWithFactory> FlattenError(Exception exception)
+        private static IEnumerable<ValidationMessageFacConcept> FlattenError(Exception exception)
         {
-            var messages = new List<ValidationMessageWithFactory>();
+            var messages = new List<ValidationMessageFacConcept>();
             var currentException = exception;
 
             do
             {
-                messages.Add(new ValidationMessageWithFactory { Message = exception.Message });
+                messages.Add(new ValidationMessageFacConcept { Message = exception.Message });
                 currentException = currentException.InnerException;
             } while (currentException != null);
 
@@ -43,14 +45,14 @@ namespace CoreMVCValidatorExample.APILibrary.ValidationFactoryConcept
 
     //snippets
 
-    //ForRequestedType<IValidatorWithFactory<EmployeeWithFactory>>().TheDefaultIsConcreteType<EmployeeValidatorWithFactory>();
+    //ForRequestedType<IValidatorFacConcept<EmployeeExample>>().TheDefaultIsConcreteType<EmployeeValidatorWithFactory>();
 
 
     //public void InvalidEmployeeTest()
     //{
-    //    var person = new EmployeeWithFactory { PersonWithFactory = new PersonWithFactory { FirstName = string.Empty, LastName = string.Empty } };
+    //    var person = new EmployeeExample { PersonExample = new PersonExample { FirstName = string.Empty, LastName = string.Empty } };
 
-    //    var results = ValidationFactory.Validate(person);
+    //    var results = ValidationFactoryFacConcept.Validate(person);
 
     //    Assert.IsNotNull(results);
     //    Assert.IsFalse(results.Valid);
@@ -59,9 +61,9 @@ namespace CoreMVCValidatorExample.APILibrary.ValidationFactoryConcept
 
     //public bool SaveEmployee()
     //{
-    //    var person = View.EmployeeWithFactory;
+    //    var person = View.EmployeeExample;
 
-    //    var results = ValidationFactory.Validate(person);
+    //    var results = ValidationFactoryFacConcept.Validate(person);
 
     //    if (results.Valid)
     //        _controller.SaveEmployee(person);
@@ -70,11 +72,11 @@ namespace CoreMVCValidatorExample.APILibrary.ValidationFactoryConcept
     //}
 
 
-    //internal class CustomObjectFactory
+    //internal class CustomObjectFactoryFacConcept
     //{
-    //    internal static IValidatorWithFactory<T> GetObjectInstance<T>(T obj)
+    //    internal static IValidatorFacConcept<T> GetObjectInstance<T>(T obj)
     //    {
-    //        return (IValidatorWithFactory<T>)Activator.CreateInstance(typeof(ProposalStateValidatorHelper), true, obj);//<T>(typeof(ProposalStateValidatorHelper));
+    //        return (IValidatorFacConcept<T>)Activator.CreateInstance(typeof(ProposalStateValidatorHelper), true, obj);//<T>(typeof(ProposalStateValidatorHelper));
     //    }
     //}
 
@@ -86,7 +88,7 @@ namespace CoreMVCValidatorExample.APILibrary.ValidationFactoryConcept
     //}
     //public static T Validate<T>(T obj) where T : class
     //{
-    //    //ValidationResultWithFactory validationResult = new ValidationResultWithFactory();
+    //    //ValidationResultFacConcept validationResult = new ValidationResultFacConcept();
 
     //    switch ((typeof(T)).Name )
     //    {
