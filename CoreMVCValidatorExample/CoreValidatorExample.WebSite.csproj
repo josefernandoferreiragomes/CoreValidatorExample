@@ -7,10 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <OpenApiReference Include="OpenAPIs\swagger.json" Namespace="CoreValidatorExample.WebAPIRef" ClassName="CoreWebAPIRef">
-      <CodeGenerator>NSwagCSharp</CodeGenerator>
-      <SourceUri>http://localhost:5108/swagger/v1/swagger.json</SourceUri>
-    </OpenApiReference>
+    <Compile Remove="Data\**" />
+    <Compile Remove="Repository\**" />
+    <Compile Remove="ValidationHelper\**" />
+    <Content Remove="Data\**" />
+    <Content Remove="Repository\**" />
+    <Content Remove="ValidationHelper\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="Repository\**" />
+    <EmbeddedResource Remove="ValidationHelper\**" />
+    <None Remove="Data\**" />
+    <None Remove="Repository\**" />
+    <None Remove="ValidationHelper\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="OpenAPIs\swagger.json" ClassName="CoreWebAPIRef" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +35,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CoreMVCValidatorExample.APILibrary\CoreMVCValidatorExample.APILibrary.csproj" />
   </ItemGroup>
 
 </Project>

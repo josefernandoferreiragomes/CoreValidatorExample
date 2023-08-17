@@ -1,7 +1,7 @@
-﻿using CoreValidatorExample.WebAPIRef;
+﻿using CoreValidatorExample.APILibrary.WebAPI;
 using CoreMVCValidatorExample.APILibrary.Data;
 
-namespace CoreValidatorExample.WebSite.Repository
+namespace CoreMVCValidatorExample.APILibrary.Repository
 {
     public class SvcRepository
     {
@@ -13,9 +13,10 @@ namespace CoreValidatorExample.WebSite.Repository
             Uri addressUri = new Uri(address);
             httpClient.BaseAddress = addressUri;
 
-            CoreWebAPIRef apiReference = new CoreWebAPIRef(address, httpClient);
+            CoreValidatorExample.APILibrary.WebAPI.WebAPIClassReference apiReference = new WebAPIClassReference(address, httpClient);
 
-            result = apiReference.GetWeatherForecastAsync().Result.ToString();
+            WeatherForecast forecast = apiReference.GetWeatherForecastAsync().Result.First();
+            result = string.Format("{0} {1}", forecast.Summary, forecast.TemperatureC);
             return result;
         }
 

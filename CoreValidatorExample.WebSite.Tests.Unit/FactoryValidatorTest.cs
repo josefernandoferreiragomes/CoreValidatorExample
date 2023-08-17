@@ -1,4 +1,4 @@
-using CoreValidatorExample.WebSite.ValidationHelper;
+using CoreMVCValidatorExample.APILibrary.ValidationHelper;
 
 namespace CoreValidatorExample.WebSite.Tests.Unit
 {

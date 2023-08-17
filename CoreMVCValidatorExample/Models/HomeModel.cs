@@ -1,11 +1,11 @@
-﻿using CoreValidatorExample.WebAPIRef;
-using CoreValidatorExample.WebSite.Data;
-using CoreValidatorExample.WebSite.Repository;
-using CoreValidatorExample.WebSite.ValidationHelper;
+﻿using CoreMVCValidatorExample.APILibrary.Repository;
+using CoreMVCValidatorExample.APILibrary.Data;
+//using CoreValidatorExample.WebSite.Repository;
+using CoreMVCValidatorExample.APILibrary.ValidationHelper;
 
 namespace CoreValidatorExample.WebSite.Models
 {
-    public class HomeModel : SvcRepository
+    public class HomeModel //: SvcRepository
     {
         public HomeModel()
         {
