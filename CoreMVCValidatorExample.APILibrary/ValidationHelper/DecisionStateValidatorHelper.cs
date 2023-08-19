@@ -1,7 +1,7 @@
 ﻿using System.Dynamic;
-using CoreMVCValidatorExample.APILibrary.Data;
+using CoreValidatorExample.APILibrary.Data;
 
-namespace CoreMVCValidatorExample.APILibrary.ValidationHelper
+namespace CoreValidatorExample.APILibrary.Data
 {
     //public class DecisionStateValidatorHelper : IStateValidator<DecisionSvcRequest>
     //{

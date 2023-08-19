@@ -1,5 +1,5 @@
 ﻿using CoreMVCValidatorExample.Models;
-using CoreMVCValidatorExample.APILibrary.Data;
+using CoreValidatorExample.APILibrary.Data;
 using CoreValidatorExample.WebSite.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;

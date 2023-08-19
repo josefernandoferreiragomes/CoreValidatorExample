@@ -1,5 +1,5 @@
 using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Data;
-using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Interfaces;
+using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Validators;
 
 namespace CoreValidatorExample.WebSite.Tests.Unit
 {

@@ -1,11 +1,11 @@
-﻿namespace CoreMVCValidatorExample.APILibrary.ValidationHelper
+﻿namespace CoreValidatorExample.APILibrary.Data
 {
     public class WFValidationResult<T>
     {
         public bool IsSuccess { get; set; }
         public List<WFValidationMessage>? MessageList { get; set; }
 
-        public object? Value { get; set; }
+        public T Value { get; set; }
 
         public WFValidationResult(T obj)
         {

@@ -1,4 +1,4 @@
-﻿namespace CoreMVCValidatorExample.APILibrary.ValidationHelper
+﻿namespace CoreValidatorExample.APILibrary.Data
 {
     public interface IStateValidator<T>
     {

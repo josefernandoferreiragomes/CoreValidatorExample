@@ -1,7 +1,7 @@
 ﻿using System.Dynamic;
-using CoreMVCValidatorExample.APILibrary.Data;
+using CoreValidatorExample.APILibrary.Data;
 
-namespace CoreMVCValidatorExample.APILibrary.ValidationHelper
+namespace CoreValidatorExample.APILibrary.Data
 {
     public class ProposalStateValidatorHelper : IStateValidator<ProposalSvcRequest>
     {
@@ -26,7 +26,7 @@ namespace CoreMVCValidatorExample.APILibrary.ValidationHelper
                     result.IsSuccess = ValidateStateTransfer1(_request);
                     break;
                 case 2:
-                    result.IsSuccess = ValidateStateTransfer2(_request);
+                    result.IsSuccess = InValidationProposalValidatedInTreatment(_request);
                     break;
 
             }
@@ -47,17 +47,33 @@ namespace CoreMVCValidatorExample.APILibrary.ValidationHelper
         //            result.IsSuccess = ValidateStateTransfer1(_request);
         //            break;
         //        case 2:
-        //            result.IsSuccess = ValidateStateTransfer2(_request);
+        //            result.IsSuccess = InValidationProposalValidatedInTreatment(_request);
         //            break;
 
         //    }
         //    return result;
         //}
-
-        private bool ValidateStateTransfer2(ProposalSvcRequest request)
+        /// <summary>
+        /// WF Proposta - Regras validação: 206 Em Validação (Proposta Validada) > Em Produção MP
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        private bool InValidationProposalValidatedInTreatment(ProposalSvcRequest request)
         {
             int businessLogicValue = 0;
             bool result = false;
+            //Checklist de documentos (obrigatórios para a validação) todos OK
+            result = VerifyIfDocumentsAreValid();
+            //Critérios / Cálculos para validação da proposta dentro dos limites previstos nas Regras de flexibilidade e condicionalismos informados
+            FlexibilityRulesValidator flexibilityRulesValidator = new FlexibilityRulesValidator();
+            result = flexibilityRulesValidator.ValidateFlexibilityRules();
+
+            //Regras para correta constituição de Garantias Hipotecárias/reais/financeiras
+            //Validade do despacho
+
+            //Emissão da FINE de Aprovação e da Carta de Aprovação
+            result = VerifyIfFINEWasPublished();                      
+            
             businessLogicValue = CallServiceA(request);
             if (businessLogicValue == 0)
             {
@@ -66,7 +82,15 @@ namespace CoreMVCValidatorExample.APILibrary.ValidationHelper
             return result;
         }
 
+        private bool VerifyIfDocumentsAreValid()
+        {
+            throw new NotImplementedException();
+        }
 
+        private bool VerifyIfFINEWasPublished()
+        {
+            throw new NotImplementedException();
+        }
 
         private bool ValidateStateTransfer1(ProposalSvcRequest request)
         {

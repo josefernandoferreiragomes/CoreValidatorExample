@@ -1,7 +1,7 @@
 ﻿using CoreValidatorExample.APILibrary.WebAPI;
-using CoreMVCValidatorExample.APILibrary.Data;
+using CoreValidatorExample.APILibrary.Data;
 
-namespace CoreMVCValidatorExample.APILibrary.Repository
+namespace CoreValidatorExample.APILibrary.Repository
 {
     public class SvcRepository
     {

@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Data;
 using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Factory;
+using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Interfaces;
 
-namespace CoreValidatorExample.APILibrary.ValidationFactoryConcept.Interfaces
+namespace CoreValidatorExample.APILibrary.ValidationFactoryConcept.Validators
 {
 
     public static class ValidationFactoryFacConcept

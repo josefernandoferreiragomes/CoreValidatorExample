@@ -1,7 +1,6 @@
-﻿using CoreMVCValidatorExample.APILibrary.Repository;
-using CoreMVCValidatorExample.APILibrary.Data;
+﻿using CoreValidatorExample.APILibrary.Data;
 //using CoreValidatorExample.WebSite.Repository;
-using CoreMVCValidatorExample.APILibrary.ValidationHelper;
+using CoreValidatorExample.APILibrary.Repository;
 
 namespace CoreValidatorExample.WebSite.Models
 {
@@ -27,12 +26,16 @@ namespace CoreValidatorExample.WebSite.Models
             ProposalSvcResponse result = new ProposalSvcResponse();
 
             ProposalStateValidatorHelper helper = new ProposalStateValidatorHelper(request);
-            if (helper.ValidateSimple(request).IsSuccess)
+            WFValidationResult<ProposalSvcRequest> validationResult = helper.ValidateSimple(request);
+            if (validationResult.IsSuccess)
             {
                 result = SvcRepository.ProposalChangeState(request);
             }
-            
-           
+            else
+            {
+                //error handling, using validationResult.MessageList
+            }
+
             return result;
         }
 
