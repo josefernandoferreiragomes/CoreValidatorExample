@@ -3,19 +3,19 @@ using CoreValidatorExample.APILibrary.Data;
 
 namespace CoreValidatorExample.APILibrary.Data
 {
-    public class ProposalStateValidatorHelper : IStateValidator<ProposalSvcRequest>
+    public class ProposalStateValidatorHelper : IStateValidator<ProposalChangeStateSvcRequest>
     {
-        private ProposalSvcRequest _request;
+        private ProposalChangeStateSvcRequest _request;
 
-        public ProposalStateValidatorHelper(ProposalSvcRequest request)
+        public ProposalStateValidatorHelper(ProposalChangeStateSvcRequest request)
         {
             _request = request;
         }
 
-        public WFValidationResult<ProposalSvcRequest> ValidateSimple(ProposalSvcRequest obj)
+        public WFValidationResult<ProposalChangeStateSvcRequest> ValidateSimple(ProposalChangeStateSvcRequest obj)
         {
             //simulate true
-            WFValidationResult<ProposalSvcRequest> result = new WFValidationResult<ProposalSvcRequest>(obj);
+            WFValidationResult<ProposalChangeStateSvcRequest> result = new WFValidationResult<ProposalChangeStateSvcRequest>(obj);
             result.MessageList = new List<WFValidationMessage>();
 
 
@@ -58,7 +58,7 @@ namespace CoreValidatorExample.APILibrary.Data
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        private bool InValidationProposalValidatedInTreatment(ProposalSvcRequest request)
+        private bool InValidationProposalValidatedInTreatment(ProposalChangeStateSvcRequest request)
         {
             int businessLogicValue = 0;
             bool result = false;
@@ -92,7 +92,7 @@ namespace CoreValidatorExample.APILibrary.Data
             throw new NotImplementedException();
         }
 
-        private bool ValidateStateTransfer1(ProposalSvcRequest request)
+        private bool ValidateStateTransfer1(ProposalChangeStateSvcRequest request)
         {
             int businessLogicValue = 0;
             bool result = false;
@@ -106,13 +106,13 @@ namespace CoreValidatorExample.APILibrary.Data
             return result;
         }
 
-        private int CallServiceA(ProposalSvcRequest request)
+        private int CallServiceA(ProposalChangeStateSvcRequest request)
         {
             //simulate service call
             return 1;
         }
 
-        private int CallServiceB(ProposalSvcRequest request)
+        private int CallServiceB(ProposalChangeStateSvcRequest request)
         {
             //simulate service call
             return 2;

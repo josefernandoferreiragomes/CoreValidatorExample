@@ -6,9 +6,11 @@ namespace CoreValidatorExample.WebSite.Models
 {
     public class HomeModel //: SvcRepository
     {
+        ProposalSvcRepository ProposalSvcRepository;
         public HomeModel()
         {
             DataFromModel = "example string from model";
+            ProposalSvcRepository = new ProposalSvcRepository();
         }
 
         public string DataFromModel { get; set; }
@@ -18,36 +20,17 @@ namespace CoreValidatorExample.WebSite.Models
         public string ChangeStateResultMessage { get; set; }
         public void GetDataFromApi()
         {
-            this.DataFromModel = SvcRepository.GetDataFromApi();
+            this.DataFromModel = ProposalSvcRepository.GetDataFromApi();
         }
 
-        public ProposalSvcResponse ProposalChangeState(ProposalSvcRequest request)
+        public ProposalChangeStateSvcResponse ProposalChangeState(ProposalChangeStateSvcRequest request)
         {
-            ProposalSvcResponse result = new ProposalSvcResponse();
+            ProposalChangeStateSvcResponse result = new ProposalChangeStateSvcResponse();
 
-            ProposalStateValidatorHelper helper = new ProposalStateValidatorHelper(request);
-            WFValidationResult<ProposalSvcRequest> validationResult = helper.ValidateSimple(request);
-            if (validationResult.IsSuccess)
-            {
-                result = SvcRepository.ProposalChangeState(request);
-            }
-            else
-            {
-                //error handling, using validationResult.MessageList
-            }
+            var validationResult = ProposalSvcRepository.ProposalChangeState(request);
 
             return result;
         }
 
-        //would be in a different controller
-        public DecisionSvcResponse DecisionChangeState(DecisionSvcRequest request)
-        {
-            DecisionSvcResponse result = new DecisionSvcResponse();
-            //if (ValidatorFactory.Validate<DecisionSvcRequest>(request).IsSuccess)
-            //{
-            //    result = SvcRepository.DecisionChangeState(request);
-            //}
-            return result;
-        }
     }
 }

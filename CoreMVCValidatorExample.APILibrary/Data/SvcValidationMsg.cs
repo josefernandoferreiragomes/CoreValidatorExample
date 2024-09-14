@@ -1,6 +1,6 @@
 ﻿namespace CoreValidatorExample.APILibrary.Data
 {
-    public class SvcErrorMsg
+    public class SvcValidationMsg
     {
         public int MessageId { get; set; }
         public string? Message { get; set; }

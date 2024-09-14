@@ -38,7 +38,7 @@ namespace CoreMVCValidatorExample.Controllers
         public IActionResult ProposalChangeState(HomeModel model)
         {
             //validation
-            ProposalSvcRequest request = new ProposalSvcRequest();
+            ProposalChangeStateSvcRequest request = new ProposalChangeStateSvcRequest();
             request.ProposalId = 1;
             request.UserId = 2;
             request.ActionName = 3;

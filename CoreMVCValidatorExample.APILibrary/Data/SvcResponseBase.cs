@@ -2,9 +2,9 @@
 
 namespace CoreValidatorExample.APILibrary.Data
 {
-    public class DecisionSvcResponse
+    public abstract class SvcResponseBase
     {
         public bool Success { get; set; }
-        public List<SvcErrorMsg> SvcErrorMsgs { get; set; }
+        public List<SvcErrorMsg>? SvcErrorMsgs { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using CoreValidatorExample.APILibrary.Data;
 using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Data;
-using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Factory;
+
 using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Interfaces;
 
 namespace CoreValidatorExample.APILibrary.ValidationFactoryConcept.Validators
@@ -8,13 +9,12 @@ namespace CoreValidatorExample.APILibrary.ValidationFactoryConcept.Validators
 
     public static class ValidationFactoryFacConcept
     {
-
         public static ValidationResultFacConcept Validate<T>(T obj)
         {
             try
             {
-                //var validator = ObjectFactory.GetInstance<IValidatorFacConcept<T>>();
-                IValidatorFacConcept<T> validator = CustomObjectFactoryFacConcept.GetObjectInstance<T>();
+                //IValidatorFacConcept<T>? objInstance = Activator.CreateInstance(typeof(EmployeeValidatorWithFactory)) as IValidatorFacConcept<T>;
+                var validator = Activator.CreateInstance<IValidatorFacConcept<T>>();
                 return validator.Validate(obj);
             }
             catch (Exception ex)
@@ -43,69 +43,4 @@ namespace CoreValidatorExample.APILibrary.ValidationFactoryConcept.Validators
             return messages;
         }
     }
-
-    //snippets
-
-    //ForRequestedType<IValidatorFacConcept<EmployeeExample>>().TheDefaultIsConcreteType<EmployeeValidatorWithFactory>();
-
-
-    //public void InvalidEmployeeTest()
-    //{
-    //    var person = new EmployeeExample { PersonExample = new PersonExample { FirstName = string.Empty, LastName = string.Empty } };
-
-    //    var results = ValidationFactoryFacConcept.Validate(person);
-
-    //    Assert.IsNotNull(results);
-    //    Assert.IsFalse(results.Valid);
-    //    Assert.IsTrue(results.Messages.Count > 0);
-    //}
-
-    //public bool SaveEmployee()
-    //{
-    //    var person = View.EmployeeExample;
-
-    //    var results = ValidationFactoryFacConcept.Validate(person);
-
-    //    if (results.Valid)
-    //        _controller.SaveEmployee(person);
-    //    else
-    //        View.Errors = results.Messages;
-    //}
-
-
-    //internal class CustomObjectFactoryFacConcept
-    //{
-    //    internal static IValidatorFacConcept<T> GetObjectInstance<T>(T obj)
-    //    {
-    //        return (IValidatorFacConcept<T>)Activator.CreateInstance(typeof(ProposalStateValidatorHelper), true, obj);//<T>(typeof(ProposalStateValidatorHelper));
-    //    }
-    //}
-
-    //public static class ValidatorFactory
-    //{
-    //public static T CreateValidator<T>( obj) where T : class
-    //{
-    //    return Activator.CreateInstance<T>(obj);
-    //}
-    //public static T Validate<T>(T obj) where T : class
-    //{
-    //    //ValidationResultFacConcept validationResult = new ValidationResultFacConcept();
-
-    //    switch ((typeof(T)).Name )
-    //    {
-    //        case "ProposalSvcRequest":
-    //            return Activator.CreateInstance<T>();
-    //            //validationResult = validator.Validate(obj);
-    //            break;
-    //        case "DecisionSvcRequest":
-    //            var validator2 = Activator.CreateInstance<DecisionStateValidatorHelper>();
-    //            //validationResult = validator2.Validate(obj);
-    //            break;
-
-    //    }
-
-    //    //return validationResult;
-    //    return T;
-    //}
-    //}
 }
