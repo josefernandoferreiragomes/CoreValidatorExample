@@ -12,10 +12,10 @@ using System.Threading.Tasks;
 
 namespace CoreValidatorExample.APILibrary
 {
-    public abstract class AppraisalChangeStateManager : ChangeStateManagerBase
+    public class AppraisalChangeStateManager : ChangeStateManagerBase
     {
 
-        protected AppraisalChangeStateManager(int userId, int userCorporateUnitId, int appraisalId) 
+        public AppraisalChangeStateManager(int userId, int userCorporateUnitId, int appraisalId) 
             : base (userCorporateUnitId, appraisalId)
         {
             AppraisalId = appraisalId;

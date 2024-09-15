@@ -9,7 +9,7 @@ namespace CoreValidatorExample.APILibrary.ChangeStateManager
 {
     public interface IChangeStateManager
     {
-        List<SvcValidationMsg> ChangeState();
+        void ExecuteChangeState();
         List<SvcValidationMsg> ValidateAndExecute(int eventId);
     }
 }

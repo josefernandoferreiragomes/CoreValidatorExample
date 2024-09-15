@@ -36,7 +36,7 @@ namespace CoreValidatorExample.APILibrary.Repository
             //simulate success
             ProposalChangeStateSvcResponse response = new ProposalChangeStateSvcResponse();
 
-            ProposalChangeStateManager manager = (ProposalChangeStateManager)this.ChangeStateManagerFactory.GetObjectInstance<ProposalChangeStateManager>();
+            ProposalChangeStateManager manager = (ProposalChangeStateManager)this.ChangeStateManagerFactory.GetObjectInstance<ProposalChangeStateManager>(request.UserId, request.UserCorporateUnitId, request.ProposalId);
 
             svcValidationMsgs = manager.ValidateAndExecute(request.EventId);
             response.Success = true;

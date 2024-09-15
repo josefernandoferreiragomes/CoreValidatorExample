@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace CoreValidatorExample.APILibrary
 {
-    public abstract class DecisionChangeStateManager : ChangeStateManagerBase
+    public class DecisionChangeStateManager : ChangeStateManagerBase
     {
-        protected DecisionChangeStateManager(int userId, int userCorporateUnitId, int decisionId)
+        public DecisionChangeStateManager(int userId, int userCorporateUnitId, int decisionId)
             : base(userCorporateUnitId, decisionId)
         {
             DecisionId = decisionId;
@@ -47,6 +47,7 @@ namespace CoreValidatorExample.APILibrary
         public override void ExecuteChangeState()
         {
             //call service method ChangeState
+            
         }
 
     }

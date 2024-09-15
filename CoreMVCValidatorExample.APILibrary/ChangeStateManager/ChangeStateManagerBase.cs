@@ -24,12 +24,10 @@ namespace CoreValidatorExample.APILibrary
         public int EventId { get; set; }
         public int UserId { get; set; }
         public int UserCorporateUnitId { get; set; }
+
         protected List<SvcValidationMsg> ValidationMsgList { get; set; }
 
         public abstract List<SvcValidationMsg> ValidateAndExecute(int eventId);
-        
-
-        public abstract List<SvcValidationMsg> ChangeState();
 
         public abstract void ExecuteChangeState();
 
