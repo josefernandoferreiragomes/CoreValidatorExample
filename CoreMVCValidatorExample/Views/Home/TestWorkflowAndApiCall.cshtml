@@ -1,10 +1,10 @@
 ﻿@model CoreValidatorExample.WebSite.Models.HomeModel
 @{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "TestWorkflowAndApiCall Policy";
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<p>Test WorkFlow and Api Call</p>
 <div>Data from service:</div>
 <div>@Model.DataFromModel</div>
 @using (Html.BeginForm(actionName:"Save",controllerName:"Home",method:FormMethod.Post)){

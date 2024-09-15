@@ -23,7 +23,7 @@ namespace CoreMVCValidatorExample.Controllers
             return View(model);
         }
 
-        public IActionResult Privacy()
+        public IActionResult TestWorkflowAndApiCall()
         {
             HomeModel model = new HomeModel();
             model.GetDataFromApi();
@@ -32,7 +32,7 @@ namespace CoreMVCValidatorExample.Controllers
         public IActionResult Save(HomeModel model) 
         {
 
-            return View("Privacy", model);
+            return View("TestWorkflowAndApiCall", model);
         }
 
         public IActionResult ProposalChangeState(HomeModel model)
@@ -44,7 +44,7 @@ namespace CoreMVCValidatorExample.Controllers
             request.ActionName = 3;
             model.ProposalChangeState(request);
 
-            return View("Privacy", model);
+            return View("TestWorkflowAndApiCall", model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
