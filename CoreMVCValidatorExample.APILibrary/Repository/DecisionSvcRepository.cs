@@ -1,8 +1,8 @@
-﻿using CoreValidatorExample.APILibrary;
-using CoreValidatorExample.APILibrary.WebAPI;
-using CoreValidatorExample.APILibrary.Data;
-using CoreValidatorExample.APILibrary.ChangeStateManager.Factory;
-namespace CoreValidatorExample.APILibrary.Repository
+﻿using CoreValidatorExample.BusinessLayer;
+using CoreValidatorExample.BusinessLayer.WebAPI;
+using CoreValidatorExample.BusinessLayer.Data;
+using CoreValidatorExample.BusinessLayer.ChangeStateManager.Factory;
+namespace CoreValidatorExample.BusinessLayer.Repository
 {
     public class DecisionSvcRepository
     {
@@ -22,7 +22,7 @@ namespace CoreValidatorExample.APILibrary.Repository
             Uri addressUri = new Uri(address);
             httpClient.BaseAddress = addressUri;
 
-            CoreValidatorExample.APILibrary.WebAPI.WebAPIClassReference apiReference = new WebAPIClassReference(address, httpClient);
+            CoreValidatorExample.BusinessLayer.WebAPI.WebAPIClassReference apiReference = new WebAPIClassReference(address, httpClient);
 
             WeatherForecast forecast = apiReference.GetWeatherForecastAsync().Result.First();
             result = string.Format("{0} {1}", forecast.Summary, forecast.TemperatureC);

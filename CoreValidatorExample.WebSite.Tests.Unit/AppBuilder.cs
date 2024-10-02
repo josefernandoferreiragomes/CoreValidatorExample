@@ -1,8 +1,8 @@
-﻿using CoreValidatorExample.APILibrary.Repository;
-using CoreValidatorExample.APILibrary.ValidationChainOfResponsibilityConcept;
-using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Data;
-using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Interfaces;
-using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Validators;
+﻿using CoreValidatorExample.BusinessLayer.Repository;
+using CoreValidatorExample.BusinessLayer.ValidationChainOfResponsibilityConcept;
+using CoreValidatorExample.BusinessLayer.ValidationFactoryConcept.Data;
+using CoreValidatorExample.BusinessLayer.ValidationFactoryConcept.Interfaces;
+using CoreValidatorExample.BusinessLayer.ValidationFactoryConcept.Validators;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

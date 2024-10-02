@@ -1,4 +1,4 @@
-﻿namespace CoreValidatorExample.APILibrary.ValidationFactoryConcept.Data
+﻿namespace CoreValidatorExample.BusinessLayer.ValidationFactoryConcept.Data
 {
     public sealed class ValidationMessageFacConcept
     {

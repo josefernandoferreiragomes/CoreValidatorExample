@@ -1,6 +1,6 @@
-﻿using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Data;
+﻿using CoreValidatorExample.BusinessLayer.ValidationFactoryConcept.Data;
 
-namespace CoreValidatorExample.APILibrary.ValidationFactoryConcept.Validators
+namespace CoreValidatorExample.BusinessLayer.ValidationFactoryConcept.Validators
 {
     public class PersonValidatorWithFactory : Interfaces.IValidatorFacConcept<PersonExample>
     {

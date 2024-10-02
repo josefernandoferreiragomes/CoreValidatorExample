@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using CoreValidatorExample.APILibrary.Data;
-using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Data;
+using CoreValidatorExample.BusinessLayer.Data;
+using CoreValidatorExample.BusinessLayer.ValidationFactoryConcept.Data;
 
-using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Interfaces;
+using CoreValidatorExample.BusinessLayer.ValidationFactoryConcept.Interfaces;
 
-namespace CoreValidatorExample.APILibrary.ValidationFactoryConcept.Validators
+namespace CoreValidatorExample.BusinessLayer.ValidationFactoryConcept.Validators
 {
 
     public static class ValidationFactoryFacConcept

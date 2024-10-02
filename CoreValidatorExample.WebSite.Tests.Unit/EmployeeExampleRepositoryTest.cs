@@ -1,8 +1,8 @@
 using CoreValidatorExample.ApiLibrary.Tests.Unit;
-using CoreValidatorExample.APILibrary.Repository;
-using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Data;
-using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Interfaces;
-using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Validators;
+using CoreValidatorExample.BusinessLayer.Repository;
+using CoreValidatorExample.BusinessLayer.ValidationFactoryConcept.Data;
+using CoreValidatorExample.BusinessLayer.ValidationFactoryConcept.Interfaces;
+using CoreValidatorExample.BusinessLayer.ValidationFactoryConcept.Validators;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CoreValidatorExample.WebSite.Tests.Unit

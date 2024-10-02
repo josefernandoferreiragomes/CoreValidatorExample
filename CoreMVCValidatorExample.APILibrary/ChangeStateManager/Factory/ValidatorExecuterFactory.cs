@@ -1,8 +1,8 @@
-﻿using CoreValidatorExample.APILibrary.ChangeStateManager.ValidatorExecuters;
-using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Interfaces;
-using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Validators;
+﻿using CoreValidatorExample.BusinessLayer.ChangeStateManager.ValidatorExecuters;
+using CoreValidatorExample.BusinessLayer.ValidationFactoryConcept.Interfaces;
+using CoreValidatorExample.BusinessLayer.ValidationFactoryConcept.Validators;
 
-namespace CoreValidatorExample.APILibrary.ChangeStateManager.Factory
+namespace CoreValidatorExample.BusinessLayer.ChangeStateManager.Factory
 {
     public class ValidatorExecuterFactory
     {

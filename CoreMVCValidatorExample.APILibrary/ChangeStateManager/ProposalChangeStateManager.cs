@@ -1,14 +1,14 @@
-﻿using CoreValidatorExample.APILibrary.ChangeStateManager;
-using CoreValidatorExample.APILibrary.ChangeStateManager.ValidatorExecuters;
-using CoreValidatorExample.APILibrary.Data;
-using CoreValidatorExample.APILibrary.Data.Enums;
+﻿using CoreValidatorExample.BusinessLayer.ChangeStateManager;
+using CoreValidatorExample.BusinessLayer.ChangeStateManager.ValidatorExecuters;
+using CoreValidatorExample.BusinessLayer.Data;
+using CoreValidatorExample.BusinessLayer.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CoreValidatorExample.APILibrary
+namespace CoreValidatorExample.BusinessLayer
 {
     public class ProposalChangeStateManager : ChangeStateManagerBase
     {

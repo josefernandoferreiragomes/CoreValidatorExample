@@ -1,6 +1,5 @@
-﻿using CoreValidatorExample.APILibrary.Data;
-//using CoreValidatorExample.WebSite.Repository;
-using CoreValidatorExample.APILibrary.Repository;
+﻿using CoreValidatorExample.BusinessLayer.Data;
+using CoreValidatorExample.BusinessLayer.Repository;
 
 namespace CoreValidatorExample.WebSite.Models
 {

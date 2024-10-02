@@ -1,6 +1,6 @@
-﻿using CoreValidatorExample.APILibrary.Data;
+﻿using CoreValidatorExample.BusinessLayer.Data;
 
-namespace CoreValidatorExample.APILibrary.Data
+namespace CoreValidatorExample.BusinessLayer.Data
 {
     public class DecisionChangeStateSvcResponse : SvcResponseBase
     {

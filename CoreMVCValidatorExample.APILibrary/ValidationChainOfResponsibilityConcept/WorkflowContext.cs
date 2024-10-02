@@ -1,4 +1,4 @@
-﻿namespace CoreValidatorExample.APILibrary.ValidationChainOfResponsibilityConcept
+﻿namespace CoreValidatorExample.BusinessLayer.ValidationChainOfResponsibilityConcept
 {
     // Workflow context containing relevant data
     public class WorkflowContext

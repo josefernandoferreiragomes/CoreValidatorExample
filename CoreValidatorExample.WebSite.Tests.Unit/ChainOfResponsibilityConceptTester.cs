@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CoreValidatorExample.APILibrary.ValidationChainOfResponsibilityConcept;
+using CoreValidatorExample.BusinessLayer.ValidationChainOfResponsibilityConcept;
 
 namespace CoreValidatorExample.ApiLibrary.Tests.Unit
 {

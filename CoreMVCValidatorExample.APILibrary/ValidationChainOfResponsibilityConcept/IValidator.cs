@@ -1,4 +1,4 @@
-﻿namespace CoreValidatorExample.APILibrary.ValidationChainOfResponsibilityConcept
+﻿namespace CoreValidatorExample.BusinessLayer.ValidationChainOfResponsibilityConcept
 {
     /// <summary>
     /// Validator interface for the Chain of Responsibility

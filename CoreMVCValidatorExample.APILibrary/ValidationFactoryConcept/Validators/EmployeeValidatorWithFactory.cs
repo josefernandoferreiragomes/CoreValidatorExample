@@ -1,7 +1,7 @@
-﻿using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Data;
-using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Interfaces;
+﻿using CoreValidatorExample.BusinessLayer.ValidationFactoryConcept.Data;
+using CoreValidatorExample.BusinessLayer.ValidationFactoryConcept.Interfaces;
 
-namespace CoreValidatorExample.APILibrary.ValidationFactoryConcept.Validators
+namespace CoreValidatorExample.BusinessLayer.ValidationFactoryConcept.Validators
 {
     public class EmployeeValidatorWithFactory : IValidatorFacConcept<EmployeeExample>
     {

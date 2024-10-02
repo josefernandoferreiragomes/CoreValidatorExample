@@ -1,8 +1,8 @@
-﻿using CoreValidatorExample.APILibrary.ChangeStateManager;
-using CoreValidatorExample.APILibrary.ChangeStateManager.Factory;
-using CoreValidatorExample.APILibrary.ChangeStateManager.ValidatorExecuters;
-using CoreValidatorExample.APILibrary.Data;
-using CoreValidatorExample.APILibrary.Data.Enums;
+﻿using CoreValidatorExample.BusinessLayer.ChangeStateManager;
+using CoreValidatorExample.BusinessLayer.ChangeStateManager.Factory;
+using CoreValidatorExample.BusinessLayer.ChangeStateManager.ValidatorExecuters;
+using CoreValidatorExample.BusinessLayer.Data;
+using CoreValidatorExample.BusinessLayer.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CoreValidatorExample.APILibrary
+namespace CoreValidatorExample.BusinessLayer
 {
     public class AppraisalChangeStateManager : ChangeStateManagerBase
     {

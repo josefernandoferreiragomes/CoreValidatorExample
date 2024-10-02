@@ -1,4 +1,4 @@
-﻿namespace CoreValidatorExample.APILibrary.Data.Enums
+﻿namespace CoreValidatorExample.BusinessLayer.Data.Enums
 {
     public enum DecisionEvents
     {

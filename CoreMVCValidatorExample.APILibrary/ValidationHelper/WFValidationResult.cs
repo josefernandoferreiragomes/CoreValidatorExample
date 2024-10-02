@@ -1,4 +1,4 @@
-﻿namespace CoreValidatorExample.APILibrary.Data
+﻿namespace CoreValidatorExample.BusinessLayer.Data
 {
     public class WFValidationResult<T>
     {

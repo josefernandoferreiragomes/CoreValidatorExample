@@ -1,12 +1,12 @@
-﻿using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Data;
-using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Interfaces;
+﻿using CoreValidatorExample.BusinessLayer.ValidationFactoryConcept.Data;
+using CoreValidatorExample.BusinessLayer.ValidationFactoryConcept.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CoreValidatorExample.APILibrary.Repository
+namespace CoreValidatorExample.BusinessLayer.Repository
 {
     public class EmployeeExampleRepository : IEmployeeExampleRepository
     {

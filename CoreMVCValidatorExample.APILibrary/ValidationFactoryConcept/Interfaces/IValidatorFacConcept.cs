@@ -1,6 +1,6 @@
-﻿using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Data;
+﻿using CoreValidatorExample.BusinessLayer.ValidationFactoryConcept.Data;
 
-namespace CoreValidatorExample.APILibrary.ValidationFactoryConcept.Interfaces
+namespace CoreValidatorExample.BusinessLayer.ValidationFactoryConcept.Interfaces
 {
     public interface IValidatorFacConcept<T>
     {

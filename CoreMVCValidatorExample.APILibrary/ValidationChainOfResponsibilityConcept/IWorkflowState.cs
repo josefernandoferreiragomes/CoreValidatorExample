@@ -1,4 +1,4 @@
-﻿namespace CoreValidatorExample.APILibrary.ValidationChainOfResponsibilityConcept
+﻿namespace CoreValidatorExample.BusinessLayer.ValidationChainOfResponsibilityConcept
 {
     /// <summary>
     /// State interface for the State pattern

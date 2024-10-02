@@ -1,13 +1,13 @@
-﻿using CoreValidatorExample.APILibrary.ChangeStateManager;
-using CoreValidatorExample.APILibrary.ChangeStateManager.Factory;
-using CoreValidatorExample.APILibrary.Data;
+﻿using CoreValidatorExample.BusinessLayer.ChangeStateManager;
+using CoreValidatorExample.BusinessLayer.ChangeStateManager.Factory;
+using CoreValidatorExample.BusinessLayer.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CoreValidatorExample.APILibrary
+namespace CoreValidatorExample.BusinessLayer
 {
     public abstract class ChangeStateManagerBase : IChangeStateManager
     {

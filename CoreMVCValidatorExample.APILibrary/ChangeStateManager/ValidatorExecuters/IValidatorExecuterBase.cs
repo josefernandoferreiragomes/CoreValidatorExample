@@ -1,7 +1,7 @@
-﻿using CoreValidatorExample.APILibrary.Data;
-using CoreValidatorExample.APILibrary.ValidationFactoryConcept.Data;
+﻿using CoreValidatorExample.BusinessLayer.Data;
+using CoreValidatorExample.BusinessLayer.ValidationFactoryConcept.Data;
 
-namespace CoreValidatorExample.APILibrary.ValidationFactoryConcept.Interfaces
+namespace CoreValidatorExample.BusinessLayer.ValidationFactoryConcept.Interfaces
 {
     public interface IValidatorExecuterBase
     {
