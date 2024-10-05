@@ -12,7 +12,7 @@ namespace CoreValidatorExample.BusinessLayer.Tests.Unit
 {
 
     [TestFixture]
-    public class AppraisalChangeStateManagerTests
+    public class AppraisalChangeStateManagerChainTests
     {
         private AppraisalChangeStateManager _changeStateManager;
 

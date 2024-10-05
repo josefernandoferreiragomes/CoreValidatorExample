@@ -8,19 +8,21 @@ using System;
 using CoreValidatorExample.BusinessLayer.ChangeStateManagerChainOfResponsibility;
 
 namespace CoreValidatorExample.BusinessLayer.Tests.Unit
-{    
+{
+      
     [TestFixture]
-    public class ProposalChangeStateManagerTests
+    public class DecisionChangeStateManagerChainTests
     {
-        private ProposalChangeStateManager _changeStateManager;
+        private DecisionChangeStateManager _changeStateManager;
 
         [SetUp]
         public void Setup()
         {
-            _changeStateManager = new ProposalChangeStateManager();
+            _changeStateManager = new DecisionChangeStateManager();
         }
 
         //TO BE IMPLEMENTED
-    }    
+    }
+    
 
 }
