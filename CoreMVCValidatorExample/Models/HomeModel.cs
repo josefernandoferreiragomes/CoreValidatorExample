@@ -3,32 +3,50 @@ using CoreValidatorExample.BusinessLayer.Repository;
 
 namespace CoreValidatorExample.WebSite.Models
 {
-    public class HomeModel //: SvcRepository
+    public class HomeModel
     {
-        ProposalSvcRepository ProposalSvcRepository;
-        public HomeModel()
+        IProposalSvcRepository _proposalSvcRepository;
+        public HomeModel(IProposalSvcRepository proposalSvcRepository)
+        {            
+            _proposalSvcRepository = proposalSvcRepository;
+            ChangeStateResultMessage = "State not changed yet";
+        }               
+
+
+        public string ChangeStateResultMessage { get; set; }                
+
+        public WFValidationResult<Proposal> ProposalChangeState(ProposalChangeStateSvcRequest request)
         {
-            DataFromModel = "example string from model";
-            ProposalSvcRepository = new ProposalSvcRepository();
+            try
+            {
+                WFValidationResult<Proposal> result;
+
+                result = _proposalSvcRepository.ProposalChangeState(request);
+
+                if (result != null && result.IsSuccess)
+                {
+                    ChangeStateResultMessage = "State Change Successful";
+                }
+                else
+                {
+                    ChangeStateResultMessage = "Error on State Change";
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                //TODO handle exception
+                throw ex;
+            }
+            
         }
 
-        public string DataFromModel { get; set; }
-
-        public string Designation { get; set; }
-
-        public string ChangeStateResultMessage { get; set; }
-        public void GetDataFromApi()
+        public HomeViewModel GenerateViewModel()
         {
-            this.DataFromModel = ProposalSvcRepository.GetDataFromApi();
-        }
-
-        public ProposalChangeStateSvcResponse ProposalChangeState(ProposalChangeStateSvcRequest request)
-        {
-            ProposalChangeStateSvcResponse result = new ProposalChangeStateSvcResponse();
-
-            var validationResult = ProposalSvcRepository.ProposalChangeState(request);
-
-            return result;
+            return new HomeViewModel()
+            {
+                ChangeStateResultMessage = this.ChangeStateResultMessage
+            };
         }
 
     }

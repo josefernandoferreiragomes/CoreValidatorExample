@@ -3,7 +3,7 @@ using CoreValidatorExample.BusinessLayer.Data;
 using CoreValidatorExample.BusinessLayer.WebAPI;
 namespace CoreValidatorExample.BusinessLayer.Repository
 {
-    public class ProposalSvcRepository
+    public class ProposalSvcRepository : IProposalSvcRepository
     {
         private ChangeStateManagerFactory<Proposal> ChangeStateManagerFactory;
 
@@ -30,17 +30,20 @@ namespace CoreValidatorExample.BusinessLayer.Repository
         }
 
         //TO BE REFACTORED
-        public ProposalChangeStateSvcResponse ProposalChangeState(ProposalChangeStateSvcRequest request)
+        public WFValidationResult<Proposal> ProposalChangeState(ProposalChangeStateSvcRequest request)
         {
             
             WFValidationResult<Proposal> result = new WFValidationResult<Proposal>();
             //simulate success
-            ProposalChangeStateSvcResponse response = new ProposalChangeStateSvcResponse();
+            
+            //Mock
             Proposal proposal = new Proposal();
-            ProposalChangeStateManager<Proposal> manager = (ProposalChangeStateManager<Proposal>)ChangeStateManagerFactory.GetObjectInstance(1, 101, 1001);
 
+            ProposalChangeStateManager<Proposal> manager = (ProposalChangeStateManager<Proposal>)ChangeStateManagerFactory.GetObjectInstance(1, 101, 1001);
+           
             result = manager.ValidateAndExecute(request.EventId);
-            return response;
+            
+            return result;
         }
 
     }

@@ -1,26 +1,18 @@
-﻿@model CoreValidatorExample.WebSite.Models.HomeModel
+﻿@model CoreValidatorExample.WebSite.Models.HomeViewModel
 @{
     ViewData["Title"] = "TestWorkflowAndApiCall Policy";
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Test WorkFlow and Api Call</p>
-<div>Data from service:</div>
-<div>@Model.DataFromModel</div>
-@using (Html.BeginForm(actionName:"Save",controllerName:"Home",method:FormMethod.Post)){
-    <div>
-        @Html.LabelFor(m=>m.Designation)    
-        <p>
-            @Html.TextBoxFor(m=>m.Designation)
-        </p>
-        
-        <input type="submit" value="Submit form"/>        
-    </div>
-}
+<p>Test WorkFlow</p>
+
 @using (Html.BeginForm(actionName: "ProposalChangeState", controllerName: "Home", method: FormMethod.Post))
-{
-    @Html.HiddenFor(m=>m.Designation)
+{    
+    @Html.HiddenFor(m=>m.ChangeStateResultMessage)
     <div>       
         <input type="submit" value="ChangeState" />
     </div>
+    <p></p>
+    <div>Response from State Change: </div>
+    <p>@Model.ChangeStateResultMessage</p>
 }

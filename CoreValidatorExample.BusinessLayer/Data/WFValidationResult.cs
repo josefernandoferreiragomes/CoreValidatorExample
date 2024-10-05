@@ -2,18 +2,25 @@
 {
     public class WFValidationResult<T>
     {
-        public bool IsSuccess { get; set; }
-        public List<SvcValidationMsg>? MessageList { get; set; }
+        public bool IsSuccess 
+        {
+            get
+            {
+                return !MessageList.Any();
+            }
+        }
+        public List<SvcValidationMsg> MessageList { get; set; }
 
         public T? Value { get; set; }
 
         public WFValidationResult()
         {
+            MessageList = new List<SvcValidationMsg>();
         }
         public WFValidationResult(T obj)
         {
             this.Value = obj;
-            this.IsSuccess = true;
+            MessageList = new List<SvcValidationMsg>();
         }
 
     }

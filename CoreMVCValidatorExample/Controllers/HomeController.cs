@@ -1,5 +1,6 @@
 ﻿using CoreMVCValidatorExample.Models;
 using CoreValidatorExample.BusinessLayer.Data;
+using CoreValidatorExample.BusinessLayer.Repository;
 using CoreValidatorExample.WebSite.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -8,43 +9,43 @@ using System.Reflection;
 namespace CoreMVCValidatorExample.Controllers
 {
     public class HomeController : Controller
-    {
+    {        
+        private readonly IProposalSvcRepository _proposalSvcRepository;      
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+
+        public HomeController(ILogger<HomeController> logger, IProposalSvcRepository proposalSvcRepository)
         {
             _logger = logger;
+            _proposalSvcRepository = proposalSvcRepository;
         }
 
         public IActionResult Index()
         {
-            HomeModel model = new HomeModel();
-            
+            HomeViewModel model = new HomeViewModel();
+
             return View(model);
         }
 
         public IActionResult TestWorkflowAndApiCall()
         {
-            HomeModel model = new HomeModel();
-            model.GetDataFromApi();
+            HomeViewModel model = new HomeViewModel();            
             return View(model);
         }
-        public IActionResult Save(HomeModel model) 
-        {
 
-            return View("TestWorkflowAndApiCall", model);
-        }
-
-        public IActionResult ProposalChangeState(HomeModel model)
+        [HttpPost]
+        public IActionResult ProposalChangeState(HomeViewModel homeViewModel)
         {
+            HomeModel homeModel = new HomeModel(_proposalSvcRepository);
             //validation
             ProposalChangeStateSvcRequest request = new ProposalChangeStateSvcRequest();
             request.ProposalId = 1;
             request.UserId = 2;
             request.ActionName = 3;
-            model.ProposalChangeState(request);
-
-            return View("TestWorkflowAndApiCall", model);
+            homeModel.ProposalChangeState(request);
+            homeViewModel = homeModel.GenerateViewModel();
+            
+            return View("TestWorkflowAndApiCall", homeViewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
