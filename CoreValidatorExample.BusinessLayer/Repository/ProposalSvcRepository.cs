@@ -5,12 +5,12 @@ namespace CoreValidatorExample.BusinessLayer.Repository
 {
     public class ProposalSvcRepository
     {
-        private ChangeStateManagerFactory ChangeStateManagerFactory;
+        private ChangeStateManagerFactory<Proposal> ChangeStateManagerFactory;
 
         public ProposalSvcRepository()
         {
             //TODO add default IoC behaviour
-            this.ChangeStateManagerFactory = new ChangeStateManagerFactory();
+            this.ChangeStateManagerFactory = new ChangeStateManagerFactory<Proposal>();
         }
 
         public string GetDataFromApi()
@@ -36,8 +36,8 @@ namespace CoreValidatorExample.BusinessLayer.Repository
             WFValidationResult<Proposal> result = new WFValidationResult<Proposal>();
             //simulate success
             ProposalChangeStateSvcResponse response = new ProposalChangeStateSvcResponse();
-
-            ProposalChangeStateManager<Proposal> manager = (ProposalChangeStateManager<Proposal>)this.ChangeStateManagerFactory.GetObjectInstance<ProposalChangeStateManager<Proposal>>(request.UserId, request.UserCorporateUnitId, request.ProposalId);
+            Proposal proposal = new Proposal();
+            ProposalChangeStateManager<Proposal> manager = (ProposalChangeStateManager<Proposal>)ChangeStateManagerFactory.GetObjectInstance(1, 101, 1001);
 
             result = manager.ValidateAndExecute(request.EventId);
             return response;

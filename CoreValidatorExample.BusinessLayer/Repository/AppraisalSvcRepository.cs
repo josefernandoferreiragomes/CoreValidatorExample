@@ -6,11 +6,11 @@ namespace CoreValidatorExample.BusinessLayer.Repository
 {
     public class AppraisalSvcRepository
     {
-        private ValidatorExecuterFactory ValidatorExecuterFactory;
+        private ChangeStateManagerFactory<Appraisal> ChangeStateManagerFactory;
 
         public AppraisalSvcRepository()
         {
-            this.ValidatorExecuterFactory = new ValidatorExecuterFactory();
+            this.ChangeStateManagerFactory = new ChangeStateManagerFactory<Appraisal>();
         }
 
         public string GetDataFromApi()
@@ -38,8 +38,10 @@ namespace CoreValidatorExample.BusinessLayer.Repository
             //simulate success
             AppraisalChangeStateSvcResponse response = new AppraisalChangeStateSvcResponse();
 
-            AppraisalChangeStateManager<Appraisal> manager = (AppraisalChangeStateManager<Appraisal>)this.ValidatorExecuterFactory.GetObjectInstance<AppraisalChangeStateManager<Appraisal>>();
-            
+            ChangeStateManagerFactory.ObjectInstance = appraisal;
+            AppraisalChangeStateManager<Appraisal> manager = (AppraisalChangeStateManager<Appraisal>)ChangeStateManagerFactory.GetObjectInstance(1, 101, 1001); ;
+
+
             svcValidationMsgs = manager.ValidateAndExecute(request.EventId);
             response.Success = true;
             return response;

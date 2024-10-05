@@ -4,7 +4,7 @@ namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
 {
     public abstract class ChangeStateManagerBase<T> : IChangeStateManager<T>
     {
-
+        public T? ObjectInstance { get; set; }
         protected ChangeStateManagerBase(int userId, int userCorporateUnitId)
         {
             UserId = userId;

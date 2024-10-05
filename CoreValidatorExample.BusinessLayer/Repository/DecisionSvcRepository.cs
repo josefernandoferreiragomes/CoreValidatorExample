@@ -5,11 +5,11 @@ namespace CoreValidatorExample.BusinessLayer.Repository
 {
     public class DecisionSvcRepository
     {
-        private ValidatorExecuterFactory ValidatorExecuterFactory;
+        private ChangeStateManagerFactory<Decision> ChangeStateManagerFactory;
 
         public DecisionSvcRepository()
         {
-            this.ValidatorExecuterFactory = new ValidatorExecuterFactory();
+            this.ChangeStateManagerFactory = new ChangeStateManagerFactory<Decision>();
         }
 
         public string GetDataFromApi()
@@ -34,8 +34,10 @@ namespace CoreValidatorExample.BusinessLayer.Repository
             WFValidationResult<Decision> result = new WFValidationResult<Decision>();
             //simulate success
             DecisionChangeStateSvcResponse response = new DecisionChangeStateSvcResponse();
-
-            DecisionChangeStateManager<Decision> manager = (DecisionChangeStateManager<Decision>)this.ValidatorExecuterFactory.GetObjectInstance<DecisionChangeStateManager<Decision>>();
+            
+            Decision decision = new Decision();
+            ChangeStateManagerFactory.ObjectInstance = decision;
+            DecisionChangeStateManager<Decision> manager = (DecisionChangeStateManager<Decision>)ChangeStateManagerFactory.GetObjectInstance(1, 101, 1001);
             
             result = manager.ValidateAndExecute(request.EventId);
             response.Success = true;

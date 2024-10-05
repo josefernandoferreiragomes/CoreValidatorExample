@@ -4,7 +4,7 @@ namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
 {
     public interface IValidatorExecuterBase
     {
-        List<SvcValidationMsg> Validate();
+        List<SvcValidationMsg> Validate(object obj);
        
     }
 

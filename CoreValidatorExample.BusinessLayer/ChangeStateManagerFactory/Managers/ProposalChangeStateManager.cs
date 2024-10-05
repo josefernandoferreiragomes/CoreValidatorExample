@@ -3,19 +3,20 @@ using CoreValidatorExample.BusinessLayer.Data.Enums;
 
 namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
 {
-    public class ProposalChangeStateManager<Proposal> : ChangeStateManagerBase<Proposal>
+    public class ProposalChangeStateManager<T> : ChangeStateManagerBase<T>
+        where T : Proposal
     {
-        WFValidationResult<Proposal> Result;
-        public ProposalChangeStateManager(int userId, int userCorporateUnitId, int proposalId, Proposal proposal)
+        WFValidationResult<T> Result;
+        public ProposalChangeStateManager(int userId, int userCorporateUnitId, int proposalId, T proposal)
             : base(userCorporateUnitId, proposalId)
         {
             ProposalId = proposalId;
-            Result = new WFValidationResult<Proposal>(proposal); 
+            Result = new WFValidationResult<T>(proposal); 
         }
 
         private int ProposalId { get; set; }
 
-        public override WFValidationResult<Proposal> ValidateAndExecute(int eventId)
+        public override WFValidationResult<T> ValidateAndExecute(int eventId)
         {
             switch (eventId)
             {
@@ -34,7 +35,7 @@ namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
         private void ValidateExecuteProposalEventStarted()
         {
             var propertyValidatorExecuter = ValidatorExecuterFactory.GetObjectInstance<PropertyValidatorExecuter>();
-            propertyValidatorExecuter.Validate();
+            propertyValidatorExecuter.Validate(ObjectInstance.Status);
             //remaining validation or execution logic
             ExecuteChangeState();
         }

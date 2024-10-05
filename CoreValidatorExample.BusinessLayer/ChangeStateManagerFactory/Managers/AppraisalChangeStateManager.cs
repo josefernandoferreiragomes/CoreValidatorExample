@@ -3,19 +3,20 @@ using CoreValidatorExample.BusinessLayer.Data.Enums;
 
 namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
 {
-    public class AppraisalChangeStateManager<Appraisal> : ChangeStateManagerBase<Appraisal>
+    public class AppraisalChangeStateManager<T> : ChangeStateManagerBase<T>
+        where T : Appraisal
     {
-        WFValidationResult<Appraisal> result;
-        public AppraisalChangeStateManager(int userId, int userCorporateUnitId, int appraisalId, Appraisal appraisal) 
+        WFValidationResult<T> result;
+        public AppraisalChangeStateManager(int userId, int userCorporateUnitId, int appraisalId, T appraisal) 
             : base (userCorporateUnitId, appraisalId)
         {
             AppraisalId = appraisalId;
-            result = new WFValidationResult<Appraisal>(appraisal);
+            result = new WFValidationResult<T>(appraisal);
         }
 
         private int AppraisalId {  get; set; }
 
-        public override WFValidationResult<Appraisal> ValidateAndExecute(int eventId)
+        public override WFValidationResult<T> ValidateAndExecute(int eventId)
         {
             switch (eventId)
             {
@@ -36,15 +37,17 @@ namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
         
         private void ValidateExecuteAppraisalEventStarted()
         {
+            var appraisalValidatorExecuter = this.ValidatorExecuterFactory.GetObjectInstance<AppraisalValidatorExecuter>();
+            appraisalValidatorExecuter.Validate(ObjectInstance.SubmissionDate);
             var intervenerValidatorExecuter = ValidatorExecuterFactory.GetObjectInstance<IntervenerValidatorExecuter>();
-            intervenerValidatorExecuter.Validate();
+            intervenerValidatorExecuter.Validate(ObjectInstance.AppraiseeName);
             //remaining validation or execution logic
             ExecuteChangeState();
         }
         private void ValidateExecuteAppraisalEventCompleteDate()
         {
             var appraisalValidatorExecuter = this.ValidatorExecuterFactory.GetObjectInstance<AppraisalValidatorExecuter>();
-            appraisalValidatorExecuter.Validate();
+            appraisalValidatorExecuter.Validate(ObjectInstance.SubmissionDate);
             //remaining validation or execution logic
             ExecuteChangeState();
         }

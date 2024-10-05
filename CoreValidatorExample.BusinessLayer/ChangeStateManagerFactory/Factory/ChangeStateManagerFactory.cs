@@ -1,28 +1,44 @@
-﻿namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
-{
-    public class ChangeStateManagerFactory
-    {
+﻿using CoreValidatorExample.BusinessLayer.ChangeStateManagerChainOfResponsibility;
+using CoreValidatorExample.BusinessLayer.Data;
 
-        public IChangeStateManager<T> GetObjectInstance<T>(int userId, int userCorporateUnitId, int itemId)
+namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
+{
+    public class ChangeStateManagerFactory<T> where T : class
+    {
+        public T? ObjectInstance { get; set; }
+
+        public IChangeStateManager<T> GetObjectInstance(int userId, int userCorporateUnitId, int itemId)
         {
             IChangeStateManager<T> objInstance;
+
+            // Check the type of T and instantiate the appropriate manager
             switch (typeof(T).Name)
             {
-                case "AppraisalChangeStateManager":
-                    objInstance = (AppraisalChangeStateManager<T>)Activator.CreateInstance(typeof(AppraisalChangeStateManager<T>), userId, userCorporateUnitId, itemId);
+                case nameof(Appraisal):
+                    objInstance = (IChangeStateManager<T>)Activator.CreateInstance(
+                        typeof(AppraisalChangeStateManager<>).MakeGenericType(typeof(T)), userId, userCorporateUnitId, itemId, ObjectInstance
+                    );
                     break;
-                case "ProposalChangeStateManager":
-                    objInstance = (ProposalChangeStateManager<T>)Activator.CreateInstance(typeof(ProposalChangeStateManager<T>), userId, userCorporateUnitId, itemId);
+
+                case nameof(Proposal):
+                    objInstance = (IChangeStateManager<T>)Activator.CreateInstance(
+                        typeof(ProposalChangeStateManager<>).MakeGenericType(typeof(T)), userId, userCorporateUnitId, itemId, ObjectInstance
+                    );
                     break;
-                case "DecisionChangeStateManager":
-                    objInstance = (DecisionChangeStateManager<T>)Activator.CreateInstance(typeof(DecisionChangeStateManager<T>), userId, userCorporateUnitId, itemId);
+
+                case nameof(Decision):
+                    objInstance = (IChangeStateManager<T>)Activator.CreateInstance(
+                        typeof(DecisionChangeStateManager<>).MakeGenericType(typeof(T)), userId, userCorporateUnitId, itemId, ObjectInstance
+                    );
                     break;
+
                 default:
-                    throw new ArgumentNullException(nameof(objInstance));
+                    throw new ArgumentException($"No matching ChangeStateManager found for {typeof(T).Name}");
             }
-            
+
             return objInstance;
         }
     }
+
 
 }
