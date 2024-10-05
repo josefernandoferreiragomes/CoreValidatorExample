@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CoreMVCValidatorExample\CoreValidatorExample.WebSite.csproj" />
+    <ProjectReference Include="..\CoreValidatorExample.BusinessLayer\CoreValidatorExample.BusinessLayer.csproj" />
   </ItemGroup>
 
 </Project>

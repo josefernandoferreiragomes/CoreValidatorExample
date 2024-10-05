@@ -1,7 +1,6 @@
-﻿using CoreValidatorExample.BusinessLayer;
-using CoreValidatorExample.BusinessLayer.WebAPI;
+﻿using CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric;
 using CoreValidatorExample.BusinessLayer.Data;
-using CoreValidatorExample.BusinessLayer.ChangeStateManager.Factory;
+using CoreValidatorExample.BusinessLayer.WebAPI;
 namespace CoreValidatorExample.BusinessLayer.Repository
 {
     public class DecisionSvcRepository
@@ -29,15 +28,16 @@ namespace CoreValidatorExample.BusinessLayer.Repository
             return result;
         }
 
+        //TO BE REFACTORED
         public DecisionChangeStateSvcResponse DecisionChangeState(DecisionChangeStateSvcRequest request)
         {
-            List<SvcValidationMsg> svcValidationMsgs = new List<SvcValidationMsg>();
+            WFValidationResult<Decision> result = new WFValidationResult<Decision>();
             //simulate success
             DecisionChangeStateSvcResponse response = new DecisionChangeStateSvcResponse();
 
-            DecisionChangeStateManager manager = (DecisionChangeStateManager)this.ValidatorExecuterFactory.GetObjectInstance<DecisionChangeStateManager>();
+            DecisionChangeStateManager<Decision> manager = (DecisionChangeStateManager<Decision>)this.ValidatorExecuterFactory.GetObjectInstance<DecisionChangeStateManager<Decision>>();
             
-            svcValidationMsgs = manager.ValidateAndExecute(request.EventId);
+            result = manager.ValidateAndExecute(request.EventId);
             response.Success = true;
             return response;
         }

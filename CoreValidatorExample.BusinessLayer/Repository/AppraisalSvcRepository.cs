@@ -1,7 +1,7 @@
-﻿using CoreValidatorExample.BusinessLayer;
-using CoreValidatorExample.BusinessLayer.WebAPI;
+﻿using CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric;
 using CoreValidatorExample.BusinessLayer.Data;
-using CoreValidatorExample.BusinessLayer.ChangeStateManager.Factory;
+using CoreValidatorExample.BusinessLayer.WebAPI;
+using System.Net.Http.Headers;
 namespace CoreValidatorExample.BusinessLayer.Repository
 {
     public class AppraisalSvcRepository
@@ -29,18 +29,43 @@ namespace CoreValidatorExample.BusinessLayer.Repository
             return result;
         }
 
+        //TO BE REFACTORED
         public AppraisalChangeStateSvcResponse AppraisalChangeState(AppraisalChangeStateSvcRequest request)
         {
-            List<SvcValidationMsg> svcValidationMsgs = new List<SvcValidationMsg>();
+
+            Appraisal appraisal = new Appraisal();
+            WFValidationResult<Appraisal> svcValidationMsgs = new WFValidationResult<Appraisal>();
             //simulate success
             AppraisalChangeStateSvcResponse response = new AppraisalChangeStateSvcResponse();
 
-            AppraisalChangeStateManager manager = (AppraisalChangeStateManager)this.ValidatorExecuterFactory.GetObjectInstance<AppraisalChangeStateManager>();
+            AppraisalChangeStateManager<Appraisal> manager = (AppraisalChangeStateManager<Appraisal>)this.ValidatorExecuterFactory.GetObjectInstance<AppraisalChangeStateManager<Appraisal>>();
             
             svcValidationMsgs = manager.ValidateAndExecute(request.EventId);
             response.Success = true;
             return response;
         }
 
+        public void AppraisalChangeStateChainOfResponsibility()
+        {
+            //MOCK
+            int userID = 1;
+            int corporateStructureID = 1;
+            int appraisalID = 1;
+            int eventID = 1;
+            var appraisal = new Appraisal
+            {
+                MandatoryField = "Performance Review",
+                Status = AppraisalStatus.Approved,
+                SubmissionDate = DateTime.Now.AddDays(-1),  // Appraisal was submitted in the past
+                AppraiserName = "John Doe",
+                AppraiseeName = "Jane Smith",
+                AppraisalScore = 4.5m
+            };
+
+            // This `appraisal` object would then be passed to the `ChangeStateValidatorManager` for validation.
+            AppraisalChangeStateManager<Appraisal> manager = new AppraisalChangeStateManager<Appraisal>(userID, corporateStructureID, appraisalID, appraisal);
+            var result = manager.ValidateAndExecute(eventID);
+            //TODO
+        }
     }
 }

@@ -1,7 +1,6 @@
-﻿using CoreValidatorExample.BusinessLayer;
-using CoreValidatorExample.BusinessLayer.WebAPI;
+﻿using CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric;
 using CoreValidatorExample.BusinessLayer.Data;
-using CoreValidatorExample.BusinessLayer.ChangeStateManager.Factory;
+using CoreValidatorExample.BusinessLayer.WebAPI;
 namespace CoreValidatorExample.BusinessLayer.Repository
 {
     public class ProposalSvcRepository
@@ -30,16 +29,17 @@ namespace CoreValidatorExample.BusinessLayer.Repository
             return result;
         }
 
+        //TO BE REFACTORED
         public ProposalChangeStateSvcResponse ProposalChangeState(ProposalChangeStateSvcRequest request)
         {
-            List<SvcValidationMsg> svcValidationMsgs = new List<SvcValidationMsg>();
+            
+            WFValidationResult<Proposal> result = new WFValidationResult<Proposal>();
             //simulate success
             ProposalChangeStateSvcResponse response = new ProposalChangeStateSvcResponse();
 
-            ProposalChangeStateManager manager = (ProposalChangeStateManager)this.ChangeStateManagerFactory.GetObjectInstance<ProposalChangeStateManager>(request.UserId, request.UserCorporateUnitId, request.ProposalId);
+            ProposalChangeStateManager<Proposal> manager = (ProposalChangeStateManager<Proposal>)this.ChangeStateManagerFactory.GetObjectInstance<ProposalChangeStateManager<Proposal>>(request.UserId, request.UserCorporateUnitId, request.ProposalId);
 
-            svcValidationMsgs = manager.ValidateAndExecute(request.EventId);
-            response.Success = true;
+            result = manager.ValidateAndExecute(request.EventId);
             return response;
         }
 
