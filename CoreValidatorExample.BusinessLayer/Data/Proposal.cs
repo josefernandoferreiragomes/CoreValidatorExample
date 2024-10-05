@@ -14,6 +14,7 @@ namespace CoreValidatorExample.BusinessLayer.Data
         public ProposalStatus Status { get; set; }  // Status of the proposal
         public DateTime SubmissionDate { get; set; }  // Date the proposal was submitted
 
+        public DateTime ProponentBirthDate { get; set; } // ProponentAge
         // Additional fields can be added as needed
     }
 

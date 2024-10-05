@@ -1,430 +1,139 @@
 # Scope
-	Create a validation engine for a WorkFlow engine
+Create a validation mechanism for a WorkFlow engine
 
 ## Constraints
-	Should be extendable
-	To be used in different WorkFlows
-	Validation rules might be the same in differnt flows
-	Should be simple and easy to use by newcomers
+Should be extendable
+To be used in different WorkFlows
+Validation rules might be the same in differnt flows	
 
 ## Steps
-Create a solution with Web Site, business layer, and Web API
-
+Create a solution, including business layer, and Web API, and unit tests
+	
 Investigate and create 3 simplified PoCs, one for each alternative.
-1) Specific WF Managers with reusable validators, using factory pattern
-2) Generic Validators configured per WF Manager
-3) Chain of responsibility pattern
-
-Create testers for each
 
 ## Sources
 	https://dotnetchris.wordpress.com/2009/02/11/creating-a-generic-validation-framework/
 	(has some bugs, corrected with check in number 2)
 
+	(...)
+
 ## Implementation alternatives
 
-### Factory Change State Manager
-
-
-### Chain of Responsibility Change State Manager
-
-
-### StructureMap Change State Manager
-In .NET Core (and specifically .NET 8), you can achieve similar behavior to StructureMap’s ForRequestedType<IValidator<Employee>>().TheDefaultIsConcreteType<EmployeeValidator>(); using the built-in dependency injection (DI) container by registering services in the IServiceCollection with the AddScoped, AddSingleton, or AddTransient methods, depending on the desired lifecycle of the service.
-
-Here’s how you can map a default validator for a class, such as mapping IValidator<Employee> to EmployeeValidator, using the default .NET Core DI:
-
-1. Registering the Validator in Startup.cs or Program.cs:
-You can register the default validator for your class in Program.cs or wherever your services are configured.
-
-csharp
-Copy code
-using Microsoft.Extensions.DependencyInjection;
-
-public class Program
-{
-    public static void Main(string[] args)
-    {
-        var builder = WebApplication.CreateBuilder(args);
-
-        // Register EmployeeValidator as the default implementation for IValidator<Employee>
-        builder.Services.AddTransient<IValidator<Employee>, EmployeeValidator>();
-
-        var app = builder.Build();
-
-        app.Run();
-    }
-}
-In this case, .AddTransient<IValidator<Employee>, EmployeeValidator>() specifies that whenever IValidator<Employee> is requested, the DI container will provide an instance of EmployeeValidator.
-
-2. Creating the IValidator<T> Interface and Implementation:
-If you haven't already, define your IValidator<T> interface and your EmployeeValidator class.
-
-csharp
-Copy code
-public interface IValidator<T>
-{
-    bool Validate(T instance);
-}
-
-public class EmployeeValidator : IValidator<Employee>
-{
-    public bool Validate(Employee employee)
-    {
-        // Validation logic for Employee
-        return employee != null && !string.IsNullOrEmpty(employee.Name);
-    }
-}
-3. Consuming the Validator:
-You can now inject the IValidator<Employee> in any of your classes and the default EmployeeValidator will be resolved by the DI container:
-
-csharp
-Copy code
-public class SomeService
-{
-    private readonly IValidator<Employee> _employeeValidator;
-
-    public SomeService(IValidator<Employee> employeeValidator)
-    {
-        _employeeValidator = employeeValidator;
-    }
-
-    public void DoSomething(Employee employee)
-    {
-        bool isValid = _employeeValidator.Validate(employee);
-
-        if (isValid)
-        {
-            // Proceed with valid employee
-        }
-        else
-        {
-            // Handle invalid employee
-        }
-    }
-}
-4. Handling Multiple Validators for Different Types:
-If you have multiple types and validators, you can register each one in a similar manner:
-
-csharp
-Copy code
-builder.Services.AddTransient<IValidator<Employee>, EmployeeValidator>();
-builder.Services.AddTransient<IValidator<Manager>, ManagerValidator>();
-Each request for IValidator<Employee> will resolve to EmployeeValidator, and each request for IValidator<Manager> will resolve to ManagerValidator.
-
-Summary:
-To mimic the behavior of StructureMap in .NET Core's built-in DI, you use the AddTransient, AddScoped, or AddSingleton methods to map interface types (IValidator<T>) to their concrete implementations (EmployeeValidator).
-
-Unit test:
-To create an NUnit test project for testing your EmployeeValidator in .NET Core 8, follow these steps:
-
-1. Create an NUnit Test Project
-First, you need to create a new NUnit test project. You can do this using the .NET CLI:
-
-bash
-Copy code
-dotnet new nunit -n EmployeeValidatorTests
-This will create a new project named EmployeeValidatorTests with the NUnit framework as the test runner.
-
-Alternatively, if you're using Visual Studio:
-
-Go to File > New > Project.
-Search for NUnit Test Project.
-Select it and give your test project a name (e.g., EmployeeValidatorTests).
-Click Create.
-2. Install Required Packages
-In case your main project (the one with EmployeeValidator) and your test project are not part of the same solution, you need to reference your main project in the test project.
-
-From your test project directory, run:
-
-bash
-Copy code
-dotnet add reference ../YourMainProject.csproj
-Also, make sure your NUnit packages are up to date:
-
-bash
-Copy code
-dotnet add package NUnit
-dotnet add package Microsoft.NET.Test.Sdk
-dotnet add package NUnit3TestAdapter
-3. Create the Unit Test for EmployeeValidator
-Inside the EmployeeValidatorTests project, you will have a default Tests.cs file or UnitTest1.cs. Replace its contents with a test for the EmployeeValidator.
-
-Here’s an example of how you can write a test for your EmployeeValidator:
-
-Employee Class (for reference)
-csharp
-Copy code
-public class Employee
-{
-    public string Name { get; set; }
-    public int Age { get; set; }
-}
-EmployeeValidator Implementation (for reference)
-csharp
-Copy code
-public class EmployeeValidator : IValidator<Employee>
-{
-    public bool Validate(Employee employee)
-    {
-        return employee != null && !string.IsNullOrEmpty(employee.Name);
-    }
-}
-NUnit Test for EmployeeValidator
-Create a new test file EmployeeValidatorTests.cs inside the EmployeeValidatorTests project.
-
-csharp
-Copy code
-using NUnit.Framework;
-
-namespace EmployeeValidatorTests
-{
-    public class EmployeeValidatorTests
-    {
-        private EmployeeValidator _validator;
-
-        [SetUp]
-        public void Setup()
-        {
-            // This method will run before each test
-            _validator = new EmployeeValidator();
-        }
-
-        [Test]
-        public void Validate_ShouldReturnTrue_WhenEmployeeIsValid()
-        {
-            // Arrange
-            var employee = new Employee { Name = "John Doe", Age = 30 };
-
-            // Act
-            var result = _validator.Validate(employee);
-
-            // Assert
-            Assert.IsTrue(result);
-        }
-
-        [Test]
-        public void Validate_ShouldReturnFalse_WhenEmployeeIsNull()
-        {
-            // Arrange
-            Employee employee = null;
-
-            // Act
-            var result = _validator.Validate(employee);
-
-            // Assert
-            Assert.IsFalse(result);
-        }
-
-        [Test]
-        public void Validate_ShouldReturnFalse_WhenEmployeeNameIsEmpty()
-        {
-            // Arrange
-            var employee = new Employee { Name = "", Age = 25 };
-
-            // Act
-            var result = _validator.Validate(employee);
-
-            // Assert
-            Assert.IsFalse(result);
-        }
-
-        [Test]
-        public void Validate_ShouldReturnFalse_WhenEmployeeNameIsNull()
-        {
-            // Arrange
-            var employee = new Employee { Name = null, Age = 25 };
-
-            // Act
-            var result = _validator.Validate(employee);
-
-            // Assert
-            Assert.IsFalse(result);
-        }
-    }
-}
-4. Run the NUnit Tests
-To run your tests, you can use the .NET CLI or your IDE (like Visual Studio or JetBrains Rider).
-
-Running Tests with the CLI:
-Navigate to the directory where your test project is located and run:
-
-bash
-Copy code
-dotnet test
-This will build both your main project and the test project, and then run all the tests.
-
-Running Tests in Visual Studio:
-Build your solution.
-Go to Test > Test Explorer.
-Click Run All to run all the tests.
-Explanation of the Tests
-Test 1 (Validate_ShouldReturnTrue_WhenEmployeeIsValid):
-
-This test ensures that the EmployeeValidator.Validate method returns true when the employee is valid (i.e., the Name property is not null or empty).
-Test 2 (Validate_ShouldReturnFalse_WhenEmployeeIsNull):
-
-This test ensures that the Validate method returns false when the employee is null.
-Test 3 (Validate_ShouldReturnFalse_WhenEmployeeNameIsEmpty):
-
-This test checks that the Validate method returns false when the Name is an empty string.
-Test 4 (Validate_ShouldReturnFalse_WhenEmployeeNameIsNull):
-
-This test verifies that the Validate method returns false when the Name is null.
-5. Conclusion
-By following these steps, you’ll have a working NUnit test project that tests your EmployeeValidator. You can extend the tests with additional cases as needed, but this is a good foundation to ensure your validator behaves correctly.
-
-
-
-
-
-Unit test for the service
-To create an NUnit test for the SomeService class, which depends on IValidator<Employee>, you will typically want to mock the IValidator<Employee> to control its behavior during tests. You can use a mocking framework like Moq for this purpose.
-
-Steps to create an NUnit test for SomeService:
-Install Moq (if not already installed).
-Mock the IValidator<Employee> to simulate different validation scenarios.
-Test the SomeService methods with various inputs.
-1. Install Moq in Your Test Project
-If you don’t have Moq installed in your test project, you can install it via the .NET CLI or through your NuGet package manager.
-
-From the terminal (inside the test project directory):
-
-bash
-Copy code
-dotnet add package Moq
-Alternatively, in Visual Studio:
-
-Right-click on the test project.
-Select Manage NuGet Packages.
-Search for Moq and install the latest version.
-2. Unit Testing the SomeService Class
-Let's assume that SomeService looks something like this:
-
-csharp
-Copy code
-public class SomeService
-{
-    private readonly IValidator<Employee> _employeeValidator;
-
-    public SomeService(IValidator<Employee> employeeValidator)
-    {
-        _employeeValidator = employeeValidator;
-    }
-
-    public bool ProcessEmployee(Employee employee)
-    {
-        bool isValid = _employeeValidator.Validate(employee);
-        if (isValid)
-        {
-            // Process employee
-            return true;  // Successful processing
-        }
-        else
-        {
-            // Handle invalid employee
-            return false;  // Unsuccessful processing
-        }
-    }
-}
-Now, let’s create NUnit tests for SomeService.
-
-3. Create the Test Class
-Create a new test file called SomeServiceTests.cs in your test project:
-
-csharp
-Copy code
-using NUnit.Framework;
-using Moq;
-
-namespace EmployeeValidatorTests
-{
-    [TestFixture]
-    public class SomeServiceTests
-    {
-        private SomeService _someService;
-        private Mock<IValidator<Employee>> _mockEmployeeValidator;
-
-        [SetUp]
-        public void Setup()
-        {
-            // Initialize the mock for IValidator<Employee>
-            _mockEmployeeValidator = new Mock<IValidator<Employee>>();
-
-            // Pass the mocked validator into the service
-            _someService = new SomeService(_mockEmployeeValidator.Object);
-        }
-
-        [Test]
-        public void ProcessEmployee_ShouldReturnTrue_WhenEmployeeIsValid()
-        {
-            // Arrange
-            var employee = new Employee { Name = "John Doe", Age = 30 };
-
-            // Setup mock to return true when Validate is called with the given employee
-            _mockEmployeeValidator.Setup(v => v.Validate(employee)).Returns(true);
-
-            // Act
-            var result = _someService.ProcessEmployee(employee);
-
-            // Assert
-            Assert.IsTrue(result, "Expected ProcessEmployee to return true for valid employee.");
-        }
-
-        [Test]
-        public void ProcessEmployee_ShouldReturnFalse_WhenEmployeeIsInvalid()
-        {
-            // Arrange
-            var employee = new Employee { Name = "", Age = 30 }; // Invalid due to empty name
-
-            // Setup mock to return false when Validate is called with the given employee
-            _mockEmployeeValidator.Setup(v => v.Validate(employee)).Returns(false);
-
-            // Act
-            var result = _someService.ProcessEmployee(employee);
-
-            // Assert
-            Assert.IsFalse(result, "Expected ProcessEmployee to return false for invalid employee.");
-        }
-
-        [Test]
-        public void ProcessEmployee_ShouldInvokeValidatorOnce()
-        {
-            // Arrange
-            var employee = new Employee { Name = "Jane Doe", Age = 25 };
-
-            // Act
-            _someService.ProcessEmployee(employee);
-
-            // Assert
-            // Verify that the Validate method was called exactly once with the specified employee
-            _mockEmployeeValidator.Verify(v => v.Validate(employee), Times.Once, 
-                "Expected the validator's Validate method to be called exactly once.");
-        }
-    }
-}
-Explanation of the Tests
-Test 1 (ProcessEmployee_ShouldReturnTrue_WhenEmployeeIsValid):
-
-This test ensures that when a valid employee is passed into SomeService, the service's ProcessEmployee method returns true.
-Mock Setup: The mock is configured to return true when Validate is called with a valid Employee object.
-Test 2 (ProcessEmployee_ShouldReturnFalse_WhenEmployeeIsInvalid):
-
-This test ensures that when an invalid employee (e.g., empty Name) is passed in, the service returns false.
-Mock Setup: The mock is configured to return false when Validate is called with an invalid Employee object.
-Test 3 (ProcessEmployee_ShouldInvokeValidatorOnce):
-
-This test ensures that the Validate method is called exactly once for the given employee.
-Mock Setup: No return value setup is needed here. Instead, we use Moq's Verify method to check how many times the Validate method was invoked.
-4. Run the Tests
-Just like with the previous tests, you can run the tests using the .NET CLI or an IDE.
-
-Using the .NET CLI:
-bash
-Copy code
-dotnet test
-In Visual Studio:
-Open the Test Explorer.
-Click Run All to execute all the tests.
-Conclusion
-By using Moq to mock the IValidator<Employee>, you're able to isolate SomeService from the actual validation logic and test its behavior independently. This is a common practice in unit testing when your class depends on external services or interfaces.
+#### Factory Change State Manager
+
+#### Chain of Responsibility Change State Manager
+
+#### StructureMap Change State Manager (TOBE)
+
+# Detailed description:
+
+# Change State Manager Factory
+
+This project demonstrates the implementation of the **Factory Design Pattern** for managing the instantiation of different state managers related to various business entities such as `Appraisal`, `Proposal`, and `Decision`. The `ChangeStateManagerFactory` provides an extensible and dynamic way to create instances of different state management classes based on the type of entity being processed.
+
+## Features
+
+### 1. Factory Design Pattern
+The core feature of this implementation is the **Factory Design Pattern**, which abstracts the process of creating objects. The `ChangeStateManagerFactory` dynamically instantiates the appropriate state manager class based on the business entity type.
+
+### 2. Support for Multiple Entities
+The `ChangeStateManagerFactory` is designed to handle the instantiation of state managers for various business entities, such as:
+- **Appraisal**: Instantiates `AppraisalChangeStateManager` for managing state transitions related to appraisals.
+- **Proposal**: Instantiates `ProposalChangeStateManager` to handle proposal-specific state changes.
+- **Decision**: Instantiates `DecisionChangeStateManager` to manage state changes for decisions.
+
+### 3. Generic and Type-Safe
+The factory implementation is generic and type-safe. By leveraging C#'s generic capabilities, the factory ensures that only valid types (such as `Appraisal`, `Proposal`, `Decision`) are used when creating state managers, thus reducing runtime errors.
+
+### 4. Extensible for New Entities
+New entities and state managers can easily be added without changing the existing codebase. This makes the system highly extensible, enabling seamless support for additional business types in the future.
+
+### 5. Centralized Object Creation
+The factory centralizes the logic of object creation, keeping the business logic separate from the instantiation process. This promotes cleaner, more maintainable code, especially when working with multiple state managers.
+
+## Key Classes
+
+### `ChangeStateManagerFactory<T>`
+This is the main factory class that handles the creation of different state manager instances. It uses the type `T` to determine which state manager should be instantiated. It provides the following key method:
+
+- `GetObjectInstance(int userId, int userCorporateUnitId, int itemId)`: This method takes user-specific data as arguments and returns the appropriate `IChangeStateManager<T>` instance.
+
+### `AppraisalChangeStateManager`
+A state manager class that manages the state transitions for the `Appraisal` entity. This class implements the `IChangeStateManager<Appraisal>` interface.
+
+### `ProposalChangeStateManager`
+A state manager class responsible for handling state transitions for `Proposal` entities, implementing the `IChangeStateManager<Proposal>` interface.
+
+### `DecisionChangeStateManager`
+A state manager class that handles the state transitions for `Decision` entities, implementing the `IChangeStateManager<Decision>` interface.
+
+## Adding New State Managers
+If you need to add support for a new entity and its corresponding state manager, follow these steps:
+
+Create a new entity class: For example, NewEntity.
+
+Create a new state manager class: Implement the IChangeStateManager<NewEntity> interface and define the state transition logic in this new class.
+
+Modify the factory: Add a new case in the ChangeStateManagerFactory's GetObjectInstance method to handle the instantiation of the new state manager.
+
+## Extensibility
+
+This factory pattern allows you to easily add new entities and their respective state managers without modifying the core system significantly. Simply add a new state manager, register it in the factory, and the rest of the system will work seamlessly with the new entity.
+
+## Unit Testing
+The ChangeStateManagerFactory and the state managers are unit-testable. You can mock different IChangeStateManager implementations and test the behavior of the factory.
+
+# Change State Manager Chain of Responsibility
+This project demonstrates the implementation of the Chain of Responsibility design pattern applied to the state management of various business entities such as Appraisal, Proposal, and Decision. This pattern allows for a flexible, decoupled, and scalable way to handle different state transitions based on specific validation criteria.
+
+## Features:
+## Chain of Responsibility Pattern
+The core feature of this implementation is the Chain of Responsibility design pattern, which enables the sequential processing of state validation through a chain of handlers. Each handler performs its validation, and if it cannot handle the state, it passes it on to the next handler in the chain.
+
+## Support for Multiple Entities
+This implementation is flexible enough to support various business entities, such as:
+
+**Appraisal**: Handles validation and state changes specific to appraisal management.
+**Proposal**: Manages proposal-related state changes through a chain of validators.
+**Decision**: Manages the state transition for decision entities with appropriate validations.
+
+## Extendable and Configurable
+The ChangeStateManagerChainOfResponsibility is designed to be easily extended. New validators or business logic can be added to the chain without modifying existing code. This is achieved through:
+
+Pluggable Handlers: New state managers or validation handlers can be introduced by simply implementing the IChangeStateValidatorHandler<T> interface.
+Configurable Chains: Chains can be configured based on different business rules or context, providing flexibility for different scenarios.
+
+## Separation of Concerns
+Each responsibility in the validation chain is separated into different classes, ensuring that each handler focuses on a specific piece of the validation logic. This makes the system more maintainable and readable.
+
+## Unit-Testable
+The implementation supports unit testing by allowing individual handlers to be tested in isolation. Each handler in the chain can be tested to ensure that it correctly processes its validation logic before passing the responsibility to the next handler.
+
+## Key Classes
+
+IChangeStateValidatorHandler<T>
+
+This is the core interface that defines the contract for each handler in the chain. It provides:
+
+A method SetNext(IChangeStateValidatorHandler<T> handler) to set the next handler in the chain.
+A method Handle(T entity) to perform validation and state management for the entity.
+
+AppraisalChangeStateManager
+
+This class implements the IChangeStateValidatorHandler<T> interface for the Appraisal entity. It handles validation and state transitions specific to appraisals.
+
+ProposalChangeStateManager
+
+Similar to the AppraisalChangeStateManager, this class implements the IChangeStateValidatorHandler<T> interface for the Proposal entity.
+
+DecisionChangeStateManager
+
+This class also implements the IChangeStateValidatorHandler<T> interface and is responsible for handling state transitions and validation logic for decisions.
+
+## Extending the Chain
+
+To extend the chain with a new state manager:
+
+Create a new class that implements IChangeStateValidatorHandler<T>.
+Define the validation and state logic in the Handle(T entity) method.
+Add the new handler to the chain using SetNext().

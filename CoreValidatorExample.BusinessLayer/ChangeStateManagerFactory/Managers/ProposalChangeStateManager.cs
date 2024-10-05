@@ -36,6 +36,10 @@ namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
         {
             var propertyValidatorExecuter = ValidatorExecuterFactory.GetObjectInstance<PropertyValidatorExecuter>();
             propertyValidatorExecuter.Validate(ObjectInstance.Status);
+
+            var intervenerValidatorExecuter = (IntervenerValidatorExecuter)ValidatorExecuterFactory.GetObjectInstance<IntervenerValidatorExecuter>();
+            intervenerValidatorExecuter.ValidateAge(ObjectInstance.ProponentBirthDate);
+
             //remaining validation or execution logic
             ExecuteChangeState();
         }
