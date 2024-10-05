@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreValidatorExample.WebSite", "CoreMVCValidatorExample\CoreValidatorExample.WebSite.csproj", "{9DE16656-5ADD-41D9-84C9-D21812DBEA94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreValidatorExample.WebSite", "CoreValidatorExample.WebSite\CoreValidatorExample.WebSite.csproj", "{9DE16656-5ADD-41D9-84C9-D21812DBEA94}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreValidatorExample.WebAPI", "CoreWebApiValidatorExample\CoreValidatorExample.WebAPI.csproj", "{1784A360-34E9-4A2B-A703-1C09E50CE88E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreValidatorExample.WebAPI", "CoreValidatorExample.WebApi\CoreValidatorExample.WebAPI.csproj", "{1784A360-34E9-4A2B-A703-1C09E50CE88E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E8F90C3B-4FEE-4416-BE3A-B55AC77C7E3A}"
 	ProjectSection(SolutionItems) = preProject
