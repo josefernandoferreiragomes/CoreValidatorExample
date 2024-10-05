@@ -18,6 +18,30 @@ namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
             return svcValidationMsgsList;
         }
 
+        public List<SvcValidationMsg> ValidateMandatoryField(Appraisal appraisal)
+        {
+            var svcValidationMsgsList = new List<SvcValidationMsg>();
+            // Perform mandatory field validation
+            if (string.IsNullOrEmpty(appraisal.MandatoryField))
+            {
+                throw new InvalidOperationException("Mandatory field is missing.");
+            }
+
+            return svcValidationMsgsList;
+        }
+
+
+        public List<SvcValidationMsg> ValidateStatus(Appraisal appraisal)
+        {
+            var svcValidationMsgsList = new List<SvcValidationMsg>();
+            // Perform status validation
+            if (appraisal.Status != AppraisalStatus.Approved)
+            {
+                throw new InvalidOperationException("Appraisal status is invalid.");
+            }
+
+            return svcValidationMsgsList;
+        }
         //remaining validation and execution methods
 
     }

@@ -18,12 +18,9 @@ namespace CoreValidatorExample.BusinessLayer.Tests.Unit
         [SetUp]
         public void Setup()
         {
-            // Initialize AppraisalChangeStateManager using the factory pattern
-            UserId = 1;
-            CorporateStructureId = 1;
-            AppraisalId = 1;
-            Appraisal = new Appraisal();
+            // Initialize AppraisalChangeStateManager using the factory pattern           
             _appraisalChangeStateManager = new AppraisalChangeStateManager<Appraisal>(UserId, CorporateStructureId, AppraisalId, Appraisal);
+            
         }
 
         [Test]
@@ -37,6 +34,7 @@ namespace CoreValidatorExample.BusinessLayer.Tests.Unit
                 SubmissionDate = DateTime.Now.AddDays(-1)                
             };
             int eventId = 1;
+            _appraisalChangeStateManager.ObjectInstance = Appraisal;
             // Act & Assert
             Assert.Throws<InvalidOperationException>(() => _appraisalChangeStateManager.ValidateAndExecute(eventId),
                 "Expected an InvalidOperationException due to missing mandatory field.");
@@ -46,13 +44,14 @@ namespace CoreValidatorExample.BusinessLayer.Tests.Unit
         public void ChangeState_FutureSubmissionDate_ThrowsInvalidOperationException()
         {
             // Arrange
-            var appraisal = new Appraisal
+            Appraisal = new Appraisal
             {
                 MandatoryField = "Performance Review",
                 Status = AppraisalStatus.Approved,
                 SubmissionDate = DateTime.Now.AddDays(1)  // Future date
             };
             int eventId = 1;
+            _appraisalChangeStateManager.ObjectInstance = Appraisal;
             // Act & Assert
             Assert.Throws<InvalidOperationException>(() => _appraisalChangeStateManager.ValidateAndExecute(eventId),
                 "Expected an InvalidOperationException due to future submission date.");
@@ -62,13 +61,14 @@ namespace CoreValidatorExample.BusinessLayer.Tests.Unit
         public void ChangeState_InvalidStatus_ThrowsInvalidOperationException()
         {
             // Arrange
-            var appraisal = new Appraisal
+            Appraisal = new Appraisal
             {
                 MandatoryField = "Performance Review",
                 Status = AppraisalStatus.Pending,  // Invalid status for state change
                 SubmissionDate = DateTime.Now.AddDays(-1)
             };
             int eventId = 1;
+            _appraisalChangeStateManager.ObjectInstance = Appraisal;
             // Act & Assert
             Assert.Throws<InvalidOperationException>(() => _appraisalChangeStateManager.ValidateAndExecute(eventId),
                 "Expected an InvalidOperationException due to invalid status.");
@@ -78,13 +78,14 @@ namespace CoreValidatorExample.BusinessLayer.Tests.Unit
         public void ChangeState_ValidAppraisal_DoesNotThrowException()
         {
             // Arrange
-            var appraisal = new Appraisal
+            Appraisal = new Appraisal
             {
                 MandatoryField = "Performance Review",
                 Status = AppraisalStatus.Approved,
                 SubmissionDate = DateTime.Now.AddDays(-1)
             };
             int eventId = 1;
+            _appraisalChangeStateManager.ObjectInstance = Appraisal;
             // Act & Assert
             Assert.DoesNotThrow(() => _appraisalChangeStateManager.ValidateAndExecute(eventId));
         }

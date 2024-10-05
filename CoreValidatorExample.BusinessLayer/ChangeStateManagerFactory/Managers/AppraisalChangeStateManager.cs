@@ -37,9 +37,11 @@ namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
         
         private void ValidateExecuteAppraisalEventStarted()
         {
-            var appraisalValidatorExecuter = this.ValidatorExecuterFactory.GetObjectInstance<AppraisalValidatorExecuter>();
-            appraisalValidatorExecuter.Validate(ObjectInstance.SubmissionDate);
+            
+            var appraisalValidatorExecuter = (AppraisalValidatorExecuter)ValidatorExecuterFactory.GetObjectInstance<AppraisalValidatorExecuter>();
             var intervenerValidatorExecuter = ValidatorExecuterFactory.GetObjectInstance<IntervenerValidatorExecuter>();
+            appraisalValidatorExecuter.Validate(ObjectInstance.SubmissionDate);
+            appraisalValidatorExecuter.ValidateMandatoryField(ObjectInstance);
             intervenerValidatorExecuter.Validate(ObjectInstance.AppraiseeName);
             //remaining validation or execution logic
             ExecuteChangeState();
