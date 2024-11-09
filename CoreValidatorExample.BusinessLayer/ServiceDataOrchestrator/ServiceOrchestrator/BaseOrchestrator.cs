@@ -10,9 +10,9 @@ namespace CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.ServiceOrch
     public abstract class BaseOrchestrator
     {
         public BaseOrchestratorRequest _baseOrchestratorRequest;
-        public ILogger<LoanPhaseOneOrchestrator> _logger;
+        public ILogger<BaseOrchestrator> _logger;
         public BaseOrchestrator(BaseOrchestratorRequest baseOrchestratorRequest,
-        ILogger<LoanPhaseOneOrchestrator> logger) 
+        ILogger<BaseOrchestrator> logger) 
         {
             _baseOrchestratorRequest = baseOrchestratorRequest;
             _logger = logger;
