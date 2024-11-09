@@ -8,9 +8,9 @@ namespace CoreValidatorExample.BusinessLayer.Repository
     {
         private ChangeStateManagerFactory<Appraisal> ChangeStateManagerFactory;
 
-        public AppraisalSvcRepository()
+        public AppraisalSvcRepository(ChangeStateManagerFactory<Appraisal>  changeStateManagerFactory)
         {
-            this.ChangeStateManagerFactory = new ChangeStateManagerFactory<Appraisal>();
+            this.ChangeStateManagerFactory = changeStateManagerFactory;
         }
 
         public string GetDataFromApi()
@@ -39,7 +39,7 @@ namespace CoreValidatorExample.BusinessLayer.Repository
             AppraisalChangeStateSvcResponse response = new AppraisalChangeStateSvcResponse();
 
             ChangeStateManagerFactory.ObjectInstance = appraisal;
-            AppraisalChangeStateManager<Appraisal> manager = (AppraisalChangeStateManager<Appraisal>)ChangeStateManagerFactory.GetObjectInstance(1, 101, 1001); ;
+            AppraisalChangeStateManager<Appraisal> manager = (AppraisalChangeStateManager<Appraisal>)ChangeStateManagerFactory.GetObjectInstance(1, 101, 1001);
 
 
             svcValidationMsgs = manager.ValidateAndExecute(request.EventId);
@@ -65,7 +65,7 @@ namespace CoreValidatorExample.BusinessLayer.Repository
             };
 
             // This `appraisal` object would then be passed to the `ChangeStateValidatorManager` for validation.
-            AppraisalChangeStateManager<Appraisal> manager = new AppraisalChangeStateManager<Appraisal>(userID, corporateStructureID, appraisalID, appraisal);
+            AppraisalChangeStateManager<Appraisal> manager = (AppraisalChangeStateManager<Appraisal>)ChangeStateManagerFactory.GetObjectInstance(userID, corporateStructureID, appraisalID);
             var result = manager.ValidateAndExecute(eventID);
             //TODO
         }
