@@ -1,5 +1,6 @@
 # Scope
 Create a validation mechanism for a WorkFlow engine
+Create service orchestrator
 
 ## Constraints
 Should be extendable
@@ -137,3 +138,6 @@ To extend the chain with a new state manager:
 Create a new class that implements IChangeStateValidatorHandler<T>.
 Define the validation and state logic in the Handle(T entity) method.
 Add the new handler to the chain using SetNext().
+
+### Additional notes
+Added docker support (docker file was generated automatically)

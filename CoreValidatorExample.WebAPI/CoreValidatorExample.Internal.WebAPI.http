@@ -1,0 +1,6 @@
+@CoreValidatorExample.Internal.WebAPI_HostAddress = http://localhost:5097
+
+GET {{CoreValidatorExample.Internal.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -5,11 +5,12 @@ VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreValidatorExample.WebSite", "CoreValidatorExample.WebSite\CoreValidatorExample.WebSite.csproj", "{9DE16656-5ADD-41D9-84C9-D21812DBEA94}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreValidatorExample.WebAPI", "CoreValidatorExample.WebApi\CoreValidatorExample.WebAPI.csproj", "{1784A360-34E9-4A2B-A703-1C09E50CE88E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreValidatorExample.External.WebAPI", "CoreValidatorExample.External.WebApi\CoreValidatorExample.External.WebAPI.csproj", "{1784A360-34E9-4A2B-A703-1C09E50CE88E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E8F90C3B-4FEE-4416-BE3A-B55AC77C7E3A}"
 	ProjectSection(SolutionItems) = preProject
 		CallOrchestartor.md = CallOrchestartor.md
+		docker-compose.yml = docker-compose.yml
 		ReadMe.md = ReadMe.md
 		StructureMap.md = StructureMap.md
 	EndProjectSection
@@ -17,6 +18,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreValidatorExample.BusinessLayer.Tests.Unit", "CoreValidatorExample.BusinessLayer.Tests.Unit\CoreValidatorExample.BusinessLayer.Tests.Unit.csproj", "{96D28FF5-4721-40BD-B92C-F861A720E8CB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreValidatorExample.BusinessLayer", "CoreValidatorExample.BusinessLayer\CoreValidatorExample.BusinessLayer.csproj", "{CF6F1270-B7FD-4643-89D9-7DAA43BC6BAA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreValidatorExample.DataAccessLayer", "CoreValidatorExample.DataAccessLayer\CoreValidatorExample.DataAccessLayer.csproj", "{5ACA2D34-97F6-4921-814E-BB2920DC33EE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreValidatorExample.WebAPI", "CoreValidatorExample.WebAPI\CoreValidatorExample.WebAPI.csproj", "{3EF3A94F-2E68-4BE9-B5E5-EF7B60EE7B3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +45,14 @@ Global
 		{CF6F1270-B7FD-4643-89D9-7DAA43BC6BAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF6F1270-B7FD-4643-89D9-7DAA43BC6BAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF6F1270-B7FD-4643-89D9-7DAA43BC6BAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ACA2D34-97F6-4921-814E-BB2920DC33EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ACA2D34-97F6-4921-814E-BB2920DC33EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ACA2D34-97F6-4921-814E-BB2920DC33EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ACA2D34-97F6-4921-814E-BB2920DC33EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EF3A94F-2E68-4BE9-B5E5-EF7B60EE7B3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EF3A94F-2E68-4BE9-B5E5-EF7B60EE7B3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EF3A94F-2E68-4BE9-B5E5-EF7B60EE7B3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EF3A94F-2E68-4BE9-B5E5-EF7B60EE7B3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile  # Dockerfile for the main .NET Core application
+    ports:
+      - "5000:80"
+    depends_on:
+      - db
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=db;Database=LoanDatabase;Username=postgresUser;Password=myPostGresPassword
+
+  website:
+    build:
+      context: ./WebsiteProject  # Path to the website project folder
+      dockerfile: Dockerfile  # Dockerfile for the website
+    ports:
+      - "5001:80"    
+
+  webapi:
+    build:
+      context: ./WebApiProject  # Path to the web API project folder
+      dockerfile: Dockerfile  # Dockerfile for the web API
+    ports:
+      - "5002:80"    
+
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=LoanDatabase
+      - POSTGRES_USER=postgresUser
+      - POSTGRES_PASSWORD=myPostGresPassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  sql_data:

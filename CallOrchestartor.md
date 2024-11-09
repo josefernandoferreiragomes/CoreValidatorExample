@@ -142,3 +142,25 @@ public class DataSyncOrchestrator
 }
 
 ```
+
+### Steps
+
+create DAL project
+
+install EntityFrameworkCore
+
+dotnet add package Microsoft.EntityFrameworkCore
+dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+dotnet add package Microsoft.EntityFrameworkCore.Design
+
+Create POCO classes for Customer, Loan, Collateral, Asset
+
+Add docker support
+Add docker-compose for:
+api
+website
+external api
+database PostgreSQL
+
+In BusinessLayer
+Add DataSyncOrchestrator

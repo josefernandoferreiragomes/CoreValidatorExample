@@ -24,4 +24,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CoreValidatorExample.DataAccessLayer\CoreValidatorExample.DataAccessLayer.csproj" />
+  </ItemGroup>
+
 </Project>
