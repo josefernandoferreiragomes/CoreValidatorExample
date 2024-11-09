@@ -7,9 +7,9 @@ namespace CoreValidatorExample.BusinessLayer.Repository
     {
         private ChangeStateManagerFactory<Decision> ChangeStateManagerFactory;
 
-        public DecisionSvcRepository()
+        public DecisionSvcRepository(ChangeStateManagerFactory<Decision> changeStateManagerFactory)
         {
-            this.ChangeStateManagerFactory = new ChangeStateManagerFactory<Decision>();
+            this.ChangeStateManagerFactory = changeStateManagerFactory;
         }
 
         public string GetDataFromApi()

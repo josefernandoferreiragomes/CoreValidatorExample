@@ -7,10 +7,10 @@ namespace CoreValidatorExample.BusinessLayer.Repository
     {
         private ChangeStateManagerFactory<Proposal> ChangeStateManagerFactory;
 
-        public ProposalSvcRepository()
+        public ProposalSvcRepository(ChangeStateManagerFactory<Proposal> changeStateManagerFactory)
         {
             //TODO add default IoC behaviour
-            this.ChangeStateManagerFactory = new ChangeStateManagerFactory<Proposal>();
+            this.ChangeStateManagerFactory = changeStateManagerFactory;
         }
 
         public string GetDataFromApi()

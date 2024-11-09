@@ -9,18 +9,23 @@ namespace CoreValidatorExample.BusinessLayer.Tests.Unit
     [TestFixture]
     public class AppraisalChangeStateManagerFactoryTests
     {
+        ChangeStateManagerFactory<Appraisal> ChangeStateManagerFactory;
         private AppraisalChangeStateManager<Appraisal>     _appraisalChangeStateManager;
         int UserId;
         int CorporateStructureId;
         int AppraisalId;
         Appraisal Appraisal;
+        public AppraisalChangeStateManagerFactoryTests(ChangeStateManagerFactory<Appraisal> changeStateManagerFactory)
+        {
+            ChangeStateManagerFactory = changeStateManagerFactory;
+        }
+
 
         [SetUp]
         public void Setup()
         {
             // Initialize AppraisalChangeStateManager using the factory pattern           
-            _appraisalChangeStateManager = new AppraisalChangeStateManager<Appraisal>(UserId, CorporateStructureId, AppraisalId, Appraisal);
-            
+            _appraisalChangeStateManager = (AppraisalChangeStateManager<Appraisal>)ChangeStateManagerFactory.GetObjectInstance(UserId, CorporateStructureId, AppraisalId);            
         }
 
         [Test]

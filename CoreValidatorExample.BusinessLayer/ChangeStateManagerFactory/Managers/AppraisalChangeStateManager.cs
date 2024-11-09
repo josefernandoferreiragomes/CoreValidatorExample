@@ -1,5 +1,9 @@
 ﻿using CoreValidatorExample.BusinessLayer.Data;
 using CoreValidatorExample.BusinessLayer.Data.Enums;
+using CoreValidatorExample.BusinessLayer.Interfaces;
+using CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.ServiceOrchestrator;
+using CoreValidatorExample.DataAccessLayer.Data;
+using Microsoft.Extensions.Logging;
 
 namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
 {
@@ -7,14 +11,24 @@ namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
         where T : Appraisal
     {
         WFValidationResult<T> result;
-        public AppraisalChangeStateManager(int userId, int userCorporateUnitId, int appraisalId, T appraisal) 
+
+        public ILogger<LoanPhaseOneOrchestrator> _logger { get; set; }
+        public IGenericRepository<Loan> _loanRepository { get; set; }
+        public IGenericRepository<Collateral> _collateralRepository { get; set; }
+        public IGenericRepository<Asset> _assetRepository { get; set; }
+        private int AppraisalId {  get; set; }
+
+        public AppraisalChangeStateManager(int userId, int userCorporateUnitId, int appraisalId, T appraisal, ILogger<LoanPhaseOneOrchestrator> logger, IGenericRepository<Loan> loanRepository, IGenericRepository<Collateral> collateralRepository, IGenericRepository<Asset> assetRepository) 
             : base (userCorporateUnitId, appraisalId)
         {
             AppraisalId = appraisalId;
             result = new WFValidationResult<T>(appraisal);
+            _logger = logger;
+            _loanRepository = loanRepository;
+            _collateralRepository = collateralRepository;
+            _assetRepository = assetRepository;
         }
 
-        private int AppraisalId {  get; set; }
 
         public override WFValidationResult<T> ValidateAndExecute(int eventId)
         {

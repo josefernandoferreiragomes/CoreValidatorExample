@@ -14,6 +14,12 @@ namespace CoreValidatorExample.BusinessLayer.Tests.Unit
         int CorporateStructureId;
         int ProposalId;
         Proposal Proposal;
+        ChangeStateManagerFactory<Proposal> ChangeStateManagerFactory;
+
+        public ProposalChangeStateManagerFactoryTests(ChangeStateManagerFactory<Proposal> changeStateManagerFactory)
+        {
+            ChangeStateManagerFactory = changeStateManagerFactory;
+        }
 
         [SetUp]
         public void Setup()
@@ -23,7 +29,7 @@ namespace CoreValidatorExample.BusinessLayer.Tests.Unit
             CorporateStructureId = 1;
             ProposalId = 1;
             Proposal = new Proposal();
-            _proposalChangeStateManager = new ProposalChangeStateManager<Proposal>(UserId, CorporateStructureId, ProposalId, Proposal);
+            _proposalChangeStateManager = (ProposalChangeStateManager<Proposal>)ChangeStateManagerFactory.GetObjectInstance(UserId, CorporateStructureId, ProposalId);
         }
         //TO BE IMPLEMENTED
     }
