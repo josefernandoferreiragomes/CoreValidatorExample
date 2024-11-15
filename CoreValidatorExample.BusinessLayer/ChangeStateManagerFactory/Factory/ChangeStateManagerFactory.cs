@@ -3,24 +3,23 @@ using CoreValidatorExample.BusinessLayer.Data;
 using CoreValidatorExample.BusinessLayer.Interfaces;
 using CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.ServiceOrchestrator;
 using CoreValidatorExample.DataAccessLayer.Data;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
 {
     public class ChangeStateManagerFactory<T> where T : class
     {
+        private readonly IServiceProvider _serviceProvider;
+
         public ILogger<LoanPhaseOneOrchestrator> _logger {get; set;}
-        public IGenericRepository<Loan> _loanRepository {get; set;}
-        public IGenericRepository<Collateral> _collateralRepository {get; set;}
-        public IGenericRepository<Asset> _assetRepository { get; set; }
+        
         public T? ObjectInstance { get; set; }
 
-        public ChangeStateManagerFactory(ILogger<LoanPhaseOneOrchestrator> logger, IGenericRepository<Loan> loanRepository, IGenericRepository<Collateral> collateralRepository, IGenericRepository<Asset> assetRepository)
+        public ChangeStateManagerFactory(ILogger<LoanPhaseOneOrchestrator> logger, IServiceProvider serviceProvider)
         {
             _logger = logger;
-            _loanRepository = loanRepository;
-            _collateralRepository = collateralRepository;
-            _assetRepository = assetRepository;
+            _serviceProvider = serviceProvider;
         }
         public IChangeStateManager<T> GetObjectInstance(int userId, int userCorporateUnitId, int itemId)
         {
@@ -31,19 +30,19 @@ namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
             {
                 case nameof(Appraisal):
                     objInstance = (IChangeStateManager<T>)Activator.CreateInstance(
-                        typeof(AppraisalChangeStateManager<>).MakeGenericType(typeof(T)), userId, userCorporateUnitId, itemId, ObjectInstance, _logger, _loanRepository, _collateralRepository, _assetRepository
+                        typeof(AppraisalChangeStateManager<>).MakeGenericType(typeof(T)), userId, userCorporateUnitId, itemId, ObjectInstance, _logger
                     );
                     break;
 
                 case nameof(Proposal):
                     objInstance = (IChangeStateManager<T>)Activator.CreateInstance(
-                        typeof(ProposalChangeStateManager<>).MakeGenericType(typeof(T)), userId, userCorporateUnitId, itemId, ObjectInstance, _logger, _loanRepository, _collateralRepository, _assetRepository
+                        typeof(ProposalChangeStateManager<>).MakeGenericType(typeof(T)), userId, userCorporateUnitId, itemId, ObjectInstance, _logger
                     );
                     break;
 
                 case nameof(Decision):
                     objInstance = (IChangeStateManager<T>)Activator.CreateInstance(
-                        typeof(DecisionChangeStateManager<>).MakeGenericType(typeof(T)), userId, userCorporateUnitId, itemId, ObjectInstance, _logger, _loanRepository, _collateralRepository, _assetRepository
+                        typeof(DecisionChangeStateManager<>).MakeGenericType(typeof(T)), userId, userCorporateUnitId, itemId, ObjectInstance, _logger, _serviceProvider.GetService<IBaseOrchestrator>()
                     );
                     break;
 

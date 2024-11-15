@@ -6,9 +6,9 @@ namespace CoreValidatorExample.BusinessLayer.Repository
 {
     public class AppraisalSvcRepository
     {
-        private ChangeStateManagerFactory<Appraisal> ChangeStateManagerFactory;
+        private IChangeStateManagerFactory<Appraisal> ChangeStateManagerFactory;
 
-        public AppraisalSvcRepository(ChangeStateManagerFactory<Appraisal>  changeStateManagerFactory)
+        public AppraisalSvcRepository(IChangeStateManagerFactory<Appraisal>  changeStateManagerFactory)
         {
             this.ChangeStateManagerFactory = changeStateManagerFactory;
         }
@@ -38,7 +38,7 @@ namespace CoreValidatorExample.BusinessLayer.Repository
             //simulate success
             AppraisalChangeStateSvcResponse response = new AppraisalChangeStateSvcResponse();
 
-            ChangeStateManagerFactory.ObjectInstance = appraisal;
+            //ChangeStateManagerFactory.ObjectInstance = appraisal;
             AppraisalChangeStateManager<Appraisal> manager = (AppraisalChangeStateManager<Appraisal>)ChangeStateManagerFactory.GetObjectInstance(1, 101, 1001);
 
 

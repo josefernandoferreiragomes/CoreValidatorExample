@@ -12,21 +12,15 @@ namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
     {
         WFValidationResult<T> result;
 
-        public ILogger<LoanPhaseOneOrchestrator> _logger { get; set; }
-        public IGenericRepository<Loan> _loanRepository { get; set; }
-        public IGenericRepository<Collateral> _collateralRepository { get; set; }
-        public IGenericRepository<Asset> _assetRepository { get; set; }
+        public ILogger<LoanPhaseOneOrchestrator> _logger { get; set; }      
         private int AppraisalId {  get; set; }
 
-        public AppraisalChangeStateManager(int userId, int userCorporateUnitId, int appraisalId, T appraisal, ILogger<LoanPhaseOneOrchestrator> logger, IGenericRepository<Loan> loanRepository, IGenericRepository<Collateral> collateralRepository, IGenericRepository<Asset> assetRepository) 
+        public AppraisalChangeStateManager(int userId, int userCorporateUnitId, int appraisalId, T appraisal, ILogger<LoanPhaseOneOrchestrator> logger) 
             : base (userCorporateUnitId, appraisalId)
         {
             AppraisalId = appraisalId;
             result = new WFValidationResult<T>(appraisal);
-            _logger = logger;
-            _loanRepository = loanRepository;
-            _collateralRepository = collateralRepository;
-            _assetRepository = assetRepository;
+            _logger = logger;         
         }
 
 

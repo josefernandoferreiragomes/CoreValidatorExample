@@ -10,25 +10,34 @@ using System.Threading.Tasks;
 
 namespace CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.DataSynchronizers
 {
-    internal class CustomerDataSynchronizer : BaseDataSynchronizer
+    public class CustomerDataSynchronizer : BaseDataSynchronizer
     {
         IGenericRepository<Customer> _mainRepository;
         
-        public CustomerDataSynchronizer(BaseDataSynchronizerRequest request, ILogger logger, IGenericRepository<Customer> mainRepository) : base(request, logger) 
+        public CustomerDataSynchronizer(ILogger logger, IGenericRepository<Customer> mainRepository) : base(logger) 
         {
             _mainRepository = mainRepository;
             _result = new BaseServiceDataOrchestratorResult();
         }
-        public override BaseServiceDataOrchestratorResult SynchronizeData()
+        public override BaseServiceDataOrchestratorResult SynchronizeData(BaseDataSynchronizerRequest baseDataSynchronizerRequest)
         {
+            try
+            {
+                //Get all Customers to synchronize
 
-            //Get all Customers to synchronize
+                //Map data to External Web Service/API
+                //Call External Web Service/API
 
-            //Map data to External Web Service/API
-            //Call External Web Service/API
+                //Save results to database
 
-            //Save results to database
-
+                return _result;
+            }
+            catch (Exception ex)
+            {
+                //experimental
+                _logger.Log<CustomerDataSynchronizer>(LogLevel.Error, new EventId(1), this, ex, null);
+                throw ex;
+            }
             return _result;
         }
     }

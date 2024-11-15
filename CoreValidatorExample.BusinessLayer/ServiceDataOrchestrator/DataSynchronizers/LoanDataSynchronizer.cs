@@ -10,16 +10,16 @@ using System.Threading.Tasks;
 
 namespace CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.DataSynchronizers
 {
-    internal class LoanDataSynchronizer : BaseDataSynchronizer
+    public class LoanDataSynchronizer : BaseDataSynchronizer
     {
         IGenericRepository<Loan> _mainRepository;
         
-        public LoanDataSynchronizer(BaseDataSynchronizerRequest request, ILogger logger, IGenericRepository<Loan> mainRepository) : base(request, logger) 
+        public LoanDataSynchronizer(ILogger logger, IGenericRepository<Loan> mainRepository) : base(logger) 
         {
             _mainRepository = mainRepository;
             _result = new BaseServiceDataOrchestratorResult();
-        }
-        public override BaseServiceDataOrchestratorResult SynchronizeData()
+        }        
+        public override BaseServiceDataOrchestratorResult SynchronizeData(BaseDataSynchronizerRequest baseDataSynchronizerRequest)
         {
 
             try
