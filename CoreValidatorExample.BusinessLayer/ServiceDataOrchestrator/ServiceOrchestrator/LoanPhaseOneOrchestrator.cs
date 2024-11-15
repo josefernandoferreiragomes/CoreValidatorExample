@@ -15,23 +15,31 @@ namespace CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.ServiceOrch
 {
     public class LoanPhaseOneOrchestrator : BaseOrchestrator
     {
+        private readonly IEnumerable<IBaseDataSynchronizer> _dataSynchronizers;
         public IGenericRepository<Loan> _loanRepository;
         public IGenericRepository<Collateral> _collateralRepository;
         public IGenericRepository<Asset> _assetRepository;
-        
+
+        public IBaseDataSynchronizer _customerDataSynchronizer;
+        public IBaseDataSynchronizer _collateralDataSynchronizer;
+        public IBaseDataSynchronizer _assetDataSynchronizer;
+
         WebAPIClassReference _externalApiService;        
 
-        public LoanPhaseOneOrchestrator(BaseOrchestratorRequest request, ILogger<LoanPhaseOneOrchestrator> _logger, IGenericRepository<Loan> loanRepository, IGenericRepository<Collateral> collateralRepository, IGenericRepository<Asset> assetRepository) 
-            : base (request, _logger)
+        public LoanPhaseOneOrchestrator(ILogger<LoanPhaseOneOrchestrator> _logger, IEnumerable<IBaseDataSynchronizer> dataSynchronizers, IGenericRepository<Loan> loanRepository, IGenericRepository<Collateral> collateralRepository, IGenericRepository<Asset> assetRepository) 
+            : base (_logger)
         {
+            _dataSynchronizers = dataSynchronizers;
             _loanRepository = loanRepository;
             _collateralRepository = collateralRepository;
             _assetRepository = assetRepository;
-
+            this._collateralDataSynchronizer = _dataSynchronizers.OfType<CollateralDataSynchronizer>().FirstOrDefault();
+            this._customerDataSynchronizer = _dataSynchronizers.OfType<CustomerDataSynchronizer>().FirstOrDefault();
+            this._assetDataSynchronizer = _dataSynchronizers.OfType<AssetDataSynchronizer>().FirstOrDefault();
         }        
 
 
-        public override async Task<BaseServiceDataOrchestratorResult> Orchestrate()
+        public override async Task<BaseServiceDataOrchestratorResult> Orchestrate(BaseOrchestratorRequest baseOrchestratorRequest)
         {
             try
             {
@@ -39,17 +47,16 @@ namespace CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.ServiceOrch
                 var loans = await _loanRepository.GetAllAsync();
                 var collaterals = await _collateralRepository.GetAllAsync();
 
+                //TODO for all, sync//TODO for all, sync
                 var loanDataSynchronizerRequest = new BaseDataSynchronizerRequest();
-                var loanDataSynchronizer = new LoanDataSynchronizer(loanDataSynchronizerRequest, _logger, _loanRepository);
-                _result = loanDataSynchronizer.SynchronizeData();
+                _result = _collateralDataSynchronizer.SynchronizeData(loanDataSynchronizerRequest);
+                
 
-                var collateralDataSynchronizerRequest = new BaseDataSynchronizerRequest();
-                var collateralDataSynchronizer = new CollateralDataSynchronizer(collateralDataSynchronizerRequest, _logger, _collateralRepository);
-                _result = collateralDataSynchronizer.SynchronizeData();
+                var collateralDataSynchronizerRequest = new BaseDataSynchronizerRequest();                
+                _result = _collateralDataSynchronizer.SynchronizeData(collateralDataSynchronizerRequest);
 
-                var assetDataSynchronizerRequest = new BaseDataSynchronizerRequest();
-                var assetDataSynchronizer = new AssetDataSynchronizer(assetDataSynchronizerRequest, _logger, _assetRepository);
-                _result = assetDataSynchronizer.SynchronizeData();
+                var assetDataSynchronizerRequest = new BaseDataSynchronizerRequest();           
+                _result = _assetDataSynchronizer.SynchronizeData(assetDataSynchronizerRequest);
 
 
             }

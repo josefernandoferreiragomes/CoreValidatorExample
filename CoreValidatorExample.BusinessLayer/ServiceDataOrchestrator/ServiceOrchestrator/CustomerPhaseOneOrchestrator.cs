@@ -15,35 +15,34 @@ namespace CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.ServiceOrch
 {
     public class CustomerPhaseOneOrchestrator : BaseOrchestrator
     {
-        public IGenericRepository<Loan> _loanRepository;
-        public IGenericRepository<Customer> _customerRepository;        
-        
+        private readonly IEnumerable<IBaseDataSynchronizer> _dataSynchronizers;
+        public IBaseDataSynchronizer _customerDataSynchronizer;
+        public IBaseDataSynchronizer _loanDataSynchronizer;
+        ILogger<CustomerPhaseOneOrchestrator> _logger;
+        public int _customerId;
         WebAPIClassReference _externalApiService;        
 
-        public CustomerPhaseOneOrchestrator(BaseOrchestratorRequest request, ILogger<CustomerPhaseOneOrchestrator> logger, IGenericRepository<Customer> customerRepository, IGenericRepository<Loan> loanRepository) 
-            : base (request, logger)
+        public CustomerPhaseOneOrchestrator(
+            ILogger<CustomerPhaseOneOrchestrator> logger,
+            IEnumerable<IBaseDataSynchronizer> dataSynchronizers
+        )
+            : base (logger)
         {
-            _loanRepository = loanRepository;
-            _customerRepository = customerRepository;            
-
-        }        
-
-
-        public override async Task<BaseServiceDataOrchestratorResult> Orchestrate()
+            this._logger = logger;
+            _dataSynchronizers = dataSynchronizers;
+            this._loanDataSynchronizer = _dataSynchronizers.OfType<LoanDataSynchronizer>().FirstOrDefault();
+            this._customerDataSynchronizer = _dataSynchronizers.OfType<CustomerDataSynchronizer>().FirstOrDefault();
+        }
+        public override async Task<BaseServiceDataOrchestratorResult> Orchestrate(BaseOrchestratorRequest baseOrchestratorRequest)
         {
             try
             {
+                //TODO for all, sync//TODO for all, sync
+                var customerDataSynchronizerRequest = new BaseDataSynchronizerRequest();                
+                _result = _customerDataSynchronizer.SynchronizeData(customerDataSynchronizerRequest);
 
-                var loans = await _loanRepository.GetAllAsync();
-                var customers = await _customerRepository.GetAllAsync();
-
-                var customerDataSynchronizerRequest = new BaseDataSynchronizerRequest();
-                var customerDataSynchronizer = new CustomerDataSynchronizer(customerDataSynchronizerRequest, _logger, _customerRepository);
-                _result = customerDataSynchronizer.SynchronizeData();
-
-                var loanDataSynchronizerRequest = new BaseDataSynchronizerRequest();
-                var loanDataSynchronizer = new LoanDataSynchronizer(loanDataSynchronizerRequest, _logger, _loanRepository);
-                _result = loanDataSynchronizer.SynchronizeData();             
+                var loanDataSynchronizerRequest = new BaseDataSynchronizerRequest();              
+                _result = _loanDataSynchronizer.SynchronizeData(customerDataSynchronizerRequest);             
 
 
             }

@@ -15,7 +15,7 @@ namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
         public IGenericRepository<Collateral> _collateralRepository { get; set; }
         public IGenericRepository<Asset> _assetRepository { get; set; }
         WFValidationResult<T> Result;
-        public ProposalChangeStateManager(int userId, int userCorporateUnitId, int proposalId, T proposal, ILogger<LoanPhaseOneOrchestrator> logger, IGenericRepository<Loan> loanRepository, IGenericRepository<Collateral> collateralRepository, IGenericRepository<Asset> assetRepository)
+        public ProposalChangeStateManager(int userId, int userCorporateUnitId, int proposalId, T proposal, ILogger<LoanPhaseOneOrchestrator> logger)
             : base(userCorporateUnitId, proposalId)
         {
             ProposalId = proposalId;
