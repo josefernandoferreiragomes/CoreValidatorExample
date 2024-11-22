@@ -7,6 +7,7 @@ using CoreValidatorExample.BusinessLayer.ChangeStateManagerChainOfResponsibility
 using CoreValidatorExample.BusinessLayer.Models;
 using NUnit.Framework;
 using System;
+using CoreValidatorExample.DataAccessLayer.Models;
 
 namespace CoreValidatorExample.BusinessLayer.Tests.Unit
 {

@@ -1,8 +1,5 @@
-﻿using NUnit.Framework;
-using System;
-using CoreValidatorExample.BusinessLayer.Models;
-using CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric;
-using NUnit.Framework.Internal.Execution;
+﻿using CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric;
+using CoreValidatorExample.DataAccessLayer.Models;
 
 namespace CoreValidatorExample.BusinessLayer.Tests.Unit
 {

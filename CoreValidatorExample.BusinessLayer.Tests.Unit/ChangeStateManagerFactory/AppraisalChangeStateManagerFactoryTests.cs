@@ -1,26 +1,13 @@
-﻿using NUnit.Framework;
-using System;
-using CoreValidatorExample.DataAccessLayer.Data;
-using CoreValidatorExample.DataAccessLayer;
-using CoreValidatorExample.BusinessLayer.Models;
-
-using CoreValidatorExample.BusinessLayer.Repository;
-
-using CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric;
-
-using NUnit.Framework.Internal.Execution;
-using Moq;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.ServiceOrchestrator;
+﻿using CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric;
+using CoreValidatorExample.BusinessLayer.ChangeStateManagerChainOfResponsibility;
 using CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.DataSynchronizers;
+using CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.ServiceOrchestrator;
+using CoreValidatorExample.BusinessLayer.Services;
+using CoreValidatorExample.DataAccessLayer;
+using CoreValidatorExample.DataAccessLayer.Models;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework.Internal;
-using System.Runtime.CompilerServices;
-using Microsoft.Extensions.Logging.Abstractions;
-using CoreValidatorExample.BusinessLayer.ChangeStateManagerChainOfResponsibility;
-using Microsoft.EntityFrameworkCore;
-using CoreValidatorExample.BusinessLayer.Services;
 
 namespace CoreValidatorExample.BusinessLayer.Tests.Unit
 {
@@ -29,10 +16,8 @@ namespace CoreValidatorExample.BusinessLayer.Tests.Unit
     {
         //private readonly Mock<IProposalService> _mockGenericRepository;
         ChangeStateManagerFactory<Appraisal> ChangeStateManagerFactory;
-        private AppraisalChangeStateManager<Appraisal>     _appraisalChangeStateManager;
-        int UserId;
-        int CorporateStructureId;
-        int AppraisalId;
+        private AppraisalChangeStateManager<Appraisal> _appraisalChangeStateManager;
+       
         Appraisal Appraisal;
         ICustomerService _mockCustomerRepository;
         ServiceProvider _provider;
@@ -74,27 +59,37 @@ namespace CoreValidatorExample.BusinessLayer.Tests.Unit
             var loandatasync = _provider.GetServices<IBaseDataSynchronizer>().Select(s=>s.GetType()==typeof(LoanDataSynchronizer));
             //var loanrepository = _provider.GetService<IGenericRepository<Loan>>();
 
-            // Initialize AppraisalChangeStateManager using the factory pattern           
-            _appraisalChangeStateManager = (AppraisalChangeStateManager<Appraisal>)((ChangeStateManagerFactory<Appraisal>)_provider.GetService(
-                typeof(ChangeStateManagerFactory<Appraisal>)))
-                .GetObjectInstance(
-                    UserId, 
-                    CorporateStructureId, 
-                    AppraisalId
-            );            
+                   
 
         }
 
         [Test]
         public void ChangeState_MissingMandatoryField_ThrowsInvalidOperationException()
         {
+
+            int UserId = 1;
+            int CorporateStructureId = 1;
+            int AppraisalId = 1;
+
             // Arrange
             Appraisal = new Appraisal
             {
+                
                 MandatoryField = null,  // Missing mandatory field
                 Status = AppraisalStatus.Approved,
                 SubmissionDate = DateTime.Now.AddDays(-1)                
             };
+
+
+            // Initialize AppraisalChangeStateManager using the factory pattern           
+            _appraisalChangeStateManager = (AppraisalChangeStateManager<Appraisal>)((ChangeStateManagerFactory<Appraisal>)_provider.GetService(
+                typeof(ChangeStateManagerFactory<Appraisal>)))
+                .GetObjectInstance(
+                    UserId,
+                    CorporateStructureId,
+                    AppraisalId
+            );
+
             int eventId = 1;
             _appraisalChangeStateManager.ObjectInstance = Appraisal;
             // Act & Assert
