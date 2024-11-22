@@ -1,5 +1,5 @@
-﻿using CoreValidatorExample.BusinessLayer.Data;
-using CoreValidatorExample.BusinessLayer.Interfaces;
+﻿using CoreValidatorExample.BusinessLayer.Models;
+
 using CoreValidatorExample.DataAccessLayer.Data;
 using Microsoft.Extensions.Logging;
 using System;
@@ -7,14 +7,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CoreValidatorExample.BusinessLayer.Services;
 
 namespace CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.DataSynchronizers
 {
     public class CustomerDataSynchronizer : BaseDataSynchronizer
     {
-        IGenericRepository<Customer> _mainRepository;
+        ICustomerService _mainRepository;
         
-        public CustomerDataSynchronizer(ILogger logger, IGenericRepository<Customer> mainRepository) : base(logger) 
+        public CustomerDataSynchronizer(ILogger logger, ICustomerService mainRepository) : base(logger) 
         {
             _mainRepository = mainRepository;
             _result = new BaseServiceDataOrchestratorResult();

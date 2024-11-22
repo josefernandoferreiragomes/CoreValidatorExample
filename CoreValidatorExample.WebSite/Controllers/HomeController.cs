@@ -1,6 +1,7 @@
 ﻿using CoreMVCValidatorExample.Models;
-using CoreValidatorExample.BusinessLayer.Data;
+using CoreValidatorExample.BusinessLayer.Models;
 using CoreValidatorExample.BusinessLayer.Repository;
+using CoreValidatorExample.BusinessLayer.Services;
 using CoreValidatorExample.WebSite.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -10,11 +11,11 @@ namespace CoreMVCValidatorExample.Controllers
 {
     public class HomeController : Controller
     {        
-        private readonly IProposalSvcRepository _proposalSvcRepository;      
+        private readonly IProposalService _proposalSvcRepository;      
         private readonly ILogger<HomeController> _logger;
 
 
-        public HomeController(ILogger<HomeController> logger, IProposalSvcRepository proposalSvcRepository)
+        public HomeController(ILogger<HomeController> logger, IProposalService proposalSvcRepository)
         {
             _logger = logger;
             _proposalSvcRepository = proposalSvcRepository;

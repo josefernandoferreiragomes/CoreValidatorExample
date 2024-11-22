@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CoreValidatorExample.BusinessLayer.Data;
+using CoreValidatorExample.BusinessLayer.Models;
 
 namespace CoreValidatorExample.BusinessLayer.ChangeStateManagerChainOfResponsibility
 {

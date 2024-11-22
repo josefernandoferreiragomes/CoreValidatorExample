@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CoreValidatorExample.BusinessLayer.ChangeStateManagerChainOfResponsibility;
-using CoreValidatorExample.BusinessLayer.Data;
+using CoreValidatorExample.BusinessLayer.Models;
 using NUnit.Framework;
 using System;
 

@@ -1,4 +1,4 @@
-﻿using CoreValidatorExample.BusinessLayer.Data;
+﻿using CoreValidatorExample.BusinessLayer.Models;
 using CoreValidatorExample.BusinessLayer.Repository;
 
 namespace CoreValidatorExample.WebSite.Models

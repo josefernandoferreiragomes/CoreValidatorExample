@@ -1,32 +1,22 @@
-﻿using CoreValidatorExample.BusinessLayer.Interfaces;
-using CoreValidatorExample.BusinessLayer.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CoreValidatorExample.BusinessLayer.Data;
+﻿using CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.DataSynchronizers;
+using CoreValidatorExample.BusinessLayer.Services;
 using Microsoft.Extensions.Logging;
-using CoreValidatorExample.BusinessLayer.WebAPI;
-using CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.DataSynchronizers;
-using CoreValidatorExample.DataAccessLayer.Data;
 
 namespace CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.ServiceOrchestrator
 {
     public class LoanPhaseOneOrchestrator : BaseOrchestrator
     {
         private readonly IEnumerable<IBaseDataSynchronizer> _dataSynchronizers;
-        public IGenericRepository<Loan> _loanRepository;
-        public IGenericRepository<Collateral> _collateralRepository;
-        public IGenericRepository<Asset> _assetRepository;
+        public ILoanService _loanRepository;
+        public ICollateralService _collateralRepository;
+        public IAssetService _assetRepository;
 
         public IBaseDataSynchronizer _customerDataSynchronizer;
         public IBaseDataSynchronizer _collateralDataSynchronizer;
         public IBaseDataSynchronizer _assetDataSynchronizer;
 
-        WebAPIClassReference _externalApiService;        
-
-        public LoanPhaseOneOrchestrator(ILogger<LoanPhaseOneOrchestrator> _logger, IEnumerable<IBaseDataSynchronizer> dataSynchronizers, IGenericRepository<Loan> loanRepository, IGenericRepository<Collateral> collateralRepository, IGenericRepository<Asset> assetRepository) 
+      
+        public LoanPhaseOneOrchestrator(ILogger<LoanPhaseOneOrchestrator> _logger, IEnumerable<IBaseDataSynchronizer> dataSynchronizers, ILoanService loanRepository, ICollateralService collateralRepository, IAssetService assetRepository) 
             : base (_logger)
         {
             _dataSynchronizers = dataSynchronizers;

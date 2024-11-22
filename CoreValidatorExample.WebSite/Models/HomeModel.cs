@@ -1,12 +1,13 @@
-﻿using CoreValidatorExample.BusinessLayer.Data;
+﻿using CoreValidatorExample.BusinessLayer.Models;
 using CoreValidatorExample.BusinessLayer.Repository;
+using CoreValidatorExample.BusinessLayer.Services;
 
 namespace CoreValidatorExample.WebSite.Models
 {
     public class HomeModel
     {
-        IProposalSvcRepository _proposalSvcRepository;
-        public HomeModel(IProposalSvcRepository proposalSvcRepository)
+        IProposalService _proposalSvcRepository;
+        public HomeModel(IProposalService proposalSvcRepository)
         {            
             _proposalSvcRepository = proposalSvcRepository;
             ChangeStateResultMessage = "State not changed yet";

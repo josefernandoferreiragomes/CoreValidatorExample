@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
-using CoreValidatorExample.BusinessLayer.Data;
+using CoreValidatorExample.BusinessLayer.Models;
 using CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric;
 using NUnit.Framework.Internal.Execution;
 
