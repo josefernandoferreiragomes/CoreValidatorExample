@@ -27,7 +27,7 @@ namespace CoreValidatorExample.BusinessLayer.Tests.Unit
             CorporateStructureId = 1;
             DecisionId = 1;
             Decision = new Decision();
-            _decisionChangeStateManager = (DecisionChangeStateManager<Decision>)ChangeStateManagerFactory.GetObjectInstance(UserId, CorporateStructureId, DecisionId);
+            _decisionChangeStateManager = (DecisionChangeStateManager<Decision>)ChangeStateManagerFactory.GetObjectInstance(UserId, CorporateStructureId, DecisionId, Decision);
             
         }
         //TO BE IMPLEMENTED

@@ -11,15 +11,16 @@ namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
     {
         WFValidationResult<T> result;
 
-        public ILogger<LoanPhaseOneOrchestrator> _logger { get; set; }      
+        public ILogger _logger { get; set; }      
         private int AppraisalId {  get; set; }
 
-        public AppraisalChangeStateManager(int userId, int userCorporateUnitId, int appraisalId, T appraisal, ILogger<LoanPhaseOneOrchestrator> logger) 
+        public AppraisalChangeStateManager(int userId, int userCorporateUnitId, int appraisalId, T appraisal, ILogger logger) 
             : base (userCorporateUnitId, appraisalId)
         {
             AppraisalId = appraisalId;
             result = new WFValidationResult<T>(appraisal);
-            _logger = logger;         
+            _logger = logger;
+            ObjectInstance = appraisal;
         }
 
 
@@ -55,8 +56,9 @@ namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
         }
         private void ValidateExecuteAppraisalEventCompleteDate()
         {
-            var appraisalValidatorExecuter = this.ValidatorExecuterFactory.GetObjectInstance<AppraisalValidatorExecuter>();
+            var appraisalValidatorExecuter = (AppraisalValidatorExecuter)this.ValidatorExecuterFactory.GetObjectInstance<AppraisalValidatorExecuter>();
             appraisalValidatorExecuter.Validate(ObjectInstance.SubmissionDate);
+            appraisalValidatorExecuter.ValidateStatus(ObjectInstance);
             //remaining validation or execution logic
             ExecuteChangeState();
         }
