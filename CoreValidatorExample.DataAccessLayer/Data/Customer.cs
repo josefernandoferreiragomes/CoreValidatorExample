@@ -15,5 +15,6 @@ namespace CoreValidatorExample.DataAccessLayer.Data
         [MaxLength(50)]
         public string CustomerName { get; set; }
         public List<Loan>? LoanList { get; set; }
+        public List<Collateral>? CollateralList { get; set; }
     }
 }

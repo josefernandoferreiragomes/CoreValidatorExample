@@ -13,6 +13,7 @@ namespace CoreValidatorExample.DataAccessLayer.Data
         public int AssetId { get; set; }
         public string AssetName { get; set; }
         public decimal AssetValue { get; set; }
+        public int CollateralId { get; set; }
         public Collateral Collateral { get; set; }
     }
 }

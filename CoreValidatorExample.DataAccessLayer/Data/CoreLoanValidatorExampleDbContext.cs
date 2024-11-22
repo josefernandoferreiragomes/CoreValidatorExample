@@ -41,7 +41,8 @@ namespace CoreValidatorExample.DataAccessLayer.Data
             modelBuilder.Entity<Customer>()
                 .HasMany(c => c.LoanList)
                 .WithOne(l => l.Customer)
-                .HasForeignKey(l => l.Customer.CustomerId);
+                .HasForeignKey(l => l.CustomerId)
+                .OnDelete(DeleteBehavior.NoAction); // Disable cascade delete
 
             // Loan configuration
             modelBuilder.Entity<Loan>()
@@ -50,12 +51,14 @@ namespace CoreValidatorExample.DataAccessLayer.Data
             modelBuilder.Entity<Loan>()
                 .HasOne(l => l.Customer)
                 .WithMany(c => c.LoanList)
-                .HasForeignKey(l => l.Customer.CustomerId);
+                .HasForeignKey(l => l.CustomerId)
+                .OnDelete(DeleteBehavior.NoAction); // Disable cascade delete
 
             modelBuilder.Entity<Loan>()
                 .HasMany(l => l.CollateralList)
                 .WithOne(c => c.Loan)
-                .HasForeignKey(c => c.Loan.LoanId);
+                .HasForeignKey(c => c.LoanId)
+                .OnDelete(DeleteBehavior.NoAction); // Disable cascade delete
 
             // Collateral configuration
             modelBuilder.Entity<Collateral>()
@@ -64,17 +67,20 @@ namespace CoreValidatorExample.DataAccessLayer.Data
             modelBuilder.Entity<Collateral>()
                 .HasOne(c => c.Loan)
                 .WithMany(l => l.CollateralList)
-                .HasForeignKey(c => c.Loan.LoanId);
+                .HasForeignKey(c => c.LoanId)
+                .OnDelete(DeleteBehavior.NoAction); // Disable cascade delete
 
             modelBuilder.Entity<Collateral>()
                 .HasOne(c => c.Customer)
                 .WithMany()
-                .HasForeignKey(c => c.Customer.CustomerId);
+                .HasForeignKey(c => c.CustomerId)
+                .OnDelete(DeleteBehavior.NoAction); // Disable cascade delete
 
             modelBuilder.Entity<Collateral>()
-                .HasMany(c => c.AssetList)
+                .HasMany(c => c.AssetIdList)
                 .WithOne(a => a.Collateral)
-                .HasForeignKey(a => a.Collateral.CollateralId);
+                .HasForeignKey(a => a.CollateralId)
+                .OnDelete(DeleteBehavior.NoAction); // Disable cascade delete
 
             // Asset configuration
             modelBuilder.Entity<Asset>()
@@ -82,8 +88,9 @@ namespace CoreValidatorExample.DataAccessLayer.Data
 
             modelBuilder.Entity<Asset>()
                 .HasOne(a => a.Collateral)
-                .WithMany(c => c.AssetList)
-                .HasForeignKey(a => a.Collateral.CollateralId);
+                .WithMany(c => c.AssetIdList)
+                .HasForeignKey(a => a.CollateralId)
+                .OnDelete(DeleteBehavior.NoAction); // Disable cascade delete
 
 #if DEBUG
             Console.WriteLine("Debug build and data seed");
@@ -96,24 +103,28 @@ namespace CoreValidatorExample.DataAccessLayer.Data
                 customer2
             );
 
-            var loan1 = new Loan { LoanId = 1, LoanDescription = "Home Loan", LoanValue = 250000, Customer = customer1 };
-            var loan2 = new Loan { LoanId = 2, LoanDescription = "Car Loan", LoanValue = 30000, Customer = customer2 };
+            var loan1 = new Loan { LoanId = 1, LoanDescription = "Home Loan", LoanValue = 250000, CustomerId = 1 };
+            var loan2 = new Loan { LoanId = 2, LoanDescription = "Car Loan", LoanValue = 30000, CustomerId = 2 };
             modelBuilder.Entity<Loan>().HasData(
                 loan1,
                 loan2
             );
 
-            var collateral1 = new Collateral { CollateralId = 1, CollateralDescription = "House", CollateralValue = 300000, Loan = loan1, Customer = customer1 };
-            var collateral2 = new Collateral { CollateralId = 2, CollateralDescription = "Car", CollateralValue = 35000, Loan = loan2, Customer = customer2 };
+            var collateral1 = new Collateral { CollateralId = 1, CollateralDescription = "House", CollateralValue = 300000, LoanId = 1, CustomerId = 1 };
+            var collateral2 = new Collateral { CollateralId = 2, CollateralDescription = "Car", CollateralValue = 35000, LoanId = 2, CustomerId = 2 };
             modelBuilder.Entity<Collateral>().HasData(
+                collateral1,
+                collateral2
             );
 
             modelBuilder.Entity<Asset>().HasData(
-                new Asset { AssetId = 1, AssetName = "House Asset", AssetValue = 300000, Collateral = collateral1 },
-                new Asset { AssetId = 2, AssetName = "Car Asset", AssetValue = 35000, Collateral = collateral2 }
+                new Asset { AssetId = 1, AssetName = "House Asset", AssetValue = 300000, CollateralId = 1 },
+                new Asset { AssetId = 2, AssetName = "Car Asset", AssetValue = 35000, CollateralId = 2 }
             );
 #endif
         }
+
+
     }
 
 
