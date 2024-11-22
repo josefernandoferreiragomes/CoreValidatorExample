@@ -1,5 +1,5 @@
 ﻿using CoreValidatorExample.BusinessLayer.Models;
-using CoreValidatorExample.DataAccessLayer.Models;
+using CoreValidatorExample.DataAccessLayer.Data;
 
 namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
 {

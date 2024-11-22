@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CoreValidatorExample.DataAccessLayer.Models
+namespace CoreValidatorExample.DataAccessLayer.Data
 {
     // ProposalStatus.cs
     public enum ProposalStatus

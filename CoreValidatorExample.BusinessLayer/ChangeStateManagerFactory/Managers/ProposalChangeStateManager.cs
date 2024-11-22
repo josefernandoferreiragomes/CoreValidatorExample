@@ -2,7 +2,7 @@
 using CoreValidatorExample.BusinessLayer.Models.Enums;
 using CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.ServiceOrchestrator;
 using CoreValidatorExample.BusinessLayer.Services;
-using CoreValidatorExample.DataAccessLayer.Models;
+using CoreValidatorExample.DataAccessLayer.Data;
 using Microsoft.Extensions.Logging;
 
 namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric

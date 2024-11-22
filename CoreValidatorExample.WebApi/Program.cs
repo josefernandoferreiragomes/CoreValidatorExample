@@ -1,11 +1,20 @@
+using CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric;
+using CoreValidatorExample.BusinessLayer.Repository;
+using CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.DataSynchronizers;
+using CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.ServiceOrchestrator;
+using CoreValidatorExample.BusinessLayer.Services;
+using CoreValidatorExample.DataAccessLayer.Interfaces;
+using CoreValidatorExample.DataAccessLayer.Data;
+using CoreValidatorExample.DataAccessLayer;
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+using CoreValidatorExample.WebAPI;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+var startup = new Startup(builder.Configuration);
+startup.ConfigureServices(builder.Services);
 
 var app = builder.Build();
 
