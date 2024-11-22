@@ -9,6 +9,7 @@ namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
 {
     public interface IChangeStateManager<T>
     {
+        public T? ObjectInstance { get; set; }
         void ExecuteChangeState();
         WFValidationResult<T> ValidateAndExecute(int eventId);
     }

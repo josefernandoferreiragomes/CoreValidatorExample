@@ -142,8 +142,12 @@ Add the new handler to the chain using SetNext().
 ### Additional notes
 Added docker support (docker file was generated automatically)
 
+Mocking and service collection in unit tests:
+https://medium.com/@someguyfromafrica/using-mockingcontext-a-flexible-iserviceprovider-implementation-in-c-dc954d3f6539
+
 ### Added packages
 In UnitTest Project:
 ```bash
 dotnet add package Microsoft.Extensions.Logging.Debug
+Install-Package MoqExt
 ```

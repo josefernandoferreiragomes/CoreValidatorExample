@@ -2,23 +2,24 @@
 using CoreValidatorExample.DataAccessLayer.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
 {
-    public class ChangeStateManagerFactory<T> where T : class
+    public class ChangeStateManagerFactory<T> : IChangeStateManagerFactory<T> where T : class
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public ILogger<LoanPhaseOneOrchestrator> _logger {get; set;}
+        public ILogger _logger {get; set;}
         
         public T? ObjectInstance { get; set; }
 
-        public ChangeStateManagerFactory(ILogger<LoanPhaseOneOrchestrator> logger, IServiceProvider serviceProvider)
+        public ChangeStateManagerFactory(ILogger logger, IServiceProvider serviceProvider)
         {
             _logger = logger;
             _serviceProvider = serviceProvider;
         }
-        public IChangeStateManager<T> GetObjectInstance(int userId, int userCorporateUnitId, int itemId)
+        public IChangeStateManager<T> GetObjectInstance(int userId, int userCorporateUnitId, int itemId, T obj)
         {
             IChangeStateManager<T> objInstance;
 
@@ -27,8 +28,16 @@ namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
             {
                 case nameof(Appraisal):
                     objInstance = (IChangeStateManager<T>)Activator.CreateInstance(
-                        typeof(AppraisalChangeStateManager<>).MakeGenericType(typeof(T)), userId, userCorporateUnitId, itemId, ObjectInstance, _logger
-                    );
+                        typeof(AppraisalChangeStateManager<>)
+                            .MakeGenericType(
+                                typeof(T)), 
+                                userId, 
+                                userCorporateUnitId, 
+                                itemId,
+                                obj, 
+                                _logger
+                    );                    
+                    //objInstance = _serviceProvider.GetService<IChangeStateManager<T>>();
                     break;
 
                 case nameof(Proposal):

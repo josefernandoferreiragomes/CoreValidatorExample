@@ -1,8 +1,5 @@
-﻿using NUnit.Framework;
-using System;
-using CoreValidatorExample.BusinessLayer.Models;
-using CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric;
-using NUnit.Framework.Internal.Execution;
+﻿using CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric;
+using CoreValidatorExample.DataAccessLayer.Models;
 
 namespace CoreValidatorExample.BusinessLayer.Tests.Unit
 {
@@ -29,7 +26,7 @@ namespace CoreValidatorExample.BusinessLayer.Tests.Unit
             CorporateStructureId = 1;
             ProposalId = 1;
             Proposal = new Proposal();
-            _proposalChangeStateManager = (ProposalChangeStateManager<Proposal>)ChangeStateManagerFactory.GetObjectInstance(UserId, CorporateStructureId, ProposalId);
+            _proposalChangeStateManager = (ProposalChangeStateManager<Proposal>)ChangeStateManagerFactory.GetObjectInstance(UserId, CorporateStructureId, ProposalId, Proposal);
         }
         //TO BE IMPLEMENTED
     }

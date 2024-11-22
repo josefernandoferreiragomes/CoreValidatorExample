@@ -1,35 +1,40 @@
 ﻿using CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric;
 using CoreValidatorExample.BusinessLayer.Models;
+using CoreValidatorExample.BusinessLayer.Repository;
+using CoreValidatorExample.DataAccessLayer.Interfaces;
 using CoreValidatorExample.DataAccessLayer.Models;
 
 namespace CoreValidatorExample.BusinessLayer.Services
 {
     public interface IAppraisalService
     {
-
+        public AppraisalChangeStateSvcResponse AppraisalChangeState(AppraisalChangeStateSvcRequest request);
+        public void AppraisalChangeStateChainOfResponsibility();
     }
-    public class AppraisalService
+    public class AppraisalService : IAppraisalService
     {
         private IChangeStateManagerFactory<Appraisal> ChangeStateManagerFactory;
+        private IGenericRepository<Appraisal> _appraisalRepository;
 
-        public AppraisalService(IChangeStateManagerFactory<Appraisal> changeStateManagerFactory)
+        public AppraisalService(IChangeStateManagerFactory<Appraisal> changeStateManagerFactory, IGenericRepository<Appraisal> appraisalRepository)
         {
             this.ChangeStateManagerFactory = changeStateManagerFactory;
+            _appraisalRepository = appraisalRepository;
         }
 
         //TO BE REFACTORED
         public AppraisalChangeStateSvcResponse AppraisalChangeState(AppraisalChangeStateSvcRequest request)
         {
 
-            Appraisal appraisal = new Appraisal();
+            var appraisal = _appraisalRepository.GetByIdAsync(request.AppraisalId);
+
             WFValidationResult<Appraisal> svcValidationMsgs = new WFValidationResult<Appraisal>();
             //simulate success
             AppraisalChangeStateSvcResponse response = new AppraisalChangeStateSvcResponse();
 
-            //ChangeStateManagerFactory.ObjectInstance = appraisal;
-            AppraisalChangeStateManager<Appraisal> manager = (AppraisalChangeStateManager<Appraisal>)ChangeStateManagerFactory.GetObjectInstance(1, 101, 1001);
-
-
+            //_changeStateManagerFactory.ObjectInstance = appraisal;
+            AppraisalChangeStateManager<Appraisal> manager = (AppraisalChangeStateManager<Appraisal>)ChangeStateManagerFactory.GetObjectInstance(1, 101, 1001, appraisal.Result);
+          
             svcValidationMsgs = manager.ValidateAndExecute(request.EventId);
             response.Success = true;
             return response;
@@ -53,7 +58,7 @@ namespace CoreValidatorExample.BusinessLayer.Services
             };
 
             // This `appraisal` object would then be passed to the `ChangeStateValidatorManager` for validation.
-            AppraisalChangeStateManager<Appraisal> manager = (AppraisalChangeStateManager<Appraisal>)ChangeStateManagerFactory.GetObjectInstance(userID, corporateStructureID, appraisalID);
+            AppraisalChangeStateManager<Appraisal> manager = (AppraisalChangeStateManager<Appraisal>)ChangeStateManagerFactory.GetObjectInstance(userID, corporateStructureID, appraisalID, appraisal);
             var result = manager.ValidateAndExecute(eventID);
             //TODO
         }
