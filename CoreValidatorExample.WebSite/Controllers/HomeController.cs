@@ -1,11 +1,7 @@
 ﻿using CoreMVCValidatorExample.Models;
-using CoreValidatorExample.BusinessLayer.Models;
-using CoreValidatorExample.BusinessLayer.Repository;
-using CoreValidatorExample.BusinessLayer.Services;
 using CoreValidatorExample.WebSite.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.Reflection;
 
 namespace CoreMVCValidatorExample.Controllers
 {

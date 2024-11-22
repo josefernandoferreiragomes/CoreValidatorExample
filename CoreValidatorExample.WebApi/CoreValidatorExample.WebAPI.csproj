@@ -13,4 +13,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CoreValidatorExample.BusinessLayer\CoreValidatorExample.BusinessLayer.csproj" />
+    <ProjectReference Include="..\CoreValidatorExample.DataAccessLayer\CoreValidatorExample.DataAccessLayer.csproj" />
+  </ItemGroup>
+
 </Project>

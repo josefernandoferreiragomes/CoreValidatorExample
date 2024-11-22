@@ -4,9 +4,8 @@ using CoreValidatorExample.BusinessLayer.Repository;
 using CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.DataSynchronizers;
 using CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.ServiceOrchestrator;
 using CoreValidatorExample.BusinessLayer.Services;
-using CoreValidatorExample.DataAccessLayer;
 using CoreValidatorExample.DataAccessLayer.Interfaces;
-using CoreValidatorExample.DataAccessLayer.Models;
+using CoreValidatorExample.DataAccessLayer.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -31,7 +30,7 @@ namespace CoreValidatorExample.BusinessLayer.Tests.Unit
             
             services.AddSingleton(typeof(IGenericRepository<Appraisal>), _mockAppraisalRepository.Object);
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            services.AddScoped<GenericLoanDbContext>();            
+            services.AddScoped<CoreLoanValidatorExampleDbContext>();            
             services.AddScoped<ILoanService, LoanService>();
             services.AddScoped<ICollateralService, CollateralService>();
             services.AddScoped<IAssetService, AssetService>();

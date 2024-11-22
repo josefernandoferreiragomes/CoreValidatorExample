@@ -3,28 +3,28 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using System.Collections.Generic;
 
-namespace CoreValidatorExample.DataAccessLayer
+namespace CoreValidatorExample.DataAccessLayer.Data
 {
-    //public class GenericLoanDbContext : DbContext
-    //{
-    //    public DbSet<Customer> Customers { get; set; }
-    //    public DbSet<Loan> Loans { get; set; }
-    //    public DbSet<Collateral> Collaterals { get; set; }
-    //    public DbSet<Asset> Assets { get; set; }
 
-    //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //    {
-    //        optionsBuilder.UseSqlite("Data Source=LoanDatabase"); // Use SQLite for a local database, or change this for other databases.
-    //    }
-
-
-    //}
-    public class GenericLoanDbContext : DbContext
+    public class CoreLoanValidatorExampleDbContext : DbContext
     {
+
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Loan> Loans { get; set; }
         public DbSet<Collateral> Collaterals { get; set; }
-        public DbSet<Asset> Assets { get; set; }        
+        public DbSet<Asset> Assets { get; set; }
+
+        public CoreLoanValidatorExampleDbContext(DbContextOptions<CoreLoanValidatorExampleDbContext> options)
+            : base(options)
+        {
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.ConfigureWarnings(warnings =>
+                warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
+            base.OnConfiguring(optionsBuilder);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -85,7 +85,7 @@ namespace CoreValidatorExample.DataAccessLayer
                 .WithMany(c => c.AssetList)
                 .HasForeignKey(a => a.Collateral.CollateralId);
 
-        #if DEBUG
+#if DEBUG
             Console.WriteLine("Debug build and data seed");
             // !!! Test Only !!!
             // Seed data
@@ -112,7 +112,7 @@ namespace CoreValidatorExample.DataAccessLayer
                 new Asset { AssetId = 1, AssetName = "House Asset", AssetValue = 300000, Collateral = collateral1 },
                 new Asset { AssetId = 2, AssetName = "Car Asset", AssetValue = 35000, Collateral = collateral2 }
             );
-        #endif
+#endif
         }
     }
 

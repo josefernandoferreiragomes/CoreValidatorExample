@@ -1,10 +1,4 @@
-﻿using CoreValidatorExample.BusinessLayer.Models;
-using CoreValidatorExample.DataAccessLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CoreValidatorExample.DataAccessLayer.Data;
 
 namespace CoreValidatorExample.BusinessLayer.ChangeStateManagerChainOfResponsibility
 {

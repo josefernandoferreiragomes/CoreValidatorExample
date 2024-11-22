@@ -1,4 +1,5 @@
 ﻿using CoreValidatorExample.DataAccessLayer.Interfaces;
+using CoreValidatorExample.DataAccessLayer.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,18 +8,19 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CoreValidatorExample.BusinessLayer.Repository
-{        
+{
     public class GenericRepository<T> : IGenericRepository<T> where T : class
 
     {
 
-        private readonly DbContext _context;
+        private readonly CoreLoanValidatorExampleDbContext _context;
         private readonly DbSet<T> _dbSet;
 
-        public GenericRepository(DbContext context)
+        public GenericRepository(CoreLoanValidatorExampleDbContext context)
         {
             _context = context;
-
+            // Create the database if it doesn't exist
+            _context.Database.EnsureCreated();
             _dbSet = _context.Set<T>();
         }
 

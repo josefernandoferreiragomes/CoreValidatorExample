@@ -1,5 +1,5 @@
 ﻿using CoreValidatorExample.BusinessLayer.Models;
-using CoreValidatorExample.DataAccessLayer.Models;
+using CoreValidatorExample.DataAccessLayer.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;

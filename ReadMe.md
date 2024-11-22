@@ -151,3 +151,10 @@ In UnitTest Project:
 dotnet add package Microsoft.Extensions.Logging.Debug
 Install-Package MoqExt
 ```
+
+In DataLayer Project:
+```bash
+Install-Package Microsoft.EntityFrameworkCore
+Install-Package Microsoft.EntityFrameworkCore.Relational
+Install-Package Microsoft.EntityFrameworkCore.SqlServer
+```
