@@ -1,4 +1,4 @@
-﻿using CoreValidatorExample.BusinessLayer.Data;
+﻿using CoreValidatorExample.BusinessLayer.Models;
 
 namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
 {

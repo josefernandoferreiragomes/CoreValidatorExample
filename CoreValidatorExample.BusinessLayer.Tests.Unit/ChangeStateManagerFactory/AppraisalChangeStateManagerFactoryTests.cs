@@ -2,8 +2,8 @@
 using System;
 using CoreValidatorExample.DataAccessLayer.Data;
 using CoreValidatorExample.DataAccessLayer;
-using CoreValidatorExample.BusinessLayer.Data;
-using CoreValidatorExample.BusinessLayer.Interfaces;
+using CoreValidatorExample.BusinessLayer.Models;
+
 using CoreValidatorExample.BusinessLayer.Repository;
 
 using CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric;
@@ -14,36 +14,66 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.ServiceOrchestrator;
 using CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.DataSynchronizers;
+using Microsoft.Extensions.Logging;
+using NUnit.Framework.Internal;
+using System.Runtime.CompilerServices;
+using Microsoft.Extensions.Logging.Abstractions;
+using CoreValidatorExample.BusinessLayer.ChangeStateManagerChainOfResponsibility;
+using Microsoft.EntityFrameworkCore;
+using CoreValidatorExample.BusinessLayer.Services;
 
 namespace CoreValidatorExample.BusinessLayer.Tests.Unit
 {
     [TestFixture]
     public class AppraisalChangeStateManagerFactoryTests
     {
+        //private readonly Mock<IProposalService> _mockGenericRepository;
         ChangeStateManagerFactory<Appraisal> ChangeStateManagerFactory;
         private AppraisalChangeStateManager<Appraisal>     _appraisalChangeStateManager;
         int UserId;
         int CorporateStructureId;
         int AppraisalId;
         Appraisal Appraisal;
-        IGenericRepository<Appraisal> _mockCustomerRepository;
+        ICustomerService _mockCustomerRepository;
         ServiceProvider _provider;
 
         [SetUp]
         public void Setup()
         {
             var services = new ServiceCollection();
-            services.AddSingleton(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            services.AddSingleton<IBaseDataSynchronizer, LoanDataSynchronizer>();
-            services.AddSingleton<IBaseDataSynchronizer, CollateralDataSynchronizer>();
-            services.AddSingleton<IBaseDataSynchronizer, AssetDataSynchronizer>();
-            services.AddSingleton<IBaseOrchestrator, LoanPhaseOneOrchestrator>();
+            services.AddScoped<GenericLoanDbContext>();
+            //services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<ILoanService, LoanService>();
+            services.AddScoped<ICollateralService, CollateralService>();
+            services.AddScoped<IAssetService, AssetService>();
+            services.AddScoped<ICustomerService, CustomerService>();
+
+            services.AddScoped<IProposalService, ProposalService>();
+            services.AddScoped<IBaseDataSynchronizer, LoanDataSynchronizer>();
+            services.AddScoped<IBaseDataSynchronizer, CollateralDataSynchronizer>();
+            services.AddScoped<IBaseDataSynchronizer, AssetDataSynchronizer>();
+            services.AddScoped<IBaseOrchestrator, LoanPhaseOneOrchestrator>();
+
+            // Set up the logger factory to use the Debug provider
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder
+                    .AddDebug() // Log to Debug Output
+                    .SetMinimumLevel(LogLevel.Debug); // Set the desired log level
+            });
+
+            // Create an ILogger instance for AppraisalChangeStateManager
+            var logger = loggerFactory.CreateLogger<AppraisalChangeStateManager>();
+            services.AddSingleton(typeof(Microsoft.Extensions.Logging.ILogger), logger);
+
+            //services.AddSingleton<Microsoft.Extensions.Logging.ILogger, Logger>();
             //services.AddSingleton(typeof(IChangeStateManagerFactory<>), typeof(ChangeStateManagerFactory<>));
 
             _provider = services.BuildServiceProvider();
 
-            var loandatasync = (LoanDataSynchronizer)_provider.GetService<IBaseDataSynchronizer>();
-            var loanrepository = _provider.GetService<IGenericRepository<Loan>>();
+            var loandatasync = _provider.GetServices<IBaseDataSynchronizer>().Select(s=>s.GetType()==typeof(LoanDataSynchronizer));
+            //var loanrepository = _provider.GetService<IGenericRepository<Loan>>();
+
             // Initialize AppraisalChangeStateManager using the factory pattern           
             _appraisalChangeStateManager = (AppraisalChangeStateManager<Appraisal>)((ChangeStateManagerFactory<Appraisal>)_provider.GetService(
                 typeof(ChangeStateManagerFactory<Appraisal>)))

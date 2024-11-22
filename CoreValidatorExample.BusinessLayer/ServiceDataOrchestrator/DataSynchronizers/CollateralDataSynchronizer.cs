@@ -1,20 +1,13 @@
-﻿using CoreValidatorExample.BusinessLayer.Data;
-using CoreValidatorExample.BusinessLayer.Interfaces;
-using CoreValidatorExample.DataAccessLayer.Data;
+﻿using CoreValidatorExample.BusinessLayer.Services;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.DataSynchronizers
 {
     public class CollateralDataSynchronizer : BaseDataSynchronizer
     {
-        IGenericRepository<Collateral> _mainRepository;
+        ICollateralService _mainRepository;
         
-        public CollateralDataSynchronizer(ILogger logger, IGenericRepository<Collateral> mainRepository) : base(logger) 
+        public CollateralDataSynchronizer(ILogger logger, ICollateralService mainRepository) : base(logger) 
         {
             _mainRepository = mainRepository;
             _result = new BaseServiceDataOrchestratorResult();

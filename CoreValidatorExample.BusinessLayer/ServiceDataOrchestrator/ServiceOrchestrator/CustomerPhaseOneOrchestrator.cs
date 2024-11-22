@@ -1,15 +1,5 @@
-﻿using CoreValidatorExample.BusinessLayer.Interfaces;
-using CoreValidatorExample.BusinessLayer.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CoreValidatorExample.BusinessLayer.Data;
+﻿using CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.DataSynchronizers;
 using Microsoft.Extensions.Logging;
-using CoreValidatorExample.BusinessLayer.WebAPI;
-using CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.DataSynchronizers;
-using CoreValidatorExample.DataAccessLayer.Data;
 
 namespace CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.ServiceOrchestrator
 {
@@ -20,8 +10,7 @@ namespace CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.ServiceOrch
         public IBaseDataSynchronizer _loanDataSynchronizer;
         ILogger<CustomerPhaseOneOrchestrator> _logger;
         public int _customerId;
-        WebAPIClassReference _externalApiService;        
-
+       
         public CustomerPhaseOneOrchestrator(
             ILogger<CustomerPhaseOneOrchestrator> logger,
             IEnumerable<IBaseDataSynchronizer> dataSynchronizers

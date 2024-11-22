@@ -17,6 +17,6 @@ namespace CoreValidatorExample.DataAccessLayer.Data
         public Loan Loan { get; set; }
 
         public Customer Customer { get; set; }
-        List<Asset> AssetList { get; set; }
+        public List<Asset> AssetList { get; set; }
     }
 }
