@@ -29,20 +29,29 @@ namespace CoreValidatorExample.WebAPI
             var logger = loggerFactory.CreateLogger<AppraisalService>();
             services.AddSingleton(typeof(Microsoft.Extensions.Logging.ILogger), logger);
 
+            // DbContext
             services.AddDbContext<CoreLoanValidatorExampleDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("CoreLoanValidatorExampleDB")
                 )
-                , ServiceLifetime.Scoped
+                ,ServiceLifetime.Scoped
             );
 
-            services.AddScoped(typeof(IGenericRepository<Appraisal>), typeof(GenericRepository<Appraisal>));
+            services.AddScoped(typeof(IGenericRepository<Customer>), typeof(GenericRepository<Customer>));
             services.AddScoped(typeof(IGenericRepository<Loan>), typeof(GenericRepository<Loan>));
             services.AddScoped(typeof(IGenericRepository<Collateral>), typeof(GenericRepository<Collateral>));
             services.AddScoped(typeof(IGenericRepository<Asset>), typeof(GenericRepository<Asset>));
-            
-            
-            services.AddScoped(typeof(ChangeStateManagerFactory<>));            
-         
+            services.AddScoped(typeof(IGenericRepository<Proposal>), typeof(GenericRepository<Proposal>));
+            services.AddScoped(typeof(IGenericRepository<Decision>), typeof(GenericRepository<Decision>));
+            services.AddScoped(typeof(IGenericRepository<Appraisal>), typeof(GenericRepository<Appraisal>));
+
+            //services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+            services.AddScoped(typeof(IChangeStateManagerFactory<Appraisal>), typeof(ChangeStateManagerFactory<Appraisal>));
+            services.AddScoped(typeof(IChangeStateManagerFactory<Proposal>), typeof(ChangeStateManagerFactory<Proposal>));
+            services.AddScoped(typeof(IChangeStateManagerFactory<Decision>), typeof(ChangeStateManagerFactory<Decision>));
+
+            //services.AddScoped(typeof(IChangeStateManagerFactory<>), typeof(ChangeStateManagerFactory<>));
+
             services.AddScoped<IBaseDataSynchronizer, LoanDataSynchronizer>();
             services.AddScoped<IBaseDataSynchronizer, CollateralDataSynchronizer>();
             services.AddScoped<IBaseDataSynchronizer, AssetDataSynchronizer>();
