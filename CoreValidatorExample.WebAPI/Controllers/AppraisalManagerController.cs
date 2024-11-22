@@ -17,13 +17,22 @@ namespace CoreValidatorExample.Internal.WebAPI.Controllers
             _service = service;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public AppraisalChangeStateSvcResponse Get(AppraisalChangeStateSvcRequest request)
+        [HttpPost(Name = "GetWeatherForecast")]
+        public AppraisalChangeStateSvcResponse AppraisalChangeState(AppraisalChangeStateSvcRequest request)
         {
             var response = new AppraisalChangeStateSvcResponse();
 
             response = _service.AppraisalChangeState(request);
             
+            return response;
+
+        }
+
+        [HttpGet(Name = "TestMethod")]
+        public string TestMethod(string request)
+        {
+            var response = $"You entered: {request}";          
+
             return response;
 
         }

@@ -36,6 +36,8 @@ namespace CoreValidatorExample.WebAPI
                 ,ServiceLifetime.Scoped
             );
 
+            // Register generic repositories
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped(typeof(IGenericRepository<Customer>), typeof(GenericRepository<Customer>));
             services.AddScoped(typeof(IGenericRepository<Loan>), typeof(GenericRepository<Loan>));
             services.AddScoped(typeof(IGenericRepository<Collateral>), typeof(GenericRepository<Collateral>));
@@ -44,19 +46,23 @@ namespace CoreValidatorExample.WebAPI
             services.AddScoped(typeof(IGenericRepository<Decision>), typeof(GenericRepository<Decision>));
             services.AddScoped(typeof(IGenericRepository<Appraisal>), typeof(GenericRepository<Appraisal>));
 
-            //services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-
+            // Register ChangeStateManagerFactory for specific types
             services.AddScoped(typeof(IChangeStateManagerFactory<Appraisal>), typeof(ChangeStateManagerFactory<Appraisal>));
             services.AddScoped(typeof(IChangeStateManagerFactory<Proposal>), typeof(ChangeStateManagerFactory<Proposal>));
             services.AddScoped(typeof(IChangeStateManagerFactory<Decision>), typeof(ChangeStateManagerFactory<Decision>));
 
-            //services.AddScoped(typeof(IChangeStateManagerFactory<>), typeof(ChangeStateManagerFactory<>));
+            // Register the generic ChangeStateManagerFactory
+            services.AddScoped(typeof(ChangeStateManagerFactory<>));
 
+            // Register data synchronizers
             services.AddScoped<IBaseDataSynchronizer, LoanDataSynchronizer>();
             services.AddScoped<IBaseDataSynchronizer, CollateralDataSynchronizer>();
             services.AddScoped<IBaseDataSynchronizer, AssetDataSynchronizer>();
+
+            // Register orchestrators
             services.AddScoped<IBaseOrchestrator, LoanPhaseOneOrchestrator>();
 
+            // Register services
             services.AddScoped<ILoanService, LoanService>();
             services.AddScoped<ICollateralService, CollateralService>();
             services.AddScoped<IAssetService, AssetService>();
