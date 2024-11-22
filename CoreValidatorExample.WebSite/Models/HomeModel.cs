@@ -1,9 +1,10 @@
 ﻿using CoreValidatorExample.BusinessLayer.Models;
-using CoreValidatorExample.BusinessLayer.Repository;
 using CoreValidatorExample.BusinessLayer.Services;
+using CoreValidatorExample.DataAccessLayer.Models;
 
 namespace CoreValidatorExample.WebSite.Models
 {
+    //to be removed direct references... and data accessd by API
     public class HomeModel
     {
         IProposalService _proposalSvcRepository;

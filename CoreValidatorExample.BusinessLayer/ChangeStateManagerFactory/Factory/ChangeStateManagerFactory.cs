@@ -1,7 +1,5 @@
-﻿using CoreValidatorExample.BusinessLayer.ChangeStateManagerChainOfResponsibility;
-using CoreValidatorExample.BusinessLayer.Models;
-using CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.ServiceOrchestrator;
-using CoreValidatorExample.DataAccessLayer.Data;
+﻿using CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.ServiceOrchestrator;
+using CoreValidatorExample.DataAccessLayer.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
