@@ -15,6 +15,7 @@ namespace CoreValidatorExample.DataAccessLayer.Data
 
         public decimal LoanValue { get; set; }
 
+        public int CustomerId { get; set; }
         public Customer Customer { get; set; }
         public List<Collateral>? CollateralList { get; set; }
     }

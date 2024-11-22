@@ -31,8 +31,9 @@ namespace CoreValidatorExample.WebAPI
 
             // DbContext
             services.AddDbContext<CoreLoanValidatorExampleDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("CoreLoanValidatorExampleDB")
-                )
+                options
+                    .UseSqlServer(configuration.GetConnectionString("CoreLoanValidatorExampleDB"))
+                    .EnableSensitiveDataLogging()
                 ,ServiceLifetime.Scoped
             );
 
