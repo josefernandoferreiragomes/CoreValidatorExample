@@ -159,3 +159,14 @@ Install-Package Microsoft.EntityFrameworkCore.Relational
 Install-Package Microsoft.EntityFrameworkCore.SqlServer
 dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
 ```
+
+In Api Sdk project 
+```bash
+Install-Package Newtonsoft.Json
+
+nswag openapi2csclient /input:https://localhost:7098/swagger/v1/swagger.json /classname:LoanAssessmentDemoWebApiSdk /namespace:LoanAssessmentDemo.WebApi.Sdk.Client /output:LoanAssessmentDemoWebApiSdk.cs
+```
+In Web Site project
+
+In Web Site project, add reference to WebApi
+example url: 
