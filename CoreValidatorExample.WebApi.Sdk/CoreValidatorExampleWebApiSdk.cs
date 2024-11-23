@@ -72,15 +72,15 @@ namespace CoreValidatorExample.WebApi.Sdk.Client
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<AppraisalChangeStateSvcResponse> GetWeatherForecastAsync(AppraisalChangeStateSvcRequest body)
+        public virtual System.Threading.Tasks.Task<AppraisalChangeStateSvcResponse> AppraisalChangeStateAsync(AppraisalChangeStateSvcRequest body)
         {
-            return GetWeatherForecastAsync(body, System.Threading.CancellationToken.None);
+            return AppraisalChangeStateAsync(body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AppraisalChangeStateSvcResponse> GetWeatherForecastAsync(AppraisalChangeStateSvcRequest body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<AppraisalChangeStateSvcResponse> AppraisalChangeStateAsync(AppraisalChangeStateSvcRequest body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;

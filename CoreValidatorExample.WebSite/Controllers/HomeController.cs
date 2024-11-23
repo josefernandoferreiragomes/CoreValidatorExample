@@ -4,19 +4,20 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using CoreValidatorExample.WebApi.Sdk;
 using CoreValidatorExample.WebApi.Sdk.Client;
+using CoreValidatorExample.WebSite.Repositories;
 
 namespace CoreMVCValidatorExample.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly CoreValidatorExample.WebApi.Sdk.Client.CoreValidatorExampleWebApiSdk _serviceClient;
+        private readonly ICoreValidatorRepository _coreValidatorRepository;
         private readonly ILogger<HomeController> _logger;
 
 
-        public HomeController(ILogger<HomeController> logger, CoreValidatorExampleWebApiSdk proposalSvcRepository)
+        public HomeController(ILogger<HomeController> logger, ICoreValidatorRepository coreValidatorRepository)
         {
             _logger = logger;
-            _serviceClient = proposalSvcRepository;
+            _coreValidatorRepository = coreValidatorRepository;
         }
 
         public IActionResult Index()
@@ -33,15 +34,15 @@ namespace CoreMVCValidatorExample.Controllers
         }
 
         [HttpPost]
-        public IActionResult ProposalChangeState(HomeViewModel homeViewModel)
+        public async Task<IActionResult> ProposalChangeState(HomeViewModel homeViewModel)
         {
-            HomeModel homeModel = new HomeModel(_serviceClient);
+            HomeModel homeModel = new HomeModel(_coreValidatorRepository);
             //validation
             AppraisalChangeStateSvcRequest request = new AppraisalChangeStateSvcRequest();
             request.AppraisalId = 1;
             request.UserId = 2;
             request.ActionName = 3;
-            homeModel.ProposalChangeState(request);
+            await homeModel.ProposalChangeState(request);
             homeViewModel = homeModel.GenerateViewModel();
 
             return View("TestWorkflowAndApiCall", homeViewModel);

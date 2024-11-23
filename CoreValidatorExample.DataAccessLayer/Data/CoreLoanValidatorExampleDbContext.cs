@@ -1,6 +1,7 @@
 ﻿using CoreValidatorExample.DataAccessLayer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Collections.Generic;
 
 namespace CoreValidatorExample.DataAccessLayer.Data
@@ -63,6 +64,10 @@ namespace CoreValidatorExample.DataAccessLayer.Data
                 .HasForeignKey(c => c.LoanId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<Loan>()
+                .Property(l=>l.LoanValue)
+                .HasColumnType("decimal(18,2)");
+
             // Collateral configuration
             modelBuilder.Entity<Collateral>()
                 .HasKey(c => c.CollateralId);
@@ -85,6 +90,10 @@ namespace CoreValidatorExample.DataAccessLayer.Data
                 .HasForeignKey(a => a.CollateralId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<Collateral>()
+                .Property(c=> c.CollateralValue)
+                .HasColumnType("decimal(18,2)");
+
             // Asset configuration
             modelBuilder.Entity<Asset>()
                 .HasKey(a => a.AssetId);
@@ -94,6 +103,10 @@ namespace CoreValidatorExample.DataAccessLayer.Data
                 .WithMany(c => c.AssetIdList)
                 .HasForeignKey(a => a.CollateralId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Asset>()
+                .Property(a => a.AssetValue)
+                .HasColumnType("decimal(18,2)");
 
             // Proposal configuration
             modelBuilder.Entity<Proposal>()
@@ -105,6 +118,7 @@ namespace CoreValidatorExample.DataAccessLayer.Data
 
             modelBuilder.Entity<Proposal>()
                 .Property(p => p.Amount)
+                .HasColumnType("decimal(18,2)")
                 .IsRequired();
 
             modelBuilder.Entity<Proposal>()
@@ -141,6 +155,7 @@ namespace CoreValidatorExample.DataAccessLayer.Data
 
             modelBuilder.Entity<Appraisal>()
                 .Property(a => a.AppraisalScore)
+                .HasColumnType("decimal(18,2)")
                 .IsRequired();
 
             modelBuilder.Entity<Appraisal>()

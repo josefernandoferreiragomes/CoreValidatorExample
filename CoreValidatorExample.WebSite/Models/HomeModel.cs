@@ -1,12 +1,13 @@
 ﻿using CoreValidatorExample.WebApi.Sdk.Client;
+using CoreValidatorExample.WebSite.Repositories;
 
 namespace CoreValidatorExample.WebSite.Models
 {
-    //to be removed direct references...and data accessd by API
+    
     public class HomeModel
     {
-        CoreValidatorExampleWebApiSdk _proposalSvcRepository;
-        public HomeModel(CoreValidatorExampleWebApiSdk coreValidatorExampleWebApiSdkClient)
+        ICoreValidatorRepository _proposalSvcRepository;
+        public HomeModel(ICoreValidatorRepository coreValidatorExampleWebApiSdkClient)
         {
             _proposalSvcRepository = coreValidatorExampleWebApiSdkClient;
             ChangeStateResultMessage = "State not changed yet";
@@ -17,37 +18,20 @@ namespace CoreValidatorExample.WebSite.Models
 
         public async Task<AppraisalChangeStateSvcResponse> ProposalChangeState(AppraisalChangeStateSvcRequest request)
         {
-            try
+            var result = await _proposalSvcRepository.ProposalChangeState(request);
+            if (result != null && result.Success)
             {
-                AppraisalChangeStateSvcResponse result;
-
-                result = await _proposalSvcRepository.GetWeatherForecastAsync (request);
-
-                if (result != null && result.Success)
-                {
-                    ChangeStateResultMessage = "State Change Successful";
-                }
-                else
-                {
-                    ChangeStateResultMessage = "Error on State Change";
-                }
-                return result;
+                ChangeStateResultMessage = "State Change Successful";
             }
-            catch (Exception ex)
+            else
             {
-                //TODO handle exception
-                throw ex;
+                ChangeStateResultMessage = $"Error on State Change: {result.SvcErrorMsgs.FirstOrDefault()}";
             }
-
+            return result;
         }
 
         public HomeViewModel GenerateViewModel()
-        {
-            return new HomeViewModel()
-            {
-                ChangeStateResultMessage = this.ChangeStateResultMessage
-            };
-        }
+        => new HomeViewModel() { ChangeStateResultMessage = this.ChangeStateResultMessage };        
 
     }
 }
