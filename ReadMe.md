@@ -163,8 +163,8 @@ dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
 In Api Sdk project 
 ```bash
 Install-Package Newtonsoft.Json
-
-nswag openapi2csclient /input:https://localhost:7098/swagger/v1/swagger.json /classname:LoanAssessmentDemoWebApiSdk /namespace:LoanAssessmentDemo.WebApi.Sdk.Client /output:LoanAssessmentDemoWebApiSdk.cs
+del CoreValidatorExampleWebApiSdk.cs
+nswag openapi2csclient /input:https://localhost:7056/swagger/v1/swagger.json /classname:CoreValidatorExampleWebApiSdk /namespace:CoreValidatorExample.WebApi.Sdk.Client /output:CoreValidatorExampleWebApiSdk.cs
 ```
 In Web Site project
 

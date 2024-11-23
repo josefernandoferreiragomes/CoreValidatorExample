@@ -1,51 +1,53 @@
-﻿namespace CoreValidatorExample.WebSite.Models
+﻿using CoreValidatorExample.WebApi.Sdk.Client;
+
+namespace CoreValidatorExample.WebSite.Models
 {
-    //to be removed direct references... and data accessd by API
+    //to be removed direct references...and data accessd by API
     public class HomeModel
     {
-        //IProposalService _proposalSvcRepository;
-        //public HomeModel(IProposalService proposalSvcRepository)
-        //{            
-        //    _proposalSvcRepository = proposalSvcRepository;
-        //    ChangeStateResultMessage = "State not changed yet";
-        //}               
+        CoreValidatorExampleWebApiSdk _proposalSvcRepository;
+        public HomeModel(CoreValidatorExampleWebApiSdk coreValidatorExampleWebApiSdkClient)
+        {
+            _proposalSvcRepository = coreValidatorExampleWebApiSdkClient;
+            ChangeStateResultMessage = "State not changed yet";
+        }
 
 
-        //public string ChangeStateResultMessage { get; set; }                
+        public string ChangeStateResultMessage { get; set; }
 
-        //public WFValidationResult<Proposal> ProposalChangeState(ProposalChangeStateSvcRequest request)
-        //{
-        //    try
-        //    {
-        //        WFValidationResult<Proposal> result;
+        public async Task<AppraisalChangeStateSvcResponse> ProposalChangeState(AppraisalChangeStateSvcRequest request)
+        {
+            try
+            {
+                AppraisalChangeStateSvcResponse result;
 
-        //        result = _proposalSvcRepository.ProposalChangeState(request);
+                result = await _proposalSvcRepository.GetWeatherForecastAsync (request);
 
-        //        if (result != null && result.IsSuccess)
-        //        {
-        //            ChangeStateResultMessage = "State Change Successful";
-        //        }
-        //        else
-        //        {
-        //            ChangeStateResultMessage = "Error on State Change";
-        //        }
-        //        return result;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //TODO handle exception
-        //        throw ex;
-        //    }
-            
-        //}
+                if (result != null && result.Success)
+                {
+                    ChangeStateResultMessage = "State Change Successful";
+                }
+                else
+                {
+                    ChangeStateResultMessage = "Error on State Change";
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                //TODO handle exception
+                throw ex;
+            }
 
-        //public HomeViewModel GenerateViewModel()
-        //{
-        //    return new HomeViewModel()
-        //    {
-        //        ChangeStateResultMessage = this.ChangeStateResultMessage
-        //    };
-        //}
+        }
+
+        public HomeViewModel GenerateViewModel()
+        {
+            return new HomeViewModel()
+            {
+                ChangeStateResultMessage = this.ChangeStateResultMessage
+            };
+        }
 
     }
 }
