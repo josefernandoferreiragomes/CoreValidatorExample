@@ -1,12 +1,9 @@
-using CoreValidatorExample.BusinessLayer.Repository;
-using CoreValidatorExample.BusinessLayer.Services;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddSingleton<IProposalService, ProposalService>();
+//builder.Services.AddSingleton<IProposalService, ProposalService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
