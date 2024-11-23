@@ -9,7 +9,7 @@ services:
     depends_on:
       - db
     environment:
-      - ConnectionStrings__DefaultConnection=Host=db;Database=LoanDatabase;Username=postgresUser;Password=myPostGresPassword
+      - ConnectionStrings__DefaultConnection=Host=db;Database=CoreLoanValidatorExamplePgDB;Username=postgresUser;Password=myPostGresPassword
 
   website:
     build:
@@ -28,7 +28,7 @@ services:
   db:
     image: postgres:13
     environment:
-      - POSTGRES_DB=LoanDatabase
+      - POSTGRES_DB=CoreLoanValidatorExamplePgDB
       - POSTGRES_USER=postgresUser
       - POSTGRES_PASSWORD=myPostGresPassword
     ports:

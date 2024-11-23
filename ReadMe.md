@@ -157,4 +157,5 @@ In DataLayer Project:
 Install-Package Microsoft.EntityFrameworkCore
 Install-Package Microsoft.EntityFrameworkCore.Relational
 Install-Package Microsoft.EntityFrameworkCore.SqlServer
+dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
 ```

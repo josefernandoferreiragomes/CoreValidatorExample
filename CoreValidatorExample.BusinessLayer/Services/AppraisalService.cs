@@ -52,8 +52,7 @@ namespace CoreValidatorExample.BusinessLayer.Services
                 MandatoryField = "Performance Review",
                 Status = AppraisalStatus.Approved,
                 SubmissionDate = DateTime.Now.AddDays(-1),  // Appraisal was submitted in the past
-                AppraiserName = "John Doe",
-                AppraiseeName = "Jane Smith",
+                AppraiserName = "John Doe",                
                 AppraisalScore = 4.5m
             };
 

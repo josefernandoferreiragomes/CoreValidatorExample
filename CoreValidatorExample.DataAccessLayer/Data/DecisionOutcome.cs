@@ -9,9 +9,9 @@ namespace CoreValidatorExample.DataAccessLayer.Data
     // DecisionOutcome.cs
     public enum DecisionOutcome
     {
-        Pending,    // Decision is still pending
-        Accepted,   // Decision has been accepted
-        Rejected    // Decision has been rejected
+        Pending = 1,    // Decision is still pending
+        Accepted = 2,   // Decision has been accepted
+        Rejected = 3   // Decision has been rejected
     }
 
 }

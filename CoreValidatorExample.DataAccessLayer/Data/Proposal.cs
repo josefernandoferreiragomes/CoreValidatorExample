@@ -9,6 +9,7 @@ namespace CoreValidatorExample.DataAccessLayer.Data
     // Proposal.cs
     public class Proposal
     {
+        public int ProposalId { get; set; }
         public string Title { get; set; }           // Proposal title
         public decimal Amount { get; set; }         // Proposed amount
         public ProposalStatus Status { get; set; }  // Status of the proposal

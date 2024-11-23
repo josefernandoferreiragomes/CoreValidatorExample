@@ -9,11 +9,11 @@ namespace CoreValidatorExample.DataAccessLayer.Data
     // AppraisalStatus.cs
     public enum AppraisalStatus
     {
-        Pending,     // Appraisal is still pending
-        Approved,    // Appraisal has been approved
-        Rejected,    // Appraisal has been rejected
-        InProgress,  // Appraisal is currently in progress
-        Completed    // Appraisal has been completed
+        Pending = 1,     // Appraisal is still pending
+        Approved = 2,    // Appraisal has been approved
+        Rejected = 3,    // Appraisal has been rejected
+        InProgress = 4,  // Appraisal is currently in progress
+        Completed = 5    // Appraisal has been completed
     }
 
 }
