@@ -17,7 +17,7 @@ namespace CoreValidatorExample.Internal.WebAPI.Controllers
             _service = service;
         }
 
-        [HttpPost(Name = "GetWeatherForecast")]
+        [HttpPost(Name = "AppraisalChangeState")]
         public AppraisalChangeStateSvcResponse AppraisalChangeState(AppraisalChangeStateSvcRequest request)
         {
             var response = new AppraisalChangeStateSvcResponse();
