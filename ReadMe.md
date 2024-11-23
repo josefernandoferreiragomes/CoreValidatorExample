@@ -168,5 +168,17 @@ nswag openapi2csclient /input:https://localhost:7056/swagger/v1/swagger.json /cl
 ```
 In Web Site project
 
-In Web Site project, add reference to WebApi
-example url: 
+### Database configuration, for SQL Server
+In Package Manager Console, set CoreValidatorExample.DataAccessLayer as default project
+Run, in the DataAccessLayer folder:
+```bash
+dotnet add package Microsoft.EntityFrameworkCore.Tools
+Install-Package Microsoft.EntityFrameworkCore.Design
+
+Add-Migration InitialCreate -StartupProject CoreValidatorExample.WebApi -Project CoreValidatorExample.DataAccessLayer
+Add-Migration Update20241122 -StartupProject CoreValidatorExample.WebApi -Project CoreValidatorExample.DataAccessLayer
+Add-Migration Update20241122_2 -StartupProject CoreValidatorExample.WebApi -Project CoreValidatorExample.DataAccessLayer
+
+Update-Database
+```
+

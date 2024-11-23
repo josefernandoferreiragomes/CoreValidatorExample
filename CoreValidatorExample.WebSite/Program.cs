@@ -1,10 +1,14 @@
+using CoreValidatorExample.WebApi.Sdk.Client;
+using CoreValidatorExample.WebSite.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<ICoreValidatorRepository, CoreValidatorRepository>();
 
-//builder.Services.AddSingleton<IProposalService, ProposalService>();
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
