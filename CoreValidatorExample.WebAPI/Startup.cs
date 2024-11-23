@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using CoreValidatorExample.BusinessLayer.ServiceDataOrchestrator.ServiceOrchestrator;
 using CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric;
 using CoreValidatorExample.DataAccessLayer.Data;
+using Microsoft.Extensions.Configuration;
 
 namespace CoreValidatorExample.WebAPI
 {
@@ -29,12 +30,20 @@ namespace CoreValidatorExample.WebAPI
             var logger = loggerFactory.CreateLogger<AppraisalService>();
             services.AddSingleton(typeof(Microsoft.Extensions.Logging.ILogger), logger);
 
-            // DbContext
+            //// DbContext
+
+            ///PostgreSQL
+            //services.AddDbContext<CoreLoanValidatorExampleDbContext>(options => 
+            //    options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"))
+            //           .EnableSensitiveDataLogging()
+            //    ,ServiceLifetime.Scoped
+            //);
+            ///SqlServer
             services.AddDbContext<CoreLoanValidatorExampleDbContext>(options =>
                 options
                     .UseSqlServer(configuration.GetConnectionString("CoreLoanValidatorExampleDB"))
                     .EnableSensitiveDataLogging()
-                ,ServiceLifetime.Scoped
+                , ServiceLifetime.Scoped
             );
 
             // Register generic repositories

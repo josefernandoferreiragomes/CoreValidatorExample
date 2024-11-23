@@ -49,7 +49,7 @@ namespace CoreValidatorExample.BusinessLayer.ChangeStateManageFactoryGeneric
             var intervenerValidatorExecuter = ValidatorExecuterFactory.GetObjectInstance<IntervenerValidatorExecuter>();
             appraisalValidatorExecuter.Validate(ObjectInstance.SubmissionDate);
             appraisalValidatorExecuter.ValidateMandatoryField(ObjectInstance);
-            intervenerValidatorExecuter.Validate(ObjectInstance.AppraiseeName);
+            intervenerValidatorExecuter.Validate(ObjectInstance.AppraiserName);
             //remaining validation or execution logic
             ExecuteChangeState();
         }
